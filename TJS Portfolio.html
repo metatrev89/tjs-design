@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:#FBF8F2; color:#17152B; font-family:'DM Sans',sans-serif;}
+  section[id]{scroll-margin-top:144px;}
+  .tjs-strip::-webkit-scrollbar{display:none;}
+</style>
+</helmet>
+
+<div style="overflow-x:hidden;">
+
+  <!-- ============ MAIN NAV ============ -->
+  <header style="position:sticky; top:0; z-index:50; background:rgba(251,248,242,.85); backdrop-filter:blur(12px); border-bottom:1px solid rgba(23,21,43,.07);">
+    <div style="max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,48px); height:72px; display:flex; align-items:center; justify-content:space-between;">
+      <a href="index.html" style="display:flex; align-items:center; gap:11px; text-decoration:none;">
+        <div style="width:40px; height:40px; border-radius:11px; background:#17152B; color:#fff; font-family:'Sora',sans-serif; font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center;">T</div>
+        <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:19px; color:#17152B; letter-spacing:-0.01em;">TJS Design</div>
+      </a>
+      <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+        <nav style="display:flex; align-items:center; gap:32px;">
+          <a href="index.html#services" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">Services</a>
+          <a href="TJS Portfolio.dc.html" style="text-decoration:none; font-weight:700; font-size:15px; color:#17152B;">Portfolio</a>
+          <a href="index.html#process" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">How It Works</a>
+          <a href="index.html#faq" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">FAQ</a>
+          <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; background:#2F6BFF; color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; padding:11px 20px; border-radius:999px;">Get My Website →</button>
+        </nav>
+      </sc-if>
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ toggleNav }}" aria-label="Menu" style="cursor:pointer; border:none; background:#17152B; width:44px; height:44px; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;">
+          <span style="width:20px; height:2.5px; background:#fff; border-radius:2px;"></span>
+          <span style="width:20px; height:2.5px; background:#fff; border-radius:2px;"></span>
+          <span style="width:20px; height:2.5px; background:#fff; border-radius:2px;"></span>
+        </button>
+      </sc-if>
+    </div>
+    <sc-if value="{{ mobileNav }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid rgba(23,21,43,.07); padding:14px clamp(20px,5vw,48px) 22px; display:flex; flex-direction:column; gap:4px; background:#FBF8F2;">
+        <a href="index.html#services" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">Services</a>
+        <a href="TJS Portfolio.dc.html" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">Portfolio</a>
+        <a href="index.html#process" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">How It Works</a>
+        <a href="index.html#faq" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">FAQ</a>
+        <button onClick="{{ openCheckout }}" style="margin-top:8px; cursor:pointer; border:none; background:#2F6BFF; color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; padding:15px; border-radius:13px; width:100%;">Get My Website →</button>
+      </div>
+    </sc-if>
+  </header>
+
+  <!-- ============ JUMP-LINK STRIP ============ -->
+  <div style="position:sticky; top:72px; z-index:40; background:#17152B;">
+    <div class="tjs-strip" style="max-width:1180px; margin:0 auto; padding:14px clamp(16px,5vw,48px); display:flex; gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
+      <sc-for list="{{ industries }}" as="ind" hint-placeholder-count="4">
+        <a href="#{{ ind.id }}" style="flex:none; text-decoration:none; font-family:'Sora',sans-serif; font-weight:700; font-size:14px; padding:9px 17px; border-radius:999px; background:{{ ind.pillBg }}; color:{{ ind.pillColor }}; border:1.5px solid {{ ind.pillBorder }}; white-space:nowrap;">{{ ind.name }}</a>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ PAGE HEADER ============ -->
+  <section style="position:relative; overflow:hidden;">
+    <div style="position:absolute; top:-40px; right:-30px; width:200px; height:200px; border-radius:50%; background:#FFC53D; opacity:.85;"></div>
+    <div style="position:absolute; top:90px; right:170px; width:90px; height:90px; border-radius:50%; background:#FF3D9A;"></div>
+    <div style="position:relative; max-width:1180px; margin:0 auto; padding:clamp(48px,7vw,84px) clamp(20px,5vw,48px) clamp(36px,5vw,52px);">
+      <div style="max-width:760px;">
+        <h1 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(38px,6.4vw,62px); line-height:1.02; color:#17152B; margin:0 0 22px; letter-spacing:-0.025em;">Work that speaks <span style="background:linear-gradient(105deg,#2F6BFF,#7C5CFF); -webkit-background-clip:text; background-clip:text; color:transparent;">for itself.</span></h1>
+        <p style="font-size:clamp(16px,2.2vw,19px); line-height:1.55; color:#55525f; margin:0; max-width:560px;">Every site below was built custom — designed from scratch around the specific business, its brand, and its customers. No templates. No off-the-shelf layouts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INDUSTRIES CALLOUT ============ -->
+  <div style="background:#FF6B4A;">
+    <div style="max-width:1180px; margin:0 auto; padding:20px clamp(20px,5vw,48px); display:flex; flex-wrap:wrap; align-items:center; gap:12px 28px;">
+      <div style="display:flex; align-items:center; gap:10px; flex:none;">
+        <div style="width:26px; height:26px; border-radius:50%; background:rgba(255,255,255,.22); display:flex; align-items:center; justify-content:center; font-size:13px; color:#fff; font-weight:800; flex:none;">✦</div>
+        <span style="font-family:'Sora',sans-serif; font-weight:800; font-size:15px; color:#fff; white-space:nowrap;">4 of my main industries</span>
+      </div>
+      <span style="font-size:15px; color:rgba(255,255,255,.92); line-height:1.45; flex:1; min-width:220px;">These are just a starting point — I can meet the needs of any local service provider. If you do the work, I'll build the site.</span>
+      <button onClick="{{ openCheckout }}" style="flex:none; cursor:pointer; border:none; background:#fff; color:#FF6B4A; font-family:'Sora',sans-serif; font-weight:800; font-size:14px; padding:10px 20px; border-radius:999px; white-space:nowrap;">Get My Website →</button>
+    </div>
+  </div>
+
+  <!-- ============ INDUSTRY SECTIONS ============ -->
+
+  <!-- Auto Repair -->
+  <section id="auto-repair" style="background:#fff; border-top:1px solid rgba(23,21,43,.06);">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(56px,7vw,90px) clamp(20px,5vw,48px);">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:30px;">
+        <span style="width:36px; height:6px; border-radius:3px; background:#FFC53D;"></span>
+        <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,40px); color:#17152B; margin:0; letter-spacing:-0.02em;">Auto Repair</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0,2.4fr) minmax(0,1fr); gap:24px; align-items:end; margin-bottom:28px;">
+        <div style="border-radius:16px; overflow:hidden; border:2px solid #17152B; box-shadow:8px 8px 0 rgba(212,165,40,.28);">
+          <div style="background:#f1eee7; padding:11px 14px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(23,21,43,.08);">
+            <span style="width:11px; height:11px; border-radius:50%; background:#FF6B4A;"></span>
+            <span style="width:11px; height:11px; border-radius:50%; background:#FFC53D;"></span>
+            <span style="width:11px; height:11px; border-radius:50%; background:#1FC77D;"></span>
+            <span style="margin-left:10px; font-family:monospace; font-size:12px; color:#9a958a;">redlineauto.repair</span>
+          </div>
+          <div style="aspect-ratio:16/10; background:repeating-linear-gradient(135deg,rgba(212,165,40,.16),rgba(212,165,40,.16) 16px,rgba(212,165,40,.05) 16px,rgba(212,165,40,.05) 32px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
+            <span style="font-family:monospace; font-size:13px; color:#8a6a16;">[ DESKTOP MOCKUP ]</span>
+            <span style="font-family:monospace; font-size:11px; color:#a8893f;">drop site preview here</span>
+          </div>
+        </div>
+        <div style="border-radius:26px; overflow:hidden; border:6px solid #17152B; box-shadow:8px 8px 0 rgba(212,165,40,.18);">
+          <div style="aspect-ratio:9/17; background:repeating-linear-gradient(135deg,rgba(212,165,40,.18),rgba(212,165,40,.18) 12px,rgba(212,165,40,.05) 12px,rgba(212,165,40,.05) 24px); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:monospace; font-size:11px; color:#8a6a16;">[ MOBILE ]</span>
+          </div>
+        </div>
+      </div>
+      <div style="max-width:640px;">
+        <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B; margin-bottom:8px;">Redline Auto Repair</div>
+        <p style="font-size:15.5px; line-height:1.6; color:#55525f; margin:0 0 20px;">Service-menu pricing, appointment scheduling, and a trust bar of certifications. Built so a driver can read reviews and book a slot from their phone in under a minute.</p>
+        <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; display:inline-flex; align-items:center; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#17152B; background:#FFC53D; padding:13px 22px; border-radius:12px;">Want a site like this for your auto repair business? — Get My Website →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Electrical -->
+  <section id="electrical" style="background:#FBF8F2; border-top:1px solid rgba(23,21,43,.06);">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(56px,7vw,90px) clamp(20px,5vw,48px);">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:30px;">
+        <span style="width:36px; height:6px; border-radius:3px; background:#2F6BFF;"></span>
+        <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,40px); color:#17152B; margin:0; letter-spacing:-0.02em;">Electrical</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0,2.4fr) minmax(0,1fr); gap:24px; align-items:end; margin-bottom:28px;">
+        <div style="border-radius:16px; overflow:hidden; border:2px solid #17152B; box-shadow:8px 8px 0 rgba(47,107,255,.18);">
+          <div style="background:#f1eee7; padding:11px 14px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(23,21,43,.08);">
+            <span style="width:11px; height:11px; border-radius:50%; background:#FF6B4A;"></span>
+            <span style="width:11px; height:11px; border-radius:50%; background:#FFC53D;"></span>
+            <span style="width:11px; height:11px; border-radius:50%; background:#1FC77D;"></span>
+            <span style="margin-left:10px; font-family:monospace; font-size:12px; color:#9a958a;">apexelectricco.com</span>
+          </div>
+          <div style="aspect-ratio:16/10; background:repeating-linear-gradient(135deg,rgba(47,107,255,.1),rgba(47,107,255,.1) 16px,rgba(47,107,255,.04) 16px,rgba(47,107,255,.04) 32px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
+            <span style="font-family:monospace; font-size:13px; color:#5b6b8a;">[ DESKTOP MOCKUP ]</span>
+            <span style="font-family:monospace; font-size:11px; color:#8a93a8;">drop site preview here</span>
+          </div>
+        </div>
+        <div style="border-radius:26px; overflow:hidden; border:6px solid #17152B; box-shadow:8px 8px 0 rgba(47,107,255,.12);">
+          <div style="aspect-ratio:9/17; background:repeating-linear-gradient(135deg,rgba(47,107,255,.12),rgba(47,107,255,.12) 12px,rgba(47,107,255,.04) 12px,rgba(47,107,255,.04) 24px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;">
+            <span style="font-family:monospace; font-size:11px; color:#5b6b8a;">[ MOBILE ]</span>
+          </div>
+        </div>
+      </div>
+      <div style="max-width:640px;">
+        <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B; margin-bottom:8px;">Apex Electric Co.</div>
+        <p style="font-size:15.5px; line-height:1.6; color:#55525f; margin:0 0 20px;">Panel upgrades, EV charger installs, and safety inspections — organized so a homeowner finds the right service in seconds. License numbers and insurance badges up front build trust before a call is ever made.</p>
+        <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; display:inline-flex; align-items:center; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#fff; background:#2F6BFF; padding:13px 22px; border-radius:12px;">Want a site like this for your electrical business? — Get My Website →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Handyman -->
+  <section id="handyman" style="background:#fff; border-top:1px solid rgba(23,21,43,.06);">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(56px,7vw,90px) clamp(20px,5vw,48px);">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:30px;">
+        <span style="width:36px; height:6px; border-radius:3px; background:#FF6B4A;"></span>
+        <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,40px); color:#17152B; margin:0; letter-spacing:-0.02em;">Handyman</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0,2.4fr) minmax(0,1fr); gap:24px; align-items:end; margin-bottom:28px;">
+        <div style="border-radius:16px; overflow:hidden; border:2px solid #17152B; box-shadow:8px 8px 0 rgba(255,107,74,.18);">
+          <div style="background:#f1eee7; padding:11px 14px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(23,21,43,.08);">
+            <span style="width:11px; height:11px; border-radius:50%; background:#FF6B4A;"></span>
+            <span style="width:11px; height:11px; border-radius:50%; background:#FFC53D;"></span>
+            <span style="width:11px; height:11px; border-radius:50%; background:#1FC77D;"></span>
+            <span style="margin-left:10px; font-family:monospace; font-size:12px; color:#9a958a;">allsethandyman.com</span>
+          </div>
+          <div style="aspect-ratio:16/10; background:repeating-linear-gradient(135deg,rgba(255,107,74,.12),rgba(255,107,74,.12) 16px,rgba(255,107,74,.04) 16px,rgba(255,107,74,.04) 32px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
+            <span style="font-family:monospace; font-size:13px; color:#a05a45;">[ DESKTOP MOCKUP ]</span>
+            <span style="font-family:monospace; font-size:11px; color:#b08070;">drop site preview here</span>
+          </div>
+        </div>
+        <div style="border-radius:26px; overflow:hidden; border:6px solid #17152B; box-shadow:8px 8px 0 rgba(255,107,74,.12);">
+          <div style="aspect-ratio:9/17; background:repeating-linear-gradient(135deg,rgba(255,107,74,.14),rgba(255,107,74,.14) 12px,rgba(255,107,74,.04) 12px,rgba(255,107,74,.04) 24px); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:monospace; font-size:11px; color:#a05a45;">[ MOBILE ]</span>
+          </div>
+        </div>
+      </div>
+      <div style="max-width:640px;">
+        <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B; margin-bottom:8px;">AllSet Handyman</div>
+        <p style="font-size:15.5px; line-height:1.6; color:#55525f; margin:0 0 20px;">Task-based pricing tiers, a same-day availability callout, and a quick-quote form. Designed for the homeowner who just needs someone reliable — and wants to hire with confidence without shopping around.</p>
+        <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; display:inline-flex; align-items:center; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#fff; background:#FF6B4A; padding:13px 22px; border-radius:12px;">Want a site like this for your handyman business? — Get My Website →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Landscaping -->
+  <section id="landscaping" style="background:#FBF8F2; border-top:1px solid rgba(23,21,43,.06);">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(56px,7vw,90px) clamp(20px,5vw,48px);">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:30px;">
+        <span style="width:36px; height:6px; border-radius:3px; background:#1FC77D;"></span>
+        <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,40px); color:#17152B; margin:0; letter-spacing:-0.02em;">Landscaping</h2>
+      </div>
+      <div style="display:grid; grid-template-columns:minmax(0,2.4fr) minmax(0,1fr); gap:24px; align-items:end; margin-bottom:28px;">
+        <div style="border-radius:16px; overflow:hidden; border:2px solid #17152B; box-shadow:8px 8px 0 rgba(31,199,125,.2);">
+          <div style="background:#f1eee7; padding:11px 14px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(23,21,43,.08);">
+            <span style="width:11px; height:11px; border-radius:50%; background:#FF6B4A;"></span>
+            <span style="width:11px; height:11px; border-radius:50%; background:#FFC53D;"></span>
+            <span style="width:11px; height:11px; border-radius:50%; background:#1FC77D;"></span>
+            <span style="margin-left:10px; font-family:monospace; font-size:12px; color:#9a958a;">evergreenyard.co</span>
+          </div>
+          <div style="aspect-ratio:16/10; background:repeating-linear-gradient(135deg,rgba(31,199,125,.13),rgba(31,199,125,.13) 16px,rgba(31,199,125,.04) 16px,rgba(31,199,125,.04) 32px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
+            <span style="font-family:monospace; font-size:13px; color:#3f8a64;">[ DESKTOP MOCKUP ]</span>
+            <span style="font-family:monospace; font-size:11px; color:#6aa888;">drop site preview here</span>
+          </div>
+        </div>
+        <div style="border-radius:26px; overflow:hidden; border:6px solid #17152B; box-shadow:8px 8px 0 rgba(31,199,125,.13);">
+          <div style="aspect-ratio:9/17; background:repeating-linear-gradient(135deg,rgba(31,199,125,.15),rgba(31,199,125,.15) 12px,rgba(31,199,125,.04) 12px,rgba(31,199,125,.04) 24px); display:flex; align-items:center; justify-content:center;">
+            <span style="font-family:monospace; font-size:11px; color:#3f8a64;">[ MOBILE ]</span>
+          </div>
+        </div>
+      </div>
+      <div style="max-width:640px;">
+        <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B; margin-bottom:8px;">Evergreen Yard Co.</div>
+        <p style="font-size:15.5px; line-height:1.6; color:#55525f; margin:0 0 20px;">A visual-heavy portfolio grid that lets the work do the selling, paired with a simple estimate form. Built to showcase before-and-after transformations and seasonal maintenance packages.</p>
+        <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; display:inline-flex; align-items:center; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#fff; background:#1FC77D; padding:13px 22px; border-radius:12px;">Want a site like this for your landscaping business? — Get My Website →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BOTTOM CTA BAR ============ -->
+  <section style="position:relative; background:#17152B; overflow:hidden;">
+    <div style="position:absolute; top:-90px; right:-30px; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle at 40% 40%,#2F6BFF,transparent 70%); opacity:.5;"></div>
+    <div style="position:relative; max-width:820px; margin:0 auto; padding:clamp(64px,9vw,104px) clamp(20px,5vw,48px); text-align:center;">
+      <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(30px,5vw,48px); line-height:1.05; color:#fff; margin:0 0 18px; letter-spacing:-0.02em;">Don't see your industry here?</h2>
+      <p style="font-size:clamp(16px,2.2vw,19px); line-height:1.6; color:#c2bfd6; margin:0 auto 34px; max-width:520px;">Every local service business is a fit. If you do the work, I'll build the site.</p>
+      <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; background:linear-gradient(135deg,#FF6B4A,#FF3D9A); color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:clamp(16px,2.2vw,19px); padding:19px 36px; border-radius:15px; box-shadow:0 14px 34px rgba(255,61,154,.35);">Get My Website — $999.99 →</button>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background:#0f0e22; color:#c2bfd6;">
+    <div style="max-width:1180px; margin:0 auto; padding:clamp(40px,5vw,56px) clamp(20px,5vw,48px); display:flex; flex-wrap:wrap; gap:18px 28px; align-items:center; justify-content:space-between;">
+      <div style="display:flex; align-items:center; gap:11px;">
+        <div style="width:36px; height:36px; border-radius:10px; background:#fff; color:#17152B; font-family:'Sora',sans-serif; font-weight:800; font-size:15px; display:flex; align-items:center; justify-content:center;">T</div>
+        <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:17px; color:#fff;">TJS Design</div>
+      </div>
+      <div style="font-size:13px; color:#7a7790;">© 2026 TJS Design — Trevor Jared Spencer. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <!-- ============ CHECKOUT SLIDE-OVER ============ -->
+  <sc-if value="{{ coOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; inset:0; z-index:100; display:flex; justify-content:flex-end;">
+      <div onClick="{{ closeCheckout }}" style="position:absolute; inset:0; background:rgba(15,14,34,.55); backdrop-filter:blur(3px);"></div>
+      <div style="position:relative; width:min(480px,100%); height:100%; background:#FBF8F2; box-shadow:-20px 0 60px rgba(0,0,0,.25); display:flex; flex-direction:column;">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:20px 24px; border-bottom:1px solid rgba(23,21,43,.08); flex:none;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:34px; height:34px; border-radius:9px; background:#17152B; color:#fff; font-family:'Sora',sans-serif; font-weight:800; font-size:14px; display:flex; align-items:center; justify-content:center;">T</div>
+            <span style="font-family:'Sora',sans-serif; font-weight:800; font-size:16px; color:#17152B;">Checkout</span>
+          </div>
+          <button onClick="{{ closeCheckout }}" aria-label="Close" style="cursor:pointer; border:none; background:rgba(23,21,43,.06); width:36px; height:36px; border-radius:50%; font-size:20px; color:#17152B; display:flex; align-items:center; justify-content:center;">×</button>
+        </div>
+        <div style="display:flex; gap:6px; padding:16px 24px 0; flex:none;">
+          <div style="height:5px; flex:1; border-radius:3px; background:{{ bar1 }};"></div>
+          <div style="height:5px; flex:1; border-radius:3px; background:{{ bar2 }};"></div>
+          <div style="height:5px; flex:1; border-radius:3px; background:{{ bar3 }};"></div>
+          <div style="height:5px; flex:1; border-radius:3px; background:{{ bar4 }};"></div>
+        </div>
+        <div style="display:flex; gap:6px; padding:9px 24px 0; flex:none;">
+          <div style="flex:1; font-size:11px; font-weight:700; letter-spacing:.01em; color:{{ lbl1Color }};">Summary</div>
+          <div style="flex:1; font-size:11px; font-weight:700; letter-spacing:.01em; color:{{ lbl2Color }};">Payment</div>
+          <div style="flex:1; font-size:11px; font-weight:700; letter-spacing:.01em; color:{{ lbl3Color }};">Book Call</div>
+          <div style="flex:1; font-size:11px; font-weight:700; letter-spacing:.01em; color:{{ lbl4Color }};">Done</div>
+        </div>
+        <div style="flex:1; overflow-y:auto; padding:24px;">
+
+          <!-- STEP 1 — SUMMARY -->
+          <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+            <div>
+              <h3 style="font-family:'Sora',sans-serif; font-weight:800; font-size:22px; color:#17152B; margin:0 0 6px;">Order summary</h3>
+              <p style="font-size:14px; color:#7a7783; margin:0 0 24px;">Review your order before payment.</p>
+              <div style="background:#fff; border:2px solid #17152B; border-radius:16px; padding:20px; margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+                  <div>
+                    <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:16px; color:#17152B;">Custom Website Build</div>
+                    <div style="font-size:13px; color:#7a7783; margin-top:3px;">One-time · delivered in &lt;14 business days</div>
+                  </div>
+                  <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:16px; color:#17152B; white-space:nowrap;">$999.99</div>
+                </div>
+              </div>
+              <div style="background:{{ addonBg }}; border:2px solid {{ addonBorder }}; border-radius:16px; padding:20px; margin-bottom:24px;">
+                <button onClick="{{ toggleAddon }}" style="cursor:pointer; width:100%; text-align:left; background:transparent; border:none; padding:0; display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+                  <div style="display:flex; gap:12px; align-items:flex-start;">
+                    <div style="width:24px; height:24px; border-radius:7px; border:2px solid {{ addonBorder }}; background:{{ addonCheckBg }}; color:#fff; font-size:15px; font-weight:800; display:flex; align-items:center; justify-content:center; flex:none; margin-top:1px;">{{ addonCheck }}</div>
+                    <div>
+                      <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#17152B;">Add Site Management</div>
+                      <div style="font-size:13px; color:#7a7783; margin-top:3px;">Updates, support &amp; monitoring, fully handled.</div>
+                    </div>
+                  </div>
+                  <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:15px; color:#2F6BFF; white-space:nowrap;">{{ addonLinePrice }}</div>
+                </button>
+                <sc-if value="{{ addon }}" hint-placeholder-val="{{ false }}">
+                  <div style="display:flex; gap:6px; margin-top:16px; background:#fff; border:1.5px solid rgba(23,21,43,.12); border-radius:11px; padding:4px;">
+                    <button onClick="{{ setAddonAnnual }}" style="cursor:pointer; flex:1; border:none; font-family:'Sora',sans-serif; font-weight:700; font-size:12.5px; padding:9px; border-radius:8px; background:{{ addonAnnualBg }}; color:{{ addonAnnualColor }};">Annual · $83.33/mo</button>
+                    <button onClick="{{ setAddonMonthly }}" style="cursor:pointer; flex:1; border:none; font-family:'Sora',sans-serif; font-weight:700; font-size:12.5px; padding:9px; border-radius:8px; background:{{ addonMonthlyBg }}; color:{{ addonMonthlyColor }};">Monthly · $129.99</button>
+                  </div>
+                  <div style="font-size:12px; color:#7a7783; margin-top:9px;">
+                    <sc-if value="{{ addonAnnual }}" hint-placeholder-val="{{ true }}">Billed annually at $999.96/yr — save $560 vs paying monthly.</sc-if>
+                    <sc-if value="{{ addonMonthly }}" hint-placeholder-val="{{ false }}">Billed month-to-month — cancel anytime.</sc-if>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; padding:0 4px 4px;">
+                <span style="font-weight:700; font-size:15px; color:#17152B;">Due today</span>
+                <span style="font-family:'Sora',sans-serif; font-weight:800; font-size:22px; color:#17152B;">{{ dueToday }}</span>
+              </div>
+              <sc-if value="{{ addon }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; justify-content:space-between; padding:0 4px 8px; font-size:13px; color:#7a7783;">
+                  <span>{{ recurringLabel }}</span><span>{{ recurringValue }}</span>
+                </div>
+              </sc-if>
+              <button onClick="{{ toPayment }}" style="cursor:pointer; border:none; width:100%; background:#17152B; color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; padding:17px; border-radius:13px; margin-top:14px;">Continue to Payment →</button>
+            </div>
+          </sc-if>
+
+          <!-- STEP 2 — PAYMENT -->
+          <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <h3 style="font-family:'Sora',sans-serif; font-weight:800; font-size:22px; color:#17152B; margin:0 0 6px;">Payment</h3>
+              <p style="font-size:14px; color:#7a7783; margin:0 0 16px;">Secure payment — processed by Stripe.</p>
+              <div style="display:flex; align-items:center; gap:11px; background:#FFF4D6; border:1px solid #FBE08F; border-radius:12px; padding:12px 14px; margin-bottom:22px;">
+                <span style="flex:none; width:24px; height:24px; border-radius:50%; background:#FFC53D; color:#17152B; font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center;">3</span>
+                <span style="font-size:13px; color:#6b5e2e; line-height:1.45;"><strong style="color:#17152B;">Next step:</strong> right after payment you'll book your 30-minute intake call.</span>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:22px;">
+                <div><label style="display:block; font-size:13px; font-weight:600; color:#3a3845; margin-bottom:6px;">Full name</label><div style="height:48px; border-radius:11px; border:1.5px solid rgba(23,21,43,.2); background:#fff; display:flex; align-items:center; padding:0 14px; color:#9a97a3; font-size:15px;">Jane Smith</div></div>
+                <div><label style="display:block; font-size:13px; font-weight:600; color:#3a3845; margin-bottom:6px;">Email</label><div style="height:48px; border-radius:11px; border:1.5px solid rgba(23,21,43,.2); background:#fff; display:flex; align-items:center; padding:0 14px; color:#9a97a3; font-size:15px;">jane@business.com</div></div>
+                <div><label style="display:block; font-size:13px; font-weight:600; color:#3a3845; margin-bottom:6px;">Card details</label><div style="height:48px; border-radius:11px; border:1.5px solid rgba(23,21,43,.2); background:#fff; display:flex; align-items:center; justify-content:space-between; padding:0 14px; color:#9a97a3; font-size:15px;"><span>1234 1234 1234 1234</span><span style="font-size:13px;">MM/YY · CVC</span></div></div>
+              </div>
+              <button onClick="{{ toCalendar }}" style="cursor:pointer; border:none; width:100%; background:linear-gradient(135deg,#FF6B4A,#FF3D9A); color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; padding:17px; border-radius:13px; box-shadow:0 10px 24px rgba(255,61,154,.3);">Pay {{ dueToday }} →</button>
+              <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-top:18px; font-size:12px; color:#9a97a3;"><span>🔒 Stripe Secured</span><span>SSL Encrypted</span><span>PCI Compliant</span></div>
+              <button onClick="{{ backStep }}" style="cursor:pointer; border:none; background:transparent; width:100%; color:#7a7783; font-size:14px; padding:14px; margin-top:6px;">← Back to summary</button>
+            </div>
+          </sc-if>
+
+          <!-- STEP 3 — CALENDAR -->
+          <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <div style="background:#1FC77D; color:#0f3d28; font-weight:700; font-size:13px; border-radius:10px; padding:11px 14px; margin-bottom:20px; display:flex; align-items:center; gap:8px;"><span style="font-weight:800;">✓</span> Payment confirmed. Now let's schedule your call.</div>
+              <h3 style="font-family:'Sora',sans-serif; font-weight:800; font-size:22px; color:#17152B; margin:0 0 6px;">Book your intake call</h3>
+              <p style="font-size:14px; color:#7a7783; margin:0 0 22px;">Pick a 30-minute slot that works for you. A calendar invite is sent automatically.</p>
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <sc-for list="{{ slots }}" as="s" hint-placeholder-count="5">
+                  <button onClick="{{ s.pick }}" style="cursor:pointer; background:#fff; border:2px solid #17152B; border-radius:13px; padding:15px 18px; display:flex; align-items:center; justify-content:space-between; text-align:left;">
+                    <div>
+                      <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#17152B;">{{ s.date }}</div>
+                      <div style="font-size:13px; color:#7a7783;">{{ s.time }}</div>
+                    </div>
+                    <span style="font-family:'Sora',sans-serif; font-weight:700; font-size:14px; color:#2F6BFF;">Select →</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- STEP 4 — CONFIRMATION -->
+          <sc-if value="{{ isStep4 }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center; padding-top:14px;">
+              <div style="width:74px; height:74px; border-radius:50%; background:#1FC77D; color:#fff; font-size:38px; display:flex; align-items:center; justify-content:center; margin:0 auto 22px;">✓</div>
+              <h3 style="font-family:'Sora',sans-serif; font-weight:800; font-size:26px; color:#17152B; margin:0 0 10px;">You're on the calendar.</h3>
+              <p style="font-size:15px; color:#7a7783; margin:0 0 26px;">A confirmation email and calendar invite are on their way.</p>
+              <div style="background:#fff; border:2px solid #17152B; border-radius:16px; padding:22px; text-align:left; margin-bottom:22px;">
+                <div style="display:flex; gap:10px; margin-bottom:14px;"><span style="color:#1FC77D; font-weight:800;">✓</span><span style="font-size:14.5px; color:#3a3845;">Payment of <strong>$999.99</strong> confirmed</span></div>
+                <div style="display:flex; gap:10px; margin-bottom:14px;"><span style="color:#1FC77D; font-weight:800;">✓</span><span style="font-size:14.5px; color:#3a3845;">Intake call scheduled: <strong>{{ slot }}</strong></span></div>
+                <div style="display:flex; gap:10px;"><span style="color:#1FC77D; font-weight:800;">✓</span><span style="font-size:14.5px; color:#3a3845;">Calendar invite sent to your email</span></div>
+              </div>
+              <div style="text-align:left; background:#FBF8F2; border-radius:14px; padding:18px; margin-bottom:22px;">
+                <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:14px; color:#17152B; margin-bottom:10px;">What happens next</div>
+                <div style="font-size:14px; line-height:1.55; color:#55525f;">You'll get a confirmation email, I'll review your info before the call, and your site build begins immediately after we talk.</div>
+              </div>
+              <button onClick="{{ closeCheckout }}" style="cursor:pointer; border:none; width:100%; background:#17152B; color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; padding:17px; border-radius:13px;">Done</button>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isMobile: false, mobileNav: false, active: 'auto-repair',
+      coOpen: false, coStep: 1, addon: false, addonCycle: 'annual', slot: ''
+    };
+  }
+  componentDidMount() {
+    this._onResize = () => {
+      const m = window.innerWidth < 900;
+      if (m !== this.state.isMobile) this.setState({ isMobile: m, mobileNav: false });
+    };
+    this._onResize();
+    window.addEventListener('resize', this._onResize);
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) this.setState({ active: e.target.id }); });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    document.querySelectorAll('section[id]').forEach(s => this._io.observe(s));
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+    if (this._io) this._io.disconnect();
+    document.body.style.overflow = '';
+  }
+  _open() { this.setState({ coOpen: true, coStep: 1 }); document.body.style.overflow = 'hidden'; }
+  _close() { this.setState({ coOpen: false }); document.body.style.overflow = ''; }
+  renderVals() {
+    const data = [
+      { id: 'auto-repair',  name: 'Auto Repair',  accent: '#FFC53D' },
+      { id: 'electrical',   name: 'Electrical',    accent: '#2F6BFF' },
+      { id: 'handyman',     name: 'Handyman',      accent: '#FF6B4A' },
+      { id: 'landscaping',  name: 'Landscaping',   accent: '#1FC77D' }
+    ];
+    const industries = data.map(d => {
+      const on = this.state.active === d.id;
+      return {
+        id: d.id, name: d.name,
+        pillBg:     on ? d.accent : 'transparent',
+        pillColor:  on ? (d.accent === '#FFC53D' ? '#17152B' : '#fff') : '#c8c5dd',
+        pillBorder: on ? d.accent : 'rgba(255,255,255,.22)'
+      };
+    });
+    const slotData = [
+      { date: 'Tuesday, June 23',   time: '10:00 AM \u2013 10:30 AM' },
+      { date: 'Wednesday, June 24', time: '1:00 PM \u2013 1:30 PM' },
+      { date: 'Thursday, June 25',  time: '9:30 AM \u2013 10:00 AM' },
+      { date: 'Monday, June 29',    time: '2:30 PM \u2013 3:00 PM' },
+      { date: 'Tuesday, June 30',   time: '11:00 AM \u2013 11:30 AM' }
+    ];
+    const slots = slotData.map(s => ({
+      date: s.date, time: s.time,
+      pick: () => this.setState({ slot: s.date + ' at ' + s.time.split(' \u2013 ')[0], coStep: 4 })
+    }));
+    const step = this.state.coStep;
+    const accent = '#17152B';
+    const dim = 'rgba(23,21,43,.12)';
+    const addonAnnual = this.state.addonCycle === 'annual';
+    const addon = this.state.addon;
+    return {
+      isMobile:    this.state.isMobile,
+      isDesktop:   !this.state.isMobile,
+      mobileNav:   this.state.mobileNav,
+      toggleNav:   () => this.setState(s => ({ mobileNav: !s.mobileNav })),
+      industries,
+      openCheckout:  () => this._open(),
+      closeCheckout: () => this._close(),
+      coOpen: this.state.coOpen,
+      toggleAddon:    () => this.setState(s => ({ addon: !s.addon })),
+      toPayment:      () => this.setState({ coStep: 2 }),
+      toCalendar:     () => this.setState({ coStep: 3 }),
+      backStep:       () => this.setState(s => ({ coStep: Math.max(1, s.coStep - 1) })),
+      setAddonAnnual: () => this.setState({ addon: true, addonCycle: 'annual' }),
+      setAddonMonthly:() => this.setState({ addon: true, addonCycle: 'monthly' }),
+      slots,
+      slot: this.state.slot,
+      addon, addonAnnual, addonMonthly: !addonAnnual,
+      isStep1: step === 1, isStep2: step === 2, isStep3: step === 3, isStep4: step === 4,
+      bar1: step >= 1 ? accent : dim,
+      bar2: step >= 2 ? accent : dim,
+      bar3: step >= 3 ? accent : dim,
+      bar4: step >= 4 ? accent : dim,
+      lbl1Color: step >= 1 ? '#17152B' : '#b3b0bd',
+      lbl2Color: step >= 2 ? '#17152B' : '#b3b0bd',
+      lbl3Color: step >= 3 ? '#17152B' : '#b3b0bd',
+      lbl4Color: step >= 4 ? '#17152B' : '#b3b0bd',
+      addonBg:       addon ? 'rgba(47,107,255,.07)' : '#fff',
+      addonBorder:   addon ? '#2F6BFF' : 'rgba(23,21,43,.2)',
+      addonCheckBg:  addon ? '#2F6BFF' : 'transparent',
+      addonCheck:    addon ? '\u2713' : '',
+      addonAnnualBg:    addonAnnual ? '#2F6BFF' : 'transparent',
+      addonAnnualColor: addonAnnual ? '#fff' : '#55525f',
+      addonMonthlyBg:    !addonAnnual ? '#2F6BFF' : 'transparent',
+      addonMonthlyColor: !addonAnnual ? '#fff' : '#55525f',
+      addonLinePrice: addonAnnual ? '$83.33/mo' : '$129.99/mo',
+      dueToday:       (addon && addonAnnual) ? '$1,999.95' : '$999.99',
+      recurringLabel: addonAnnual ? 'Then annually' : 'Then monthly',
+      recurringValue: addonAnnual ? '$999.96/yr' : '$129.99/mo'
+    };
+  }
+}
+</script>
+</body>
+</html>
