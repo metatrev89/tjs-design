@@ -1,0 +1,7 @@
+# macOS
+.DS_Store
+
+# Archive / preview files (not served by GitHub Pages)
+export/
+*.zip
+*.pdf
