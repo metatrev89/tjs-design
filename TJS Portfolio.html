@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 <x-dc>
@@ -334,11 +335,12 @@
                 <span style="font-size:13px; color:#6b5e2e; line-height:1.45;"><strong style="color:#17152B;">Next step:</strong> right after payment you'll book your 30-minute intake call.</span>
               </div>
               <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:22px;">
-                <div><label style="display:block; font-size:13px; font-weight:600; color:#3a3845; margin-bottom:6px;">Full name</label><div style="height:48px; border-radius:11px; border:1.5px solid rgba(23,21,43,.2); background:#fff; display:flex; align-items:center; padding:0 14px; color:#9a97a3; font-size:15px;">Jane Smith</div></div>
-                <div><label style="display:block; font-size:13px; font-weight:600; color:#3a3845; margin-bottom:6px;">Email</label><div style="height:48px; border-radius:11px; border:1.5px solid rgba(23,21,43,.2); background:#fff; display:flex; align-items:center; padding:0 14px; color:#9a97a3; font-size:15px;">jane@business.com</div></div>
-                <div><label style="display:block; font-size:13px; font-weight:600; color:#3a3845; margin-bottom:6px;">Card details</label><div style="height:48px; border-radius:11px; border:1.5px solid rgba(23,21,43,.2); background:#fff; display:flex; align-items:center; justify-content:space-between; padding:0 14px; color:#9a97a3; font-size:15px;"><span>1234 1234 1234 1234</span><span style="font-size:13px;">MM/YY · CVC</span></div></div>
+                <div><label style="display:block; font-size:13px; font-weight:600; color:#3a3845; margin-bottom:6px;">Full name</label><input id="tjs-name" type="text" placeholder="Jane Smith" autocomplete="name" style="width:100%; height:48px; border-radius:11px; border:1.5px solid rgba(23,21,43,.2); background:#fff; padding:0 14px; color:#17152B; font-size:15px; font-family:'DM Sans',sans-serif; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2F6BFF'" onblur="this.style.borderColor='rgba(23,21,43,.2)'"/></div>
+                <div><label style="display:block; font-size:13px; font-weight:600; color:#3a3845; margin-bottom:6px;">Email</label><input id="tjs-email" type="email" placeholder="jane@business.com" autocomplete="email" style="width:100%; height:48px; border-radius:11px; border:1.5px solid rgba(23,21,43,.2); background:#fff; padding:0 14px; color:#17152B; font-size:15px; font-family:'DM Sans',sans-serif; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2F6BFF'" onblur="this.style.borderColor='rgba(23,21,43,.2)'"/></div>
+                <div><label style="display:block; font-size:13px; font-weight:600; color:#3a3845; margin-bottom:6px;">Card details</label><div id="tjs-payment-element" style="border-radius:11px; border:1.5px solid rgba(23,21,43,.2); background:#fff; padding:12px 14px; min-height:48px;"></div></div><div id="tjs-pay-error" style="color:#e53e3e; font-size:13px; margin-top:-6px; display:none; padding:8px 12px; background:#fff5f5; border-radius:8px; border:1px solid #feb2b2;"></div>
               </div>
-              <button onClick="{{ toCalendar }}" style="cursor:pointer; border:none; width:100%; background:linear-gradient(135deg,#FF6B4A,#FF3D9A); color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; padding:17px; border-radius:13px; box-shadow:0 10px 24px rgba(255,61,154,.3);">Pay {{ dueToday }} →</button>
+              <button id="tjs-pay-btn" onclick="window.tjsPay(event)" style="cursor:pointer; border:none; width:100%; background:linear-gradient(135deg,#FF6B4A,#FF3D9A); color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; padding:17px; border-radius:13px; box-shadow:0 10px 24px rgba(255,61,154,.3);">Pay {{ dueToday }} →</button>
+              <button id="tjs-advance-calendar" onClick="{{ toCalendar }}" style="display:none;position:fixed;pointer-events:none;opacity:0;"></button>
               <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-top:18px; font-size:12px; color:#9a97a3;"><span>🔒 Stripe Secured</span><span>SSL Encrypted</span><span>PCI Compliant</span></div>
               <button onClick="{{ backStep }}" style="cursor:pointer; border:none; background:transparent; width:100%; color:#7a7783; font-size:14px; padding:14px; margin-top:6px;">← Back to summary</button>
             </div>
@@ -350,6 +352,12 @@
               <div style="background:#1FC77D; color:#0f3d28; font-weight:700; font-size:13px; border-radius:10px; padding:11px 14px; margin-bottom:20px; display:flex; align-items:center; gap:8px;"><span style="font-weight:800;">✓</span> Payment confirmed. Now let's schedule your call.</div>
               <h3 style="font-family:'Sora',sans-serif; font-weight:800; font-size:22px; color:#17152B; margin:0 0 6px;">Book your intake call</h3>
               <p style="font-size:14px; color:#7a7783; margin:0 0 22px;">Pick a 30-minute slot that works for you. A calendar invite is sent automatically.</p>
+              <sc-if value="{{ slotsLoading }}" hint-placeholder-val="{{ false }}">
+                <div style="text-align:center; padding:36px 0; color:#7a7783; font-size:14px;">Loading available times…</div>
+              </sc-if>
+              <sc-if value="{{ slotsHasError }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#fff5f5; border:1px solid #feb2b2; border-radius:10px; padding:14px; color:#c53030; font-size:13px;">{{ slotsError }} — Please close and try again.</div>
+              </sc-if>
               <div style="display:flex; flex-direction:column; gap:10px;">
                 <sc-for list="{{ slots }}" as="s" hint-placeholder-count="5">
                   <button onClick="{{ s.pick }}" style="cursor:pointer; background:#fff; border:2px solid #17152B; border-radius:13px; padding:15px 18px; display:flex; align-items:center; justify-content:space-between; text-align:left;">
@@ -396,7 +404,7 @@ class Component extends DCLogic {
     super(props);
     this.state = {
       isMobile: false, mobileNav: false, active: 'auto-repair',
-      coOpen: false, coStep: 1, addon: false, addonCycle: 'annual', slot: ''
+      coOpen: false, coStep: 1, addon: false, addonCycle: 'annual', slot: '', slots: [], slotsLoading: false, slotsError: ''
     };
   }
   componentDidMount() {
@@ -418,6 +426,41 @@ class Component extends DCLogic {
   }
   _open() { this.setState({ coOpen: true, coStep: 1 }); document.body.style.overflow = 'hidden'; }
   _close() { this.setState({ coOpen: false }); document.body.style.overflow = ''; }
+  async _loadSlots() {
+    if (this.state.slotsLoading) return;
+    this.setState({ slotsLoading: true, slotsError: '', slots: [] });
+    var self = this;
+    try {
+      var res = await fetch('https://tjs-checkout.trevorspencer89.workers.dev/calendar/slots');
+      var data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to load slots');
+      var slots = (data.slots || []).slice(0, 10).map(function(s) {
+        var start = new Date(s.start);
+        var end   = new Date(start.getTime() + 30 * 60 * 1000);
+        var dateFmt = start.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'America/Denver' });
+        var startT  = start.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Denver' });
+        var endT    = end.toLocaleTimeString('en-US',   { hour: 'numeric', minute: '2-digit', timeZone: 'America/Denver', timeZoneName: 'short' });
+        return {
+          date: dateFmt,
+          time: startT + ' – ' + endT,
+          pick: async function() {
+            var cust = window.__tjsCustomer || {};
+            try {
+              await fetch('https://tjs-checkout.trevorspencer89.workers.dev/calendar/book', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: cust.name || 'Customer', email: cust.email || '', slot: s.start })
+              });
+            } catch(e) { console.error('Book error:', e); }
+            self.setState({ slot: dateFmt + ' at ' + startT, coStep: 4 });
+          }
+        };
+      });
+      this.setState({ slots: slots, slotsLoading: false });
+    } catch(err) {
+      this.setState({ slotsError: err.message || 'Could not load available times.', slotsLoading: false });
+    }
+  }
   renderVals() {
     const data = [
       { id: 'auto-repair',  name: 'Auto Repair',  accent: '#FFC53D' },
@@ -434,17 +477,7 @@ class Component extends DCLogic {
         pillBorder: on ? d.accent : 'rgba(255,255,255,.22)'
       };
     });
-    const slotData = [
-      { date: 'Tuesday, June 23',   time: '10:00 AM \u2013 10:30 AM' },
-      { date: 'Wednesday, June 24', time: '1:00 PM \u2013 1:30 PM' },
-      { date: 'Thursday, June 25',  time: '9:30 AM \u2013 10:00 AM' },
-      { date: 'Monday, June 29',    time: '2:30 PM \u2013 3:00 PM' },
-      { date: 'Tuesday, June 30',   time: '11:00 AM \u2013 11:30 AM' }
-    ];
-    const slots = slotData.map(s => ({
-      date: s.date, time: s.time,
-      pick: () => this.setState({ slot: s.date + ' at ' + s.time.split(' \u2013 ')[0], coStep: 4 })
-    }));
+    const slots = this.state.slots;
     const step = this.state.coStep;
     const accent = '#17152B';
     const dim = 'rgba(23,21,43,.12)';
@@ -461,11 +494,14 @@ class Component extends DCLogic {
       coOpen: this.state.coOpen,
       toggleAddon:    () => this.setState(s => ({ addon: !s.addon })),
       toPayment:      () => this.setState({ coStep: 2 }),
-      toCalendar:     () => this.setState({ coStep: 3 }),
+      toCalendar:     () => { this.setState({ coStep: 3 }); this._loadSlots(); },
       backStep:       () => this.setState(s => ({ coStep: Math.max(1, s.coStep - 1) })),
       setAddonAnnual: () => this.setState({ addon: true, addonCycle: 'annual' }),
       setAddonMonthly:() => this.setState({ addon: true, addonCycle: 'monthly' }),
       slots,
+      slotsLoading: this.state.slotsLoading,
+      slotsHasError: !!this.state.slotsError,
+      slotsError: this.state.slotsError,
       slot: this.state.slot,
       addon, addonAnnual, addonMonthly: !addonAnnual,
       isStep1: step === 1, isStep2: step === 2, isStep3: step === 3, isStep4: step === 4,
@@ -492,6 +528,99 @@ class Component extends DCLogic {
     };
   }
 }
+</script>
+
+<script>
+(function () {
+  var TJS_STRIPE_PK  = 'pk_live_51T488BA7Unp9hIDTqDfsTtnoHMC3mrC3Eaan1uyB7zaYwEZrTwaOJnO519g3WWP36TpwYrj5KMcnqp8pT3BAPGDy008u13q032';
+  var TJS_WORKER_URL = 'https://tjs-checkout.trevorspencer89.workers.dev';
+  var stripe = null, elements = null, payEl = null, _mounted = false;
+
+  function initStripe() {
+    if (typeof Stripe === 'undefined') { setTimeout(initStripe, 100); return; }
+    stripe = Stripe(TJS_STRIPE_PK);
+  }
+  initStripe();
+
+  function parseCents(text) {
+    var m = text.match(/\$([\d,]+\.?\d*)/);
+    return m ? Math.round(parseFloat(m[1].replace(/,/g, '')) * 100) : 99999;
+  }
+
+  var observer = new MutationObserver(function () {
+    var mount = document.getElementById('tjs-payment-element');
+    if (mount && !_mounted) { _mounted = true; mountPaymentElement(mount); }
+    if (!mount && _mounted) { _mounted = false; elements = null; payEl = null; }
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  function mountPaymentElement(mount) {
+    if (!stripe) { setTimeout(function(){ mountPaymentElement(mount); }, 200); return; }
+    var btn = document.getElementById('tjs-pay-btn');
+    var amount = btn ? parseCents(btn.textContent || '') : 99999;
+    elements = stripe.elements({
+      mode: 'payment', currency: 'usd', amount: amount,
+      appearance: {
+        theme: 'stripe',
+        variables: { colorPrimary: '#2F6BFF', colorBackground: '#ffffff', colorText: '#17152B',
+                      colorDanger: '#e53e3e', fontFamily: 'DM Sans, sans-serif', borderRadius: '8px' }
+      },
+    });
+    payEl = elements.create('payment');
+    payEl.mount(mount);
+  }
+
+  window.tjsPay = async function (e) {
+    if (e) e.preventDefault();
+    var nameEl = document.getElementById('tjs-name');
+    var emailEl = document.getElementById('tjs-email');
+    var btn = document.getElementById('tjs-pay-btn');
+    if (!nameEl || !emailEl || !elements || !payEl) return;
+    var name = nameEl.value.trim();
+    var email = emailEl.value.trim();
+    if (!name) { showError('Please enter your full name.'); nameEl.focus(); return; }
+    if (!email || !email.includes('@')) { showError('Please enter a valid email.'); emailEl.focus(); return; }
+    setLoading(true); showError('');
+    try {
+      var submitResult = await elements.submit();
+      if (submitResult.error) throw new Error(submitResult.error.message);
+      var amount = parseCents(btn.dataset.originalText || btn.textContent || '');
+      var isAddon = amount > 100000;
+      var res = await fetch(TJS_WORKER_URL + '/create-payment-intent', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, addon: isAddon,
+          addonBilling: amount > 150000 ? 'annual' : 'monthly' }),
+      });
+      var data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || 'Payment setup failed.');
+      var confirmResult = await stripe.confirmPayment({
+        elements: elements, clientSecret: data.clientSecret,
+        confirmParams: { payment_method_data: { billing_details: { name: name, email: email } },
+          return_url: window.location.href },
+        redirect: 'if_required',
+      });
+      if (confirmResult.error) throw new Error(confirmResult.error.message);
+      window.__tjsCustomer = { name: name, email: email };
+      var advance = document.getElementById('tjs-advance-calendar');
+      if (advance) advance.click();
+    } catch (err) {
+      showError(err.message || 'Payment failed. Please try again.');
+    } finally { setLoading(false); }
+  };
+
+  function showError(msg) {
+    var el = document.getElementById('tjs-pay-error');
+    if (!el) return;
+    el.textContent = msg; el.style.display = msg ? 'block' : 'none';
+  }
+  function setLoading(on) {
+    var btn = document.getElementById('tjs-pay-btn');
+    if (!btn) return;
+    btn.disabled = on; btn.style.opacity = on ? '0.65' : '1'; btn.style.cursor = on ? 'wait' : 'pointer';
+    if (on) { btn.dataset.originalText = btn.textContent; btn.textContent = 'Processing…'; }
+    else if (btn.dataset.originalText) { btn.textContent = btn.dataset.originalText; }
+  }
+})();
 </script>
 </body>
 </html>

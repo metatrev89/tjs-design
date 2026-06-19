@@ -431,6 +431,12 @@
               <div style="background:#1FC77D; color:#0f3d28; font-weight:700; font-size:13px; border-radius:10px; padding:11px 14px; margin-bottom:20px; display:flex; align-items:center; gap:8px;"><span style="font-weight:800;">✓</span> Payment confirmed. Now let's schedule your call.</div>
               <h3 style="font-family:'Sora',sans-serif; font-weight:800; font-size:22px; color:#17152B; margin:0 0 6px;">Book your intake call</h3>
               <p style="font-size:14px; color:#7a7783; margin:0 0 22px;">Pick a 30-minute slot that works for you. A calendar invite is sent automatically.</p>
+              <sc-if value="{{ slotsLoading }}" hint-placeholder-val="{{ false }}">
+                <div style="text-align:center; padding:36px 0; color:#7a7783; font-size:14px;">Loading available times…</div>
+              </sc-if>
+              <sc-if value="{{ slotsHasError }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#fff5f5; border:1px solid #feb2b2; border-radius:10px; padding:14px; color:#c53030; font-size:13px;">{{ slotsError }} — Please close and try again.</div>
+              </sc-if>
               <div style="display:flex; flex-direction:column; gap:10px;">
                 <sc-for list="{{ slots }}" as="s" hint-placeholder-count="5">
                   <button onClick="{{ s.pick }}" style="cursor:pointer; background:#fff; border:2px solid #17152B; border-radius:13px; padding:15px 18px; display:flex; align-items:center; justify-content:space-between; text-align:left;">
@@ -472,7 +478,7 @@
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { isMobile: false, mobileNav: false, openFaq: 0, coOpen: false, coStep: 1, addon: false, planCycle: 'annual', addonCycle: 'annual', slot: '' };
+    this.state = { isMobile: false, mobileNav: false, openFaq: 0, coOpen: false, coStep: 1, addon: false, planCycle: 'annual', addonCycle: 'annual', slot: '', slots: [], slotsLoading: false, slotsError: '' };
   }
   componentDidMount() {
     this._onResize = () => {
@@ -494,6 +500,41 @@ class Component extends DCLogic {
   }
   _open(step) { this.setState({ coOpen: true, coStep: step || 1 }); document.body.style.overflow = 'hidden'; }
   _close() { this.setState({ coOpen: false }); document.body.style.overflow = ''; }
+  async _loadSlots() {
+    if (this.state.slotsLoading) return;
+    this.setState({ slotsLoading: true, slotsError: '', slots: [] });
+    var self = this;
+    try {
+      var res = await fetch('https://tjs-checkout.trevorspencer89.workers.dev/calendar/slots');
+      var data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to load slots');
+      var slots = (data.slots || []).slice(0, 10).map(function(s) {
+        var start = new Date(s.start);
+        var end   = new Date(start.getTime() + 30 * 60 * 1000);
+        var dateFmt = start.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'America/Denver' });
+        var startT  = start.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/Denver' });
+        var endT    = end.toLocaleTimeString('en-US',   { hour: 'numeric', minute: '2-digit', timeZone: 'America/Denver', timeZoneName: 'short' });
+        return {
+          date: dateFmt,
+          time: startT + ' – ' + endT,
+          pick: async function() {
+            var cust = window.__tjsCustomer || {};
+            try {
+              await fetch('https://tjs-checkout.trevorspencer89.workers.dev/calendar/book', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: cust.name || 'Customer', email: cust.email || '', slot: s.start })
+              });
+            } catch(e) { console.error('Book error:', e); }
+            self.setState({ slot: dateFmt + ' at ' + startT, coStep: 4 });
+          }
+        };
+      });
+      this.setState({ slots: slots, slotsLoading: false });
+    } catch(err) {
+      this.setState({ slotsError: err.message || 'Could not load available times.', slotsLoading: false });
+    }
+  }
   renderVals() {
     const faqData = [
       { q: 'What do I need to provide before we start?', a: "Not much. Your intake call covers everything I need — your services, branding preferences, any existing logos or photos, and a sense of what you want the site to do. If you don't have a logo yet, I can work around it or point you in the right direction." },
@@ -511,17 +552,7 @@ class Component extends DCLogic {
       sign: this.state.openFaq === i ? '\u2212' : '+',
       toggle: () => this.setState(s => ({ openFaq: s.openFaq === i ? -1 : i }))
     }));
-    const slotData = [
-      { date: 'Tuesday, June 23', time: '10:00 AM – 10:30 AM' },
-      { date: 'Wednesday, June 24', time: '1:00 PM – 1:30 PM' },
-      { date: 'Thursday, June 25', time: '9:30 AM – 10:00 AM' },
-      { date: 'Monday, June 29', time: '2:30 PM – 3:00 PM' },
-      { date: 'Tuesday, June 30', time: '11:00 AM – 11:30 AM' }
-    ];
-    const slots = slotData.map(s => ({
-      date: s.date, time: s.time,
-      pick: () => this.setState({ slot: s.date + ' at ' + s.time.split(' – ')[0], coStep: 4 })
-    }));
+    const slots = this.state.slots;
     const step = this.state.coStep;
     const accent = '#17152B';
     const dim = 'rgba(23,21,43,.12)';
@@ -538,6 +569,9 @@ class Component extends DCLogic {
       showStats: this.props.showStats ?? true,
       faqs,
       slots,
+      slotsLoading: this.state.slotsLoading,
+      slotsHasError: !!this.state.slotsError,
+      slotsError: this.state.slotsError,
       coOpen: this.state.coOpen,
       openCheckout: () => this._open(1),
       setPlanAnnual: () => this.setState({ planCycle: 'annual' }),
@@ -548,7 +582,7 @@ class Component extends DCLogic {
       closeCheckout: () => this._close(),
       toggleAddon: () => this.setState(s => ({ addon: !s.addon })),
       toPayment: () => this.setState({ coStep: 2 }),
-      toCalendar: () => this.setState({ coStep: 3 }),
+      toCalendar: () => { this.setState({ coStep: 3 }); this._loadSlots(); },
       backStep: () => this.setState(s => ({ coStep: Math.max(1, s.coStep - 1) })),
       addon: addon,
       addonAnnual: addonAnnual, addonMonthly: !addonAnnual,
