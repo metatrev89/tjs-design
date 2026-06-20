@@ -1,6 +1,6 @@
 /**
  * TJS Design — Checkout Worker
- * Handles Stripe payments + Google Calendar booking + contact form
+ * Handles Stripe payments + subscriptions + Google Calendar booking + contact form
  *
  * Environment secrets (Cloudflare Worker Settings → Variables):
  *   STRIPE_SECRET_KEY      — sk_live_...
@@ -14,9 +14,20 @@
  *   GET  /oauth/callback          →  exchange code, display refresh token
  *   GET  /calendar/slots          →  return available booking slots
  *   POST /calendar/book           →  create calendar event
- *   POST /create-payment-intent   →  { clientSecret }
+ *   POST /create-payment-intent   →  { clientSecret } — one-time build, or a real Stripe
+ *                                     Subscription (Site Management) with the build billed
+ *                                     once on the first invoice. See PRICE_IDS below.
  *   POST /contact                 →  email a footer contact-form submission via Resend
  */
+
+// Stripe Products/Prices created 2026-06-20 — acct_1T488BA7Unp9hIDT (live mode).
+// Product "Custom Website Build" (prod_UjxHRuqBTYwmpH) and
+// Product "Site Management" (prod_UjxH80uDsyyRex).
+const PRICE_IDS = {
+  build:   'price_1TkTNCA7Unp9hIDT9WnyLcjA', // Custom Website Build — $999.99 one-time
+  monthly: 'price_1TkTNNA7Unp9hIDTZiLloBNF', // Site Management — $129.99/month
+  annual:  'price_1TkTNTA7Unp9hIDTVLhCUom3', // Site Management — $999.96/year
+};
 
 const ALLOWED_ORIGINS = [
   'https://tjsdesign.online',
@@ -139,43 +150,41 @@ export default {
         return json({ error: 'Name and email are required.' }, 400, corsHeaders);
       }
 
-      let amountCents = 99999;
-      if (addon) amountCents += addonBilling === 'annual' ? 99996 : 12999;
+      try {
+        if (!addon) {
+          // Build only — simple one-time PaymentIntent, no subscription involved.
+          const pi = await stripeCreatePaymentIntent(env, {
+            amount: 99999,
+            description: 'TJS Design — Custom Website Build',
+            email, name,
+          });
+          return json({ clientSecret: pi.client_secret }, 200, corsHeaders);
+        }
 
-      let description = 'TJS Design — Custom Website Build';
-      if (addon) {
-        description += addonBilling === 'annual'
-          ? ' + Site Management (Annual)'
-          : ' + Site Management (Monthly)';
+        // Build + Site Management — create a real recurring Subscription.
+        // The Website Build is billed once, on this first invoice only, via
+        // add_invoice_items; the Subscription itself then auto-renews going
+        // forward at the Site Management price (monthly or annual).
+        const managementPrice = addonBilling === 'annual' ? PRICE_IDS.annual : PRICE_IDS.monthly;
+
+        const customer = await stripeCreateCustomer(env, { name, email });
+        const sub = await stripeCreateSubscription(env, {
+          customer: customer.id,
+          managementPrice,
+          buildPrice: PRICE_IDS.build,
+          name, email, addonBilling,
+        });
+
+        const pi = sub.latest_invoice && sub.latest_invoice.payment_intent;
+        if (!pi || !pi.client_secret) {
+          throw new Error('Subscription created but no payment intent was returned.');
+        }
+
+        return json({ clientSecret: pi.client_secret, subscriptionId: sub.id }, 200, corsHeaders);
+      } catch (err) {
+        console.error('Stripe error:', err);
+        return json({ error: err.message || 'Payment setup failed.' }, 400, corsHeaders);
       }
-
-      const stripeRes = await fetch('https://api.stripe.com/v1/payment_intents', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${env.STRIPE_SECRET_KEY}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Stripe-Version': '2024-06-20',
-        },
-        body: new URLSearchParams({
-          amount: String(amountCents),
-          currency: 'usd',
-          description,
-          receipt_email: email,
-          'metadata[customer_name]': name,
-          'metadata[customer_email]': email,
-          'metadata[addon]': addon ? 'true' : 'false',
-          'metadata[addon_billing]': addonBilling || 'none',
-          'automatic_payment_methods[enabled]': 'true',
-        }),
-      });
-
-      const pi = await stripeRes.json();
-      if (!stripeRes.ok) {
-        console.error('Stripe error:', pi);
-        return json({ error: pi.error?.message || 'Payment setup failed.' }, 400, corsHeaders);
-      }
-
-      return json({ clientSecret: pi.client_secret }, 200, corsHeaders);
     }
 
     // ── POST /contact ──────────────────────────────────────────────────────
@@ -330,6 +339,68 @@ async function bookSlot(accessToken, { name, email, slot }) {
   const event = await eventRes.json();
   if (!eventRes.ok) throw new Error(event.error?.message || 'Failed to book event');
   return event;
+}
+
+// ── Stripe helpers ───────────────────────────────────────────────────────────
+
+const STRIPE_API = 'https://api.stripe.com/v1';
+const STRIPE_HEADERS = (env) => ({
+  'Authorization': `Bearer ${env.STRIPE_SECRET_KEY}`,
+  'Content-Type': 'application/x-www-form-urlencoded',
+  'Stripe-Version': '2024-06-20',
+});
+
+async function stripeCreatePaymentIntent(env, { amount, description, email, name }) {
+  const res = await fetch(`${STRIPE_API}/payment_intents`, {
+    method: 'POST',
+    headers: STRIPE_HEADERS(env),
+    body: new URLSearchParams({
+      amount: String(amount),
+      currency: 'usd',
+      description,
+      receipt_email: email,
+      'metadata[customer_name]': name,
+      'metadata[customer_email]': email,
+      'metadata[price_id]': PRICE_IDS.build,
+      'automatic_payment_methods[enabled]': 'true',
+    }),
+  });
+  const pi = await res.json();
+  if (!res.ok) throw new Error(pi.error?.message || 'Payment setup failed.');
+  return pi;
+}
+
+async function stripeCreateCustomer(env, { name, email }) {
+  const res = await fetch(`${STRIPE_API}/customers`, {
+    method: 'POST',
+    headers: STRIPE_HEADERS(env),
+    body: new URLSearchParams({ name, email }),
+  });
+  const customer = await res.json();
+  if (!res.ok) throw new Error(customer.error?.message || 'Could not create customer.');
+  return customer;
+}
+
+async function stripeCreateSubscription(env, { customer, managementPrice, buildPrice, name, email, addonBilling }) {
+  const params = new URLSearchParams({
+    customer,
+    'items[0][price]': managementPrice,
+    'add_invoice_items[0][price]': buildPrice,
+    payment_behavior: 'default_incomplete',
+    'payment_settings[save_default_payment_method]': 'on_subscription',
+    'expand[]': 'latest_invoice.payment_intent',
+    'metadata[customer_name]': name,
+    'metadata[customer_email]': email,
+    'metadata[addon_billing]': addonBilling || 'none',
+  });
+  const res = await fetch(`${STRIPE_API}/subscriptions`, {
+    method: 'POST',
+    headers: STRIPE_HEADERS(env),
+    body: params,
+  });
+  const sub = await res.json();
+  if (!res.ok) throw new Error(sub.error?.message || 'Could not create subscription.');
+  return sub;
 }
 
 // ── Resend helper ───────────────────────────────────────────────────────────

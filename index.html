@@ -576,6 +576,10 @@ class Component extends DCLogic {
     const planAnnual = this.state.planCycle === 'annual';
     const addonAnnual = this.state.addonCycle === 'annual';
     const addon = this.state.addon;
+    // tjsPay() (plain JS, outside this component) reads this to know exactly
+    // what to bill — keeps it in sync with this render instead of guessing
+    // from displayed button text.
+    window.__tjsAddon = { enabled: addon, billing: addonAnnual ? 'annual' : 'monthly' };
     return {
       isMobile: this.state.isMobile,
       isDesktop: !this.state.isMobile,
@@ -627,7 +631,7 @@ class Component extends DCLogic {
       addonMonthlyBg: !addonAnnual ? '#2F6BFF' : 'transparent',
       addonMonthlyColor: !addonAnnual ? '#fff' : '#55525f',
       addonLinePrice: addonAnnual ? '$83.33/mo' : '$129.99/mo',
-      dueToday: (addon && addonAnnual) ? '$1,999.95' : '$999.99',
+      dueToday: !addon ? '$999.99' : (addonAnnual ? '$1,999.95' : '$1,129.98'),
       recurringLabel: addonAnnual ? 'Then annually' : 'Then monthly',
       recurringValue: addonAnnual ? '$999.96/yr' : '$129.99/mo'
     };
@@ -689,12 +693,11 @@ class Component extends DCLogic {
     try {
       var submitResult = await elements.submit();
       if (submitResult.error) throw new Error(submitResult.error.message);
-      var amount = parseCents(btn.dataset.originalText || btn.textContent || '');
-      var isAddon = amount > 100000;
+      var addonState = window.__tjsAddon || { enabled: false, billing: 'monthly' };
       var res = await fetch(TJS_WORKER_URL + '/create-payment-intent', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, email: email, addon: isAddon,
-          addonBilling: amount > 150000 ? 'annual' : 'monthly' }),
+        body: JSON.stringify({ name: name, email: email, addon: addonState.enabled,
+          addonBilling: addonState.billing }),
       });
       var data = await res.json();
       if (!res.ok || data.error) throw new Error(data.error || 'Payment setup failed.');
