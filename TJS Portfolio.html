@@ -403,16 +403,16 @@ class Component extends DCLogic {
   }
   renderVals() {
     const data = [
-      { id: 'auto-repair', name: 'High Desert Auto Repair', accent: '#FFC53D', shadow: 'rgba(212,165,40,.22)',
+      { id: 'auto-repair', name: 'Auto Repair', accent: '#FFC53D', shadow: 'rgba(212,165,40,.22)',
         src: 'High%20Desert%20Auto%20Repair/high-desert-auto-repair.html',
         blurb: 'In-shop and mobile repair with a 5-step booking flow, transparent diagnosis-fee pricing, and ASE-certified techs. Built so a driver stuck on the roadside can book a fix from their phone in under a minute.' },
-      { id: 'electrical', name: 'Jerry & Sons Electrical', accent: '#2F6BFF', shadow: 'rgba(47,107,255,.18)',
+      { id: 'electrical', name: 'Electrical', accent: '#2F6BFF', shadow: 'rgba(47,107,255,.18)',
         src: 'Jerry%20%26%20Sons%20Electrical/index.html',
         blurb: "A family-owned electrical business across Utah's Wasatch Front, with dedicated services, about, and service-area pages built to establish trust before a homeowner ever calls." },
-      { id: 'handyman', name: 'Handyman Jason', accent: '#FF6B4A', shadow: 'rgba(255,107,74,.18)',
+      { id: 'handyman', name: 'Handyman', accent: '#FF6B4A', shadow: 'rgba(255,107,74,.18)',
         src: 'Handyman%20Jason/index.html',
         blurb: "A solo handyman's site for Sedona and the Verde Valley, built around fast quote requests and a friendly, local feel — not a faceless franchise." },
-      { id: 'landscaping', name: 'Yardwise', accent: '#1FC77D', shadow: 'rgba(31,199,125,.2)',
+      { id: 'landscaping', name: 'Landscaping', accent: '#1FC77D', shadow: 'rgba(31,199,125,.2)',
         src: 'Yardwise/index.html',
         blurb: 'A Sacramento landscaping and smart-yard-care site covering design, install, irrigation, and connected device management — visual-first, so finished yards do the selling.' }
     ];
@@ -421,7 +421,7 @@ class Component extends DCLogic {
     const current = data.find(d => d.id === view) || null;
     const select = (id) => () => this.setState({ view: id });
     const cards = data.map(d => Object.assign({}, d, { select: select(d.id) }));
-    const pillSource = [{ id: 'all', name: 'All', accent: '#17152B' }].concat(data);
+    const pillSource = [{ id: 'all', name: 'All', accent: '#2F6BFF' }].concat(data);
     const pills = pillSource.map(d => {
       const on = view === d.id;
       return {
