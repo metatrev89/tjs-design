@@ -180,17 +180,20 @@
           </div>
         </div>
         <div>
-          <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:13px; color:#fff; text-transform:uppercase; letter-spacing:.1em; margin-bottom:16px;">Contact</div>
-          <div style="display:flex; flex-direction:column; gap:11px; font-size:15px;">
-            <a href="mailto:trevorspencer89@gmail.com" style="text-decoration:none; color:#FFC53D;">trevorspencer89@gmail.com</a>
-            <a href="tel:+13854723690" style="text-decoration:none; color:#FFC53D;">(385) 472-3690</a>
-            <span>Lehi, UT</span>
-          </div>
+          <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:13px; color:#fff; text-transform:uppercase; letter-spacing:.1em; margin-bottom:16px;">Get in Touch</div>
+          <form id="tjs-contact-form" style="display:flex; flex-direction:column; gap:9px; max-width:280px;">
+            <input type="text" id="tjs-contact-name" placeholder="Full name" autocomplete="name" required style="width:100%; height:42px; border-radius:9px; border:1.5px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); padding:0 12px; color:#fff; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; box-sizing:border-box;"/>
+            <input type="tel" id="tjs-contact-phone" placeholder="Phone" autocomplete="tel" style="width:100%; height:42px; border-radius:9px; border:1.5px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); padding:0 12px; color:#fff; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; box-sizing:border-box;"/>
+            <input type="email" id="tjs-contact-email" placeholder="Email" autocomplete="email" required style="width:100%; height:42px; border-radius:9px; border:1.5px solid rgba(255,255,255,.18); background:rgba(255,255,255,.06); padding:0 12px; color:#fff; font-size:14px; font-family:'DM Sans',sans-serif; outline:none; box-sizing:border-box;"/>
+            <input type="text" id="tjs-contact-hp" name="company" autocomplete="off" tabindex="-1" aria-hidden="true" style="position:absolute; left:-9999px; width:1px; height:1px; opacity:0;"/>
+            <button type="submit" id="tjs-contact-submit" style="cursor:pointer; border:none; background:#2F6BFF; color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:14px; padding:12px; border-radius:9px; margin-top:2px;">Send →</button>
+            <div id="tjs-contact-status" style="font-size:13px; min-height:16px;"></div>
+          </form>
         </div>
       </div>
       <div style="display:flex; flex-wrap:wrap; gap:14px 28px; align-items:center; justify-content:space-between; padding-top:24px;">
         <div style="font-size:13px; color:#7a7790;">© 2026 TJS Design — Trevor Jared Spencer. All rights reserved.</div>
-        <div style="display:flex; gap:24px;"><a href="#" style="text-decoration:none; color:#9c98b5; font-size:13px;">Privacy Policy</a><a href="#" style="text-decoration:none; color:#9c98b5; font-size:13px;">Terms of Service</a></div>
+        <div style="display:flex; gap:24px;"><a href="privacy.html" style="text-decoration:none; color:#9c98b5; font-size:13px;">Privacy Policy</a><a href="#" style="text-decoration:none; color:#9c98b5; font-size:13px;">Terms of Service</a></div>
       </div>
     </div>
   </footer>
@@ -287,6 +290,7 @@
               <button id="tjs-pay-btn" onclick="window.tjsPay(event)" style="cursor:pointer; border:none; width:100%; background:linear-gradient(135deg,#FF6B4A,#FF3D9A); color:#fff; font-family:'Sora',sans-serif; font-weight:700; font-size:16px; padding:17px; border-radius:13px; box-shadow:0 10px 24px rgba(255,61,154,.3);">Pay {{ dueToday }} →</button>
               <button id="tjs-advance-calendar" onClick="{{ toCalendar }}" style="display:none;position:fixed;pointer-events:none;opacity:0;"></button>
               <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-top:18px; font-size:12px; color:#9a97a3;"><span>🔒 Stripe Secured</span><span>SSL Encrypted</span><span>PCI Compliant</span></div>
+              <div style="text-align:center; font-size:12px; color:#9a97a3; margin-top:10px;">By continuing, you agree to our <a href="privacy.html" target="_blank" rel="noopener" style="color:#2F6BFF; text-decoration:none;">Privacy Policy</a>.</div>
               <button onClick="{{ backStep }}" style="cursor:pointer; border:none; background:transparent; width:100%; color:#7a7783; font-size:14px; padding:14px; margin-top:6px;">← Back to summary</button>
             </div>
           </sc-if>
@@ -595,6 +599,56 @@ class Component extends DCLogic {
     });
   });
   mo.observe(document.body, { childList: true, subtree: true });
+})();
+</script>
+
+<script>
+(function () {
+  var bound = new WeakSet();
+  function wireContactForm(form) {
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var nameEl = document.getElementById('tjs-contact-name');
+      var phoneEl = document.getElementById('tjs-contact-phone');
+      var emailEl = document.getElementById('tjs-contact-email');
+      var hpEl = document.getElementById('tjs-contact-hp');
+      var statusEl = document.getElementById('tjs-contact-status');
+      var btn = document.getElementById('tjs-contact-submit');
+      if (hpEl && hpEl.value) return; // honeypot tripped — silently ignore
+      var name = (nameEl.value || '').trim();
+      var phone = (phoneEl.value || '').trim();
+      var email = (emailEl.value || '').trim();
+      if (!name || !email || email.indexOf('@') === -1) {
+        statusEl.textContent = 'Please enter your name and a valid email.';
+        statusEl.style.color = '#FF6B4A';
+        return;
+      }
+      btn.disabled = true; btn.textContent = 'Sending…';
+      statusEl.textContent = ''; statusEl.style.color = '';
+      try {
+        var res = await fetch('https://tjs-checkout.trevorspencer89.workers.dev/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: name, phone: phone, email: email }),
+        });
+        var data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Something went wrong.');
+        form.reset();
+        statusEl.textContent = "Thanks — I'll be in touch soon.";
+        statusEl.style.color = '#1FC77D';
+      } catch (err) {
+        statusEl.textContent = err.message || 'Something went wrong — try again or email directly.';
+        statusEl.style.color = '#FF6B4A';
+      } finally {
+        btn.disabled = false; btn.textContent = 'Send →';
+      }
+    });
+  }
+  var mo2 = new MutationObserver(function () {
+    var form = document.getElementById('tjs-contact-form');
+    if (form && !bound.has(form)) { bound.add(form); wireContactForm(form); }
+  });
+  mo2.observe(document.body, { childList: true, subtree: true });
 })();
 </script>
 </body>

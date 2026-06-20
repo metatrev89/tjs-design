@@ -1,12 +1,13 @@
 /**
  * TJS Design — Checkout Worker
- * Handles Stripe payments + Google Calendar booking
+ * Handles Stripe payments + Google Calendar booking + contact form
  *
  * Environment secrets (Cloudflare Worker Settings → Variables):
  *   STRIPE_SECRET_KEY      — sk_live_...
  *   GOOGLE_CLIENT_ID       — OAuth client ID
  *   GOOGLE_CLIENT_SECRET   — OAuth client secret
  *   GOOGLE_REFRESH_TOKEN   — set after running /oauth/start once
+ *   RESEND_API_KEY         — Resend API key, used to email contact form submissions
  *
  * Routes:
  *   GET  /oauth/start             →  redirect to Google consent screen
@@ -14,9 +15,12 @@
  *   GET  /calendar/slots          →  return available booking slots
  *   POST /calendar/book           →  create calendar event
  *   POST /create-payment-intent   →  { clientSecret }
+ *   POST /contact                 →  email a footer contact-form submission via Resend
  */
 
 const ALLOWED_ORIGINS = [
+  'https://tjsdesign.online',
+  'https://www.tjsdesign.online',
   'https://metatrev89.github.io',
   'http://localhost',
   'http://127.0.0.1',
@@ -174,6 +178,30 @@ export default {
       return json({ clientSecret: pi.client_secret }, 200, corsHeaders);
     }
 
+    // ── POST /contact ──────────────────────────────────────────────────────
+    if (url.pathname === '/contact' && request.method === 'POST') {
+      let body;
+      try { body = await request.json(); } catch {
+        return json({ error: 'Invalid JSON' }, 400, corsHeaders);
+      }
+
+      const { name, phone, email, company } = body;
+      // Honeypot: real visitors never fill this hidden field — bots often do.
+      if (company) {
+        return json({ success: true }, 200, corsHeaders);
+      }
+      if (!name || !email) {
+        return json({ error: 'Name and email are required.' }, 400, corsHeaders);
+      }
+
+      try {
+        await sendContactEmail(env, { name, phone, email });
+        return json({ success: true }, 200, corsHeaders);
+      } catch (err) {
+        return json({ error: err.message }, 500, corsHeaders);
+      }
+    }
+
     return json({ error: 'Not found' }, 404, corsHeaders);
   },
 };
@@ -302,6 +330,33 @@ async function bookSlot(accessToken, { name, email, slot }) {
   const event = await eventRes.json();
   if (!eventRes.ok) throw new Error(event.error?.message || 'Failed to book event');
   return event;
+}
+
+// ── Resend helper ───────────────────────────────────────────────────────────
+
+async function sendContactEmail(env, { name, phone, email }) {
+  if (!env.RESEND_API_KEY) {
+    throw new Error('Contact form is not configured yet (missing RESEND_API_KEY).');
+  }
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'TJS Design Contact Form <onboarding@resend.dev>',
+      to: 'trevorspencer89@gmail.com',
+      reply_to: email,
+      subject: `New contact form submission — ${name}`,
+      text: `New message from the TJS Design site contact form:\n\nName: ${name}\nPhone: ${phone || '—'}\nEmail: ${email}`,
+    }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to send email.');
+  return data;
 }
 
 function json(data, status = 200, extraHeaders = {}) {
