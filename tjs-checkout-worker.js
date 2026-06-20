@@ -7,7 +7,7 @@
  *   GOOGLE_CLIENT_ID       — OAuth client ID
  *   GOOGLE_CLIENT_SECRET   — OAuth client secret
  *   GOOGLE_REFRESH_TOKEN   — set after running /oauth/start once
- *   RESEND_API_KEY         — Resend API key, used to email contact form submissions
+ *   RESEND_API_KEY         — Resend API key, used to email contact form + payment notifications
  *
  * Routes:
  *   GET  /oauth/start             →  redirect to Google consent screen
@@ -17,6 +17,10 @@
  *   POST /create-payment-intent   →  { clientSecret } — one-time build, or a real Stripe
  *                                     Subscription (Site Management) with the build billed
  *                                     once on the first invoice. See PRICE_IDS below.
+ *   POST /payment-confirmed       →  email Trevor as soon as the client-side payment confirms,
+ *                                     so he has their contact info even if they never get to
+ *                                     the calendar-booking step. Best-effort / non-blocking —
+ *                                     not a substitute for a real Stripe webhook later.
  *   POST /contact                 →  email a footer contact-form submission via Resend
  */
 
@@ -185,6 +189,28 @@ export default {
         console.error('Stripe error:', err);
         return json({ error: err.message || 'Payment setup failed.' }, 400, corsHeaders);
       }
+    }
+
+    // ── POST /payment-confirmed ─────────────────────────────────────────────
+    if (url.pathname === '/payment-confirmed' && request.method === 'POST') {
+      let body;
+      try { body = await request.json(); } catch {
+        return json({ error: 'Invalid JSON' }, 400, corsHeaders);
+      }
+
+      const { name, email, addon, addonBilling, subscriptionId } = body;
+      if (!name || !email) {
+        return json({ error: 'Name and email are required.' }, 400, corsHeaders);
+      }
+
+      try {
+        await sendPaymentNotificationEmail(env, { name, email, addon, addonBilling, subscriptionId });
+      } catch (err) {
+        // Never let a notification-email failure look like a problem to the client —
+        // the payment itself already succeeded by the time this is called.
+        console.error('Payment notification email failed:', err);
+      }
+      return json({ success: true }, 200, corsHeaders);
     }
 
     // ── POST /contact ──────────────────────────────────────────────────────
@@ -403,7 +429,52 @@ async function stripeCreateSubscription(env, { customer, managementPrice, buildP
   return sub;
 }
 
-// ── Resend helper ───────────────────────────────────────────────────────────
+// ── Resend helpers ──────────────────────────────────────────────────────────
+
+async function sendPaymentNotificationEmail(env, { name, email, addon, addonBilling, subscriptionId }) {
+  if (!env.RESEND_API_KEY) {
+    throw new Error('Payment notification not sent (missing RESEND_API_KEY).');
+  }
+
+  let purchase = 'Custom Website Build ($999.99 one-time)';
+  if (addon) {
+    purchase += addonBilling === 'annual'
+      ? ' + Site Management (Annual, $999.96/yr)'
+      : ' + Site Management (Monthly, $129.99/mo)';
+  }
+
+  const lines = [
+    'Payment received from a new client!',
+    '',
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Purchase: ${purchase}`,
+  ];
+  if (subscriptionId) lines.push(`Stripe Subscription ID: ${subscriptionId}`);
+  lines.push(
+    '',
+    "They should be scheduling their intake call next. If you don't see a calendar booking from them soon, it's worth reaching out directly."
+  );
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'TJS Design Checkout <onboarding@resend.dev>',
+      to: 'trevorspencer89@gmail.com',
+      reply_to: email,
+      subject: `New payment received — ${name}`,
+      text: lines.join('\n'),
+    }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to send payment notification email.');
+  return data;
+}
 
 async function sendContactEmail(env, { name, phone, email }) {
   if (!env.RESEND_API_KEY) {

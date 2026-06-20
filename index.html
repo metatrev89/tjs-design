@@ -709,6 +709,13 @@ class Component extends DCLogic {
       });
       if (confirmResult.error) throw new Error(confirmResult.error.message);
       window.__tjsCustomer = { name: name, email: email };
+      // Notify Trevor immediately — best-effort, never blocks the customer's flow,
+      // and means he has contact info even if they drop off before booking a call.
+      fetch(TJS_WORKER_URL + '/payment-confirmed', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, addon: addonState.enabled,
+          addonBilling: addonState.billing, subscriptionId: data.subscriptionId || null }),
+      }).catch(function (e) { console.error('Payment notification failed (non-blocking):', e); });
       var advance = document.getElementById('tjs-advance-calendar');
       if (advance) advance.click();
     } catch (err) {
