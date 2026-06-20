@@ -1,0 +1,9 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="92" fill="#FBF8F2"/>
+  <rect x="350" y="86" width="110" height="46" fill="#FFC53D" opacity="0.9"/>
+  <path d="M392 372 a64 64 0 1 0 0.1 0 Z" fill="#1FC77D" opacity="0.85" transform="translate(0,0)"/>
+  <polygon points="96,330 138,410 54,410" fill="#7C5CFF" opacity="0.85"/>
+  <text x="108" y="316" font-family="Poppins" font-weight="700" font-size="168" letter-spacing="-2">
+    <tspan fill="#2F6BFF">T</tspan><tspan fill="#FF3D9A">J</tspan><tspan fill="#FF6B4A">S</tspan>
+  </text>
+</svg>
