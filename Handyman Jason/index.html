@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handyman Jason | Sedona, AZ Handyman Services</title>
+<meta name="description" content="Handyman Jason provides reliable, fairly-priced home repair, painting, installs, and carpentry across Sedona, Cottonwood, Village of Oak Creek, and the Verde Valley. Licensed & insured. Call or text for a free quote.">
+<meta name="theme-color" content="#2E9C95">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "name": "Handyman Jason",
+  "image": "",
+  "telephone": "+1-928-555-0142",
+  "email": "jason@handymanjasonaz.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Sedona",
+    "addressRegion": "AZ",
+    "postalCode": "86336",
+    "addressCountry": "US"
+  },
+  "areaServed": ["Sedona", "Cottonwood", "Village of Oak Creek", "Cornville", "Oak Creek Canyon"],
+  "openingHours": "Mo-Sa 07:00-18:00",
+  "priceRange": "$$"
+}
+</script>
+<style>
+  :root{
+    --teal:#2E9C95;
+    --teal-dark:#04342C;
+    --amber:#C8862E;
+    --amber-dark:#412402;
+    --rust:#7C2530;
+    --charcoal:#211B18;
+    --sand:#F2E8D8;
+    --sand-light:#FAF5EA;
+    --gray:#A9A29A;
+    --radius:10px;
+    --max:1140px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',Arial,sans-serif;
+    color:var(--charcoal);
+    background:var(--sand-light);
+    line-height:1.6;
+    font-size:16px;
+  }
+  h1,h2,h3{font-family:'Fraunces',Georgia,serif;font-weight:600;line-height:1.2;}
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:var(--max);margin:0 inline-size auto;padding-inline:20px;margin-left:auto;margin-right:auto;}
+  .skip-link{position:absolute;left:-999px;top:0;background:var(--charcoal);color:#fff;padding:10px 16px;z-index:200;}
+  .skip-link:focus{left:8px;top:8px;}
+  .icon{width:22px;height:22px;flex-shrink:0;}
+
+  /* Buttons */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    font-weight:600;font-size:15px;padding:13px 22px;border-radius:var(--radius);
+    border:1.5px solid transparent;cursor:pointer;transition:transform .15s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-amber{background:var(--amber);color:var(--amber-dark);}
+  .btn-outline{background:transparent;border-color:var(--teal);color:var(--teal-dark);}
+  .btn-teal{background:var(--teal);color:#fff;}
+  .btn-block{width:100%;}
+
+  /* Header */
+  header.site{
+    position:sticky;top:0;z-index:100;background:var(--sand-light);
+    border-bottom:1px solid rgba(33,27,24,0.1);
+  }
+  /* Offset anchor targets so the sticky header doesn't cover them on jump */
+  #main, #services, #why-us, #gallery, #reviews, #area, #contact{
+    scroll-margin-top:72px;
+  }
+  .nav-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;max-width:var(--max);margin:0 auto;}
+  .logo{display:flex;align-items:center;gap:8px;font-weight:600;font-size:17px;}
+  .logo-mark{width:28px;height:28px;object-fit:contain;flex-shrink:0;}
+  nav.links{display:none;gap:26px;font-size:14px;font-weight:500;}
+  .nav-actions{display:flex;align-items:center;gap:12px;}
+  .hamburger{display:flex;background:none;border:none;cursor:pointer;padding:6px;}
+  .mobile-menu{display:none;flex-direction:column;gap:2px;padding:0 20px 16px;}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{padding:10px 4px;font-size:15px;font-weight:500;border-top:1px solid rgba(33,27,24,0.08);}
+
+  /* Mobile call bar */
+  .mobile-call-bar{
+    position:fixed;bottom:0;left:0;right:0;z-index:90;
+    background:var(--amber);padding:10px 18px;
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    font-weight:600;color:var(--amber-dark);font-size:15px;
+  }
+  .bar-actions{display:flex;gap:10px;}
+  .bar-actions a{
+    display:flex;align-items:center;justify-content:center;
+    width:38px;height:38px;border-radius:50%;
+    background:var(--amber-dark);color:var(--sand-light);
+  }
+  body{padding-bottom:64px;}
+
+  /* Hero */
+  .hero{padding:44px 20px 40px;text-align:center;background:var(--sand);}
+  .eyebrow{font-size:12px;letter-spacing:1px;font-weight:600;color:var(--rust);margin-bottom:10px;}
+  .hero h1{font-size:30px;margin-bottom:14px;}
+  .hero p.lead{font-size:16px;opacity:0.8;max-width:520px;margin:0 auto 22px;}
+  .phone-display{font-family:'Fraunces',Georgia,serif;font-size:21px;font-weight:600;margin-bottom:14px;}
+  .phone-display a{color:var(--charcoal);}
+  .hero-ctas{display:flex;flex-direction:column;gap:12px;max-width:360px;margin:0 auto;}
+  .call-text-row{display:flex;gap:10px;}
+  .call-text-row .btn{flex:1;}
+  .trust-line{margin-top:18px;font-size:13px;opacity:0.7;}
+  .hero-visual{display:none;}
+
+  /* Sections */
+  section{padding:48px 20px;max-width:var(--max);margin:0 auto;}
+  .section-head{text-align:center;max-width:560px;margin:0 auto 30px;}
+  .section-head .eyebrow{display:block;}
+  .section-head h2{font-size:26px;margin-bottom:8px;}
+  .section-head p{opacity:0.75;font-size:15px;}
+
+  /* Services */
+  .services-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .service-card{background:var(--sand);border-radius:var(--radius);padding:20px 16px;text-align:center;}
+  .service-card .icon{margin:0 auto 10px;color:var(--teal);width:30px;height:30px;}
+  .service-card h3{font-family:'Inter';font-weight:600;font-size:14.5px;margin-bottom:4px;}
+  .service-card p{font-size:12.5px;opacity:0.7;}
+
+  /* Trust strip */
+  .trust-strip{background:var(--teal);padding:0;margin:0;max-width:none;}
+  .trust-inner{max-width:var(--max);margin:0 auto;padding:26px 20px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .trust-item{display:flex;align-items:flex-start;gap:10px;color:var(--teal-dark);}
+  .trust-item .icon{color:var(--teal-dark);}
+  .trust-item h3{font-family:'Inter';font-size:13.5px;font-weight:600;margin-bottom:2px;}
+  .trust-item p{font-size:12px;opacity:0.85;}
+
+  /* Gallery */
+  .gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .gallery-card{background:var(--sand);border-radius:var(--radius);overflow:hidden;}
+  .gallery-thumb{aspect-ratio:4/3;overflow:hidden;}
+  .gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .gallery-card figcaption{padding:10px 12px;font-size:12.5px;opacity:0.8;}
+
+  /* Testimonials */
+  .testimonial-grid{display:grid;grid-template-columns:1fr;gap:14px;}
+  .testimonial-card{background:var(--sand-light);border-left:3px solid var(--rust);border-radius:8px;padding:18px 18px 16px;}
+  .stars{display:flex;gap:3px;margin-bottom:8px;color:var(--amber);}
+  .testimonial-card p.quote{font-size:14.5px;font-style:italic;margin-bottom:10px;}
+  .testimonial-card p.attr{font-size:12.5px;font-weight:600;opacity:0.75;font-style:normal;}
+
+  /* Service area */
+  .area-section{background:var(--sand);}
+  .area-list{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px;}
+  .area-chip{background:var(--sand-light);border:1px solid rgba(33,27,24,0.12);border-radius:30px;padding:8px 16px;font-size:13.5px;font-weight:500;}
+
+  /* Contact / quote form */
+  .contact-grid{display:grid;grid-template-columns:1fr;gap:30px;}
+  .contact-info{display:flex;flex-direction:column;gap:16px;}
+  .contact-row{display:flex;align-items:flex-start;gap:12px;}
+  .contact-row .icon{color:var(--teal);margin-top:2px;}
+  .contact-row h3{font-family:'Inter';font-size:14.5px;font-weight:600;margin-bottom:2px;}
+  .contact-row p{font-size:14px;opacity:0.8;}
+  form.quote{background:var(--sand);border-radius:var(--radius);padding:24px 20px;display:flex;flex-direction:column;gap:14px;}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .field input, .field select, .field textarea{
+    width:100%;padding:11px 12px;border-radius:8px;border:1px solid rgba(33,27,24,0.2);
+    font-family:'Inter';font-size:14px;background:#fff;color:var(--charcoal);
+  }
+  .field textarea{resize:vertical;min-height:90px;}
+
+  /* Footer */
+  footer{background:var(--charcoal);color:var(--sand);padding:36px 20px 20px;}
+  .footer-inner{max-width:var(--max);margin:0 auto;text-align:center;}
+  .footer-logo{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:16px;margin-bottom:6px;}
+  footer p.tag{font-size:13px;opacity:0.7;margin-bottom:18px;}
+  .footer-phone{font-weight:600;margin-bottom:14px;}
+  .footer-phone a{color:var(--sand);}
+  .footer-cta{display:flex;gap:10px;max-width:280px;margin:0 auto 20px;}
+  .footer-cta .btn{flex:1;}
+  .footer-meta{font-size:12px;opacity:0.55;border-top:1px solid rgba(242,232,216,0.15);padding-top:16px;margin-top:10px;}
+
+  @media (min-width:768px){
+    .services-grid{grid-template-columns:repeat(4,1fr);}
+    .gallery-grid{grid-template-columns:repeat(3,1fr);}
+    .testimonial-grid{grid-template-columns:1fr 1fr;}
+    .trust-inner{grid-template-columns:repeat(3,1fr);}
+    .hero h1{font-size:38px;}
+  }
+
+  @media (min-width:1024px){
+    nav.links{display:flex;}
+    .hamburger{display:none;}
+    .mobile-call-bar{display:none;}
+    body{padding-bottom:0;}
+    .hero{text-align:left;padding:70px 20px;}
+    .hero .wrap-inner{display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:center;max-width:var(--max);margin:0 auto;}
+    .hero h1{font-size:44px;}
+    .hero p.lead{margin:0 0 24px;}
+    .hero-ctas{flex-direction:row;max-width:none;margin:0;}
+    .trust-line{text-align:left;}
+    .hero-visual{display:block;border-radius:20px;aspect-ratio:4/3;overflow:hidden;}
+    .hero-visual img{width:100%;height:100%;object-fit:cover;}
+    .contact-grid{grid-template-columns:0.9fr 1.1fr;align-items:start;}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="nav-bar">
+    <a class="logo" href="#main">
+      <img class="logo-mark" src="images/web/logo-icon@2x.png" alt="">
+      Handyman Jason
+    </a>
+    <nav class="links" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#why-us">Why us</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#area">Service area</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-amber" href="tel:+19285550142">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call now
+      </a>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" id="menuBtn">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services">Services</a>
+    <a href="#why-us">Why us</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#area">Service area</a>
+    <a href="#contact">Contact</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero">
+    <div class="wrap-inner">
+      <div>
+        <p class="eyebrow">SEDONA, ARIZONA &middot; LICENSED &amp; INSURED</p>
+        <h1>Your go-to handyman, right here in Sedona</h1>
+        <p class="lead">From leaky faucets to the honey-do list you've been putting off for months &mdash; Jason shows up on time, gives you a fair price upfront, and gets it done right the first time.</p>
+        <p class="phone-display"><a href="tel:+19285550142">(928) 555-0142</a></p>
+        <div class="hero-ctas">
+          <div class="call-text-row">
+            <a class="btn btn-amber" href="tel:+19285550142" aria-label="Call Handyman Jason">
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Call
+            </a>
+            <a class="btn btn-amber" href="sms:+19285550142" aria-label="Text Handyman Jason">
+              <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Text
+            </a>
+          </div>
+          <a class="btn btn-teal btn-block" href="#contact">Get a free quote</a>
+        </div>
+        <p class="trust-line">Serving Sedona homeowners since 2014 &middot; Mon&ndash;Sat, 7am&ndash;6pm</p>
+      </div>
+      <div class="hero-visual">
+        <img src="images/web/jason-hero.jpg" alt="Jason, Sedona's local handyman, holding a wrench" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="section-head">
+      <span class="eyebrow">FULL-SERVICE HANDYMAN</span>
+      <h2>No job too small</h2>
+      <p>If it's broken, crooked, squeaky, or just been bugging you &mdash; Jason can probably fix it in one visit.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        <h3>Repairs & fixes</h3>
+        <p>Leaky faucets, squeaky doors, loose hinges, drywall patches</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <h3>Fixture & appliance installs</h3>
+        <p>Ceiling fans, light fixtures, faucets, garbage disposals</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.5-4.5L15 6l3 3L7.5 19.5z"/><path d="M14 7l3 3"/></svg>
+        <h3>Painting & touch-ups</h3>
+        <p>Interior & exterior, trim, fences, cabinets</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="9" y1="10" x2="9" y2="20"/></svg>
+        <h3>Carpentry & shelving</h3>
+        <p>Custom shelves, trim work, cabinet repair</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+        <h3>Door & window repair</h3>
+        <p>Weatherstripping, sticking doors, screen repair</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        <h3>Deck & fence repair</h3>
+        <p>Board replacement, staining, gate fixes</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></svg>
+        <h3>Tile & grout</h3>
+        <p>Regrouting, cracked tile replacement</p>
+      </div>
+      <div class="service-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v6m0 8v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/></svg>
+        <h3>Outdoor & seasonal</h3>
+        <p>Gutter cleaning, monsoon prep, holiday lights</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust-strip" id="why-us">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><h3>Local to Sedona</h3><p>Born and raised in the Verde Valley &mdash; not a dispatched stranger.</p></div>
+      </div>
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <div><h3>Upfront, flat-rate pricing</h3><p>You get a number before work starts &mdash; no surprise invoices.</p></div>
+      </div>
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <div><h3>Shows up when he says</h3><p>Licensed, insured (ROC #339201), and reliably on time.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="gallery">
+    <div class="section-head">
+      <span class="eyebrow">RECENT WORK</span>
+      <h2>A few jobs from around town</h2>
+      <p>Real photos from real Sedona-area homes, swapped in as each job wraps up.</p>
+    </div>
+    <div class="gallery-grid">
+      <figure class="gallery-card">
+        <div class="gallery-thumb"><img src="images/web/kitchen-faucet.jpg" alt="Kitchen faucet replacement in West Sedona" loading="lazy"></div>
+        <figcaption>Kitchen faucet replacement &mdash; West Sedona</figcaption>
+      </figure>
+      <figure class="gallery-card">
+        <div class="gallery-thumb"><img src="images/web/deck-rebuild.jpg" alt="Backyard deck rebuild in Oak Creek Canyon" loading="lazy"></div>
+        <figcaption>Backyard deck rebuild &mdash; Oak Creek Canyon</figcaption>
+      </figure>
+      <figure class="gallery-card">
+        <div class="gallery-thumb"><img src="images/web/interior-repaint.jpg" alt="Interior repaint and trim work in Uptown Sedona" loading="lazy"></div>
+        <figcaption>Interior repaint & trim &mdash; Uptown Sedona</figcaption>
+      </figure>
+      <figure class="gallery-card">
+        <div class="gallery-thumb"><img src="images/web/garage-shelving.jpg" alt="Custom garage shelving in Village of Oak Creek" loading="lazy"></div>
+        <figcaption>Custom garage shelving &mdash; Village of Oak Creek</figcaption>
+      </figure>
+      <figure class="gallery-card">
+        <div class="gallery-thumb"><img src="images/web/fence-repair.jpg" alt="Fence repair after monsoon season in Cornville" loading="lazy"></div>
+        <figcaption>Fence repair after monsoon season &mdash; Cornville</figcaption>
+      </figure>
+      <figure class="gallery-card">
+        <div class="gallery-thumb"><img src="images/web/tile-regrout.jpg" alt="Bathroom tile regrout in West Sedona" loading="lazy"></div>
+        <figcaption>Bathroom tile regrout &mdash; West Sedona</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="section-head">
+      <span class="eyebrow">WHAT NEIGHBORS SAY</span>
+      <h2>Reviews from around the Verde Valley</h2>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars" aria-hidden="true">★★★★★</div>
+        <p class="quote">"Jason fixed three things on my list in under two hours and didn't try to upsell me on anything I didn't need."</p>
+        <p class="attr">Carol M. &mdash; Uptown Sedona</p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars" aria-hidden="true">★★★★★</div>
+        <p class="quote">"Quoted a fair price over the phone and stuck to it. He even swept up after himself before he left."</p>
+        <p class="attr">Mike R. &mdash; Village of Oak Creek</p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars" aria-hidden="true">★★★★★</div>
+        <p class="quote">"Our cabin's deck was falling apart. Jason rebuilt it in a weekend and it looks better than new."</p>
+        <p class="attr">Denise & Paul T. &mdash; Oak Creek Canyon</p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars" aria-hidden="true">★★★★★</div>
+        <p class="quote">"Called on a Tuesday, he was at my door Wednesday morning. Can't ask for better than that."</p>
+        <p class="attr">Allen K. &mdash; Cottonwood</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="area" class="area-section">
+    <div class="section-head">
+      <span class="eyebrow">SERVICE AREA</span>
+      <h2>Proudly serving the Verde Valley</h2>
+      <p>Based in Sedona, Jason regularly works throughout the surrounding area.</p>
+    </div>
+    <div class="area-list">
+      <span class="area-chip">Sedona</span>
+      <span class="area-chip">Cottonwood</span>
+      <span class="area-chip">Village of Oak Creek</span>
+      <span class="area-chip">Cornville</span>
+      <span class="area-chip">Oak Creek Canyon</span>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-head">
+      <span class="eyebrow">GET IN TOUCH</span>
+      <h2>Get a free, no-pressure quote</h2>
+      <p>Tell Jason what's going on and he'll get back to you with a fair price &mdash; usually same day.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <div><h3>Call or text</h3><p><a href="tel:+19285550142">(928) 555-0142</a></p></div>
+        </div>
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+          <div><h3>Email</h3><p><a href="mailto:jason@handymanjasonaz.com">jason@handymanjasonaz.com</a></p></div>
+        </div>
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 6-9 12-9 12S3 16 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div><h3>Based in</h3><p>Sedona, AZ 86336</p></div>
+        </div>
+        <div class="contact-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <div><h3>Hours</h3><p>Mon&ndash;Sat, 7:00am&ndash;6:00pm<br>Closed Sundays</p></div>
+        </div>
+      </div>
+      <form class="quote" action="mailto:jason@handymanjasonaz.com" method="post" enctype="text/plain">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="Name" type="text" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="Phone" type="tel" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="Email" type="email">
+        </div>
+        <div class="field">
+          <label for="service">Service needed</label>
+          <select id="service" name="Service">
+            <option>General repairs & fixes</option>
+            <option>Fixture & appliance installs</option>
+            <option>Painting & touch-ups</option>
+            <option>Carpentry & shelving</option>
+            <option>Door & window repair</option>
+            <option>Deck & fence repair</option>
+            <option>Tile & grout</option>
+            <option>Outdoor & seasonal work</option>
+            <option>Something else</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Tell us about the job</label>
+          <textarea id="message" name="Message" placeholder="What needs fixing, and when works for you?"></textarea>
+        </div>
+        <button class="btn btn-amber btn-block" type="submit">Send my request</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <img class="logo-mark" src="images/web/logo-icon@2x.png" alt="">
+      Handyman Jason
+    </div>
+    <p class="tag">Serving Sedona & the Verde Valley since 2014 &middot; Licensed & insured, ROC #339201</p>
+    <p class="footer-phone"><a href="tel:+19285550142">(928) 555-0142</a></p>
+    <div class="footer-cta">
+      <a class="btn btn-amber" href="tel:+19285550142" aria-label="Call (928) 555-0142">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call
+      </a>
+      <a class="btn btn-amber" href="sms:+19285550142" aria-label="Text (928) 555-0142">
+        <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Text
+      </a>
+    </div>
+    <p class="footer-meta">&copy; 2026 Handyman Jason. All rights reserved. This is a mock site built for design review.</p>
+  </div>
+</footer>
+
+<div class="mobile-call-bar">
+  <span class="bar-number">(928) 555-0142</span>
+  <div class="bar-actions">
+    <a href="tel:+19285550142" aria-label="Call (928) 555-0142">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    </a>
+    <a href="sms:+19285550142" aria-label="Text (928) 555-0142">
+      <svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    </a>
+  </div>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>

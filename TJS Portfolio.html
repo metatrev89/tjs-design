@@ -58,11 +58,11 @@
     </sc-if>
   </header>
 
-  <!-- ============ JUMP-LINK STRIP ============ -->
+  <!-- ============ JUMP-LINK / TAB STRIP ============ -->
   <div style="position:sticky; top:72px; z-index:40; background:#17152B;">
     <div class="tjs-strip" style="max-width:1180px; margin:0 auto; padding:14px clamp(16px,5vw,48px); display:flex; gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
-      <sc-for list="{{ industries }}" as="ind" hint-placeholder-count="4">
-        <a href="#{{ ind.id }}" style="flex:none; text-decoration:none; font-family:'Sora',sans-serif; font-weight:700; font-size:14px; padding:9px 17px; border-radius:999px; background:{{ ind.pillBg }}; color:{{ ind.pillColor }}; border:1.5px solid {{ ind.pillBorder }}; white-space:nowrap;">{{ ind.name }}</a>
+      <sc-for list="{{ pills }}" as="p" hint-placeholder-count="5">
+        <button onClick="{{ p.select }}" style="cursor:pointer; flex:none; border:1.5px solid {{ p.pillBorder }}; font-family:'Sora',sans-serif; font-weight:700; font-size:14px; padding:9px 17px; border-radius:999px; background:{{ p.pillBg }}; color:{{ p.pillColor }}; white-space:nowrap;">{{ p.name }}</button>
       </sc-for>
     </div>
   </div>
@@ -91,140 +91,64 @@
     </div>
   </div>
 
-  <!-- ============ INDUSTRY SECTIONS ============ -->
-
-  <!-- Auto Repair -->
-  <section id="auto-repair" style="background:#fff; border-top:1px solid rgba(23,21,43,.06);">
+  <!-- ============ INDUSTRY SHOWCASE (All grid / single full-site view) ============ -->
+  <section style="border-top:1px solid rgba(23,21,43,.06);">
     <div style="max-width:1180px; margin:0 auto; padding:clamp(56px,7vw,90px) clamp(20px,5vw,48px);">
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:30px;">
-        <span style="width:36px; height:6px; border-radius:3px; background:#FFC53D;"></span>
-        <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,40px); color:#17152B; margin:0; letter-spacing:-0.02em;">Auto Repair</h2>
-      </div>
-      <div style="display:grid; grid-template-columns:minmax(0,2.4fr) minmax(0,1fr); gap:24px; align-items:end; margin-bottom:28px;">
-        <div style="border-radius:16px; overflow:hidden; border:2px solid #17152B; box-shadow:8px 8px 0 rgba(212,165,40,.28);">
-          <div style="background:#f1eee7; padding:11px 14px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(23,21,43,.08);">
-            <span style="width:11px; height:11px; border-radius:50%; background:#FF6B4A;"></span>
-            <span style="width:11px; height:11px; border-radius:50%; background:#FFC53D;"></span>
-            <span style="width:11px; height:11px; border-radius:50%; background:#1FC77D;"></span>
-            <span style="margin-left:10px; font-family:monospace; font-size:12px; color:#9a958a;">High Desert Auto Repair</span>
-          </div>
-          <div style="aspect-ratio:16/10; overflow:hidden; position:relative; background:#fff;">
-            <iframe src="High%20Desert%20Auto%20Repair/high-desert-auto-repair.html" title="High Desert Auto Repair — desktop preview" style="width:100%; height:100%; border:none; display:block;" loading="lazy"></iframe>
-          </div>
-        </div>
-        <div style="border-radius:26px; overflow:hidden; border:6px solid #17152B; box-shadow:8px 8px 0 rgba(212,165,40,.18);">
-          <div style="aspect-ratio:9/17; overflow:hidden; position:relative; background:#fff;">
-            <iframe src="High%20Desert%20Auto%20Repair/high-desert-auto-repair.html" title="High Desert Auto Repair — mobile preview" style="width:100%; height:100%; border:none; display:block;" loading="lazy"></iframe>
-          </div>
-        </div>
-      </div>
-      <div style="max-width:640px;">
-        <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B; margin-bottom:8px;">High Desert Auto Repair</div>
-        <p style="font-size:15.5px; line-height:1.6; color:#55525f; margin:0 0 20px;">In-shop and mobile repair with a 5-step booking flow, transparent diagnosis-fee pricing, and ASE-certified techs. Built so a driver stuck on the roadside can book a fix from their phone in under a minute.</p>
-        <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; display:inline-flex; align-items:center; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#17152B; background:#FFC53D; padding:13px 22px; border-radius:12px;">Want a site like this for your auto repair business? — Get My Website →</button>
-      </div>
-    </div>
-  </section>
 
-  <!-- Electrical -->
-  <section id="electrical" style="background:#FBF8F2; border-top:1px solid rgba(23,21,43,.06);">
-    <div style="max-width:1180px; margin:0 auto; padding:clamp(56px,7vw,90px) clamp(20px,5vw,48px);">
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:30px;">
-        <span style="width:36px; height:6px; border-radius:3px; background:#2F6BFF;"></span>
-        <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,40px); color:#17152B; margin:0; letter-spacing:-0.02em;">Electrical</h2>
-      </div>
-      <div style="display:grid; grid-template-columns:minmax(0,2.4fr) minmax(0,1fr); gap:24px; align-items:end; margin-bottom:28px;">
-        <div style="border-radius:16px; overflow:hidden; border:2px solid #17152B; box-shadow:8px 8px 0 rgba(47,107,255,.18);">
-          <div style="background:#f1eee7; padding:11px 14px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(23,21,43,.08);">
-            <span style="width:11px; height:11px; border-radius:50%; background:#FF6B4A;"></span>
-            <span style="width:11px; height:11px; border-radius:50%; background:#FFC53D;"></span>
-            <span style="width:11px; height:11px; border-radius:50%; background:#1FC77D;"></span>
-            <span style="margin-left:10px; font-family:monospace; font-size:12px; color:#9a958a;">apexelectricco.com</span>
-          </div>
-          <div style="aspect-ratio:16/10; background:repeating-linear-gradient(135deg,rgba(47,107,255,.1),rgba(47,107,255,.1) 16px,rgba(47,107,255,.04) 16px,rgba(47,107,255,.04) 32px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
-            <span style="font-family:monospace; font-size:13px; color:#5b6b8a;">[ DESKTOP MOCKUP ]</span>
-            <span style="font-family:monospace; font-size:11px; color:#8a93a8;">drop site preview here</span>
-          </div>
+      <!-- ALL: overview grid of preview cards -->
+      <sc-if value="{{ isAll }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px;">
+          <sc-for list="{{ cards }}" as="ind" hint-placeholder-count="4">
+            <button onClick="{{ ind.select }}" style="cursor:pointer; text-align:left; border:2px solid #17152B; border-radius:18px; overflow:hidden; background:#fff; padding:0; box-shadow:8px 8px 0 {{ ind.shadow }}; display:flex; flex-direction:column;">
+              <div style="background:#f1eee7; padding:11px 14px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(23,21,43,.08);">
+                <span style="width:11px; height:11px; border-radius:50%; background:#FF6B4A;"></span>
+                <span style="width:11px; height:11px; border-radius:50%; background:#FFC53D;"></span>
+                <span style="width:11px; height:11px; border-radius:50%; background:#1FC77D;"></span>
+                <span style="margin-left:10px; font-family:monospace; font-size:12px; color:#9a958a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ ind.name }}</span>
+              </div>
+              <div class="tjs-pcard" style="aspect-ratio:16/10; overflow:hidden; position:relative; background:#fff;">
+                <div class="tjs-pcard-inner" style="width:1440px; height:900px; transform-origin:top left; position:absolute; top:0; left:0; pointer-events:none;">
+                  <iframe src="{{ ind.src }}" title="{{ ind.name }} preview" style="width:1440px; height:900px; border:none; display:block;" loading="lazy"></iframe>
+                </div>
+              </div>
+              <div style="padding:18px 20px;">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                  <span style="width:28px; height:5px; border-radius:3px; background:{{ ind.accent }};"></span>
+                  <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:17px; color:#17152B;">{{ ind.name }}</div>
+                </div>
+                <p style="font-size:14px; line-height:1.55; color:#55525f; margin:0;">{{ ind.blurb }}</p>
+                <div style="margin-top:14px; font-family:'Sora',sans-serif; font-weight:700; font-size:14px; color:{{ ind.accent }};">View full site →</div>
+              </div>
+            </button>
+          </sc-for>
         </div>
-        <div style="border-radius:26px; overflow:hidden; border:6px solid #17152B; box-shadow:8px 8px 0 rgba(47,107,255,.12);">
-          <div style="aspect-ratio:9/17; background:repeating-linear-gradient(135deg,rgba(47,107,255,.12),rgba(47,107,255,.12) 12px,rgba(47,107,255,.04) 12px,rgba(47,107,255,.04) 24px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;">
-            <span style="font-family:monospace; font-size:11px; color:#5b6b8a;">[ MOBILE ]</span>
-          </div>
-        </div>
-      </div>
-      <div style="max-width:640px;">
-        <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B; margin-bottom:8px;">Apex Electric Co.</div>
-        <p style="font-size:15.5px; line-height:1.6; color:#55525f; margin:0 0 20px;">Panel upgrades, EV charger installs, and safety inspections — organized so a homeowner finds the right service in seconds. License numbers and insurance badges up front build trust before a call is ever made.</p>
-        <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; display:inline-flex; align-items:center; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#fff; background:#2F6BFF; padding:13px 22px; border-radius:12px;">Want a site like this for your electrical business? — Get My Website →</button>
-      </div>
-    </div>
-  </section>
+      </sc-if>
 
-  <!-- Handyman -->
-  <section id="handyman" style="background:#fff; border-top:1px solid rgba(23,21,43,.06);">
-    <div style="max-width:1180px; margin:0 auto; padding:clamp(56px,7vw,90px) clamp(20px,5vw,48px);">
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:30px;">
-        <span style="width:36px; height:6px; border-radius:3px; background:#FF6B4A;"></span>
-        <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,40px); color:#17152B; margin:0; letter-spacing:-0.02em;">Handyman</h2>
-      </div>
-      <div style="display:grid; grid-template-columns:minmax(0,2.4fr) minmax(0,1fr); gap:24px; align-items:end; margin-bottom:28px;">
-        <div style="border-radius:16px; overflow:hidden; border:2px solid #17152B; box-shadow:8px 8px 0 rgba(255,107,74,.18);">
-          <div style="background:#f1eee7; padding:11px 14px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(23,21,43,.08);">
-            <span style="width:11px; height:11px; border-radius:50%; background:#FF6B4A;"></span>
-            <span style="width:11px; height:11px; border-radius:50%; background:#FFC53D;"></span>
-            <span style="width:11px; height:11px; border-radius:50%; background:#1FC77D;"></span>
-            <span style="margin-left:10px; font-family:monospace; font-size:12px; color:#9a958a;">allsethandyman.com</span>
+      <!-- SINGLE INDUSTRY: full live site -->
+      <sc-if value="{{ isSingle }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <button onClick="{{ backToAll }}" style="cursor:pointer; border:none; background:transparent; display:inline-flex; align-items:center; gap:6px; font-family:'Sora',sans-serif; font-weight:700; font-size:14px; color:#55525f; padding:0; margin-bottom:24px;">← All industries</button>
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px; flex-wrap:wrap;">
+            <span style="width:36px; height:6px; border-radius:3px; background:{{ current.accent }};"></span>
+            <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,40px); color:#17152B; margin:0; letter-spacing:-0.02em;">{{ current.name }}</h2>
           </div>
-          <div style="aspect-ratio:16/10; background:repeating-linear-gradient(135deg,rgba(255,107,74,.12),rgba(255,107,74,.12) 16px,rgba(255,107,74,.04) 16px,rgba(255,107,74,.04) 32px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
-            <span style="font-family:monospace; font-size:13px; color:#a05a45;">[ DESKTOP MOCKUP ]</span>
-            <span style="font-family:monospace; font-size:11px; color:#b08070;">drop site preview here</span>
+          <p style="font-size:15.5px; line-height:1.6; color:#55525f; margin:0 0 22px; max-width:680px;">{{ current.blurb }}</p>
+          <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:28px;">
+            <a href="{{ current.src }}" target="_blank" rel="noopener" style="cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#17152B; background:{{ current.accent }}; padding:13px 22px; border-radius:12px;">Open Full Site in New Tab ↗</a>
+            <button onClick="{{ openCheckout }}" style="cursor:pointer; border:2px solid #17152B; background:transparent; display:inline-flex; align-items:center; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#17152B; padding:13px 22px; border-radius:12px;">Want a site like this? — Get My Website →</button>
           </div>
-        </div>
-        <div style="border-radius:26px; overflow:hidden; border:6px solid #17152B; box-shadow:8px 8px 0 rgba(255,107,74,.12);">
-          <div style="aspect-ratio:9/17; background:repeating-linear-gradient(135deg,rgba(255,107,74,.14),rgba(255,107,74,.14) 12px,rgba(255,107,74,.04) 12px,rgba(255,107,74,.04) 24px); display:flex; align-items:center; justify-content:center;">
-            <span style="font-family:monospace; font-size:11px; color:#a05a45;">[ MOBILE ]</span>
+          <div style="border-radius:16px; overflow:hidden; border:2px solid #17152B; box-shadow:10px 10px 0 {{ current.shadow }};">
+            <div style="background:#f1eee7; padding:11px 14px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(23,21,43,.08);">
+              <span style="width:11px; height:11px; border-radius:50%; background:#FF6B4A;"></span>
+              <span style="width:11px; height:11px; border-radius:50%; background:#FFC53D;"></span>
+              <span style="width:11px; height:11px; border-radius:50%; background:#1FC77D;"></span>
+              <span style="margin-left:10px; font-family:monospace; font-size:12px; color:#9a958a;">{{ current.name }}</span>
+            </div>
+            <iframe src="{{ current.src }}" title="{{ current.name }} — full site" style="width:100%; height:900px; border:none; display:block;" loading="lazy"></iframe>
           </div>
         </div>
-      </div>
-      <div style="max-width:640px;">
-        <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B; margin-bottom:8px;">AllSet Handyman</div>
-        <p style="font-size:15.5px; line-height:1.6; color:#55525f; margin:0 0 20px;">Task-based pricing tiers, a same-day availability callout, and a quick-quote form. Designed for the homeowner who just needs someone reliable — and wants to hire with confidence without shopping around.</p>
-        <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; display:inline-flex; align-items:center; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#fff; background:#FF6B4A; padding:13px 22px; border-radius:12px;">Want a site like this for your handyman business? — Get My Website →</button>
-      </div>
-    </div>
-  </section>
+      </sc-if>
 
-  <!-- Landscaping -->
-  <section id="landscaping" style="background:#FBF8F2; border-top:1px solid rgba(23,21,43,.06);">
-    <div style="max-width:1180px; margin:0 auto; padding:clamp(56px,7vw,90px) clamp(20px,5vw,48px);">
-      <div style="display:flex; align-items:center; gap:12px; margin-bottom:30px;">
-        <span style="width:36px; height:6px; border-radius:3px; background:#1FC77D;"></span>
-        <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,40px); color:#17152B; margin:0; letter-spacing:-0.02em;">Landscaping</h2>
-      </div>
-      <div style="display:grid; grid-template-columns:minmax(0,2.4fr) minmax(0,1fr); gap:24px; align-items:end; margin-bottom:28px;">
-        <div style="border-radius:16px; overflow:hidden; border:2px solid #17152B; box-shadow:8px 8px 0 rgba(31,199,125,.2);">
-          <div style="background:#f1eee7; padding:11px 14px; display:flex; align-items:center; gap:7px; border-bottom:1px solid rgba(23,21,43,.08);">
-            <span style="width:11px; height:11px; border-radius:50%; background:#FF6B4A;"></span>
-            <span style="width:11px; height:11px; border-radius:50%; background:#FFC53D;"></span>
-            <span style="width:11px; height:11px; border-radius:50%; background:#1FC77D;"></span>
-            <span style="margin-left:10px; font-family:monospace; font-size:12px; color:#9a958a;">evergreenyard.co</span>
-          </div>
-          <div style="aspect-ratio:16/10; background:repeating-linear-gradient(135deg,rgba(31,199,125,.13),rgba(31,199,125,.13) 16px,rgba(31,199,125,.04) 16px,rgba(31,199,125,.04) 32px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;">
-            <span style="font-family:monospace; font-size:13px; color:#3f8a64;">[ DESKTOP MOCKUP ]</span>
-            <span style="font-family:monospace; font-size:11px; color:#6aa888;">drop site preview here</span>
-          </div>
-        </div>
-        <div style="border-radius:26px; overflow:hidden; border:6px solid #17152B; box-shadow:8px 8px 0 rgba(31,199,125,.13);">
-          <div style="aspect-ratio:9/17; background:repeating-linear-gradient(135deg,rgba(31,199,125,.15),rgba(31,199,125,.15) 12px,rgba(31,199,125,.04) 12px,rgba(31,199,125,.04) 24px); display:flex; align-items:center; justify-content:center;">
-            <span style="font-family:monospace; font-size:11px; color:#3f8a64;">[ MOBILE ]</span>
-          </div>
-        </div>
-      </div>
-      <div style="max-width:640px;">
-        <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B; margin-bottom:8px;">Evergreen Yard Co.</div>
-        <p style="font-size:15.5px; line-height:1.6; color:#55525f; margin:0 0 20px;">A visual-heavy portfolio grid that lets the work do the selling, paired with a simple estimate form. Built to showcase before-and-after transformations and seasonal maintenance packages.</p>
-        <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; display:inline-flex; align-items:center; font-family:'Sora',sans-serif; font-weight:700; font-size:15px; color:#fff; background:#1FC77D; padding:13px 22px; border-radius:12px;">Want a site like this for your landscaping business? — Get My Website →</button>
-      </div>
     </div>
   </section>
 
@@ -424,7 +348,7 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = {
-      isMobile: false, mobileNav: false, active: 'auto-repair',
+      isMobile: false, mobileNav: false, view: 'all',
       coOpen: false, coStep: 1, addon: false, addonCycle: 'annual', slot: '', slots: [], slotsLoading: false, slotsError: ''
     };
   }
@@ -435,14 +359,9 @@ class Component extends DCLogic {
     };
     this._onResize();
     window.addEventListener('resize', this._onResize);
-    this._io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) this.setState({ active: e.target.id }); });
-    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-    document.querySelectorAll('section[id]').forEach(s => this._io.observe(s));
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this._onResize);
-    if (this._io) this._io.disconnect();
     document.body.style.overflow = '';
   }
   _open() { this.setState({ coOpen: true, coStep: 1 }); document.body.style.overflow = 'hidden'; }
@@ -484,15 +403,29 @@ class Component extends DCLogic {
   }
   renderVals() {
     const data = [
-      { id: 'auto-repair',  name: 'Auto Repair',  accent: '#FFC53D' },
-      { id: 'electrical',   name: 'Electrical',    accent: '#2F6BFF' },
-      { id: 'handyman',     name: 'Handyman',      accent: '#FF6B4A' },
-      { id: 'landscaping',  name: 'Landscaping',   accent: '#1FC77D' }
+      { id: 'auto-repair', name: 'High Desert Auto Repair', accent: '#FFC53D', shadow: 'rgba(212,165,40,.22)',
+        src: 'High%20Desert%20Auto%20Repair/high-desert-auto-repair.html',
+        blurb: 'In-shop and mobile repair with a 5-step booking flow, transparent diagnosis-fee pricing, and ASE-certified techs. Built so a driver stuck on the roadside can book a fix from their phone in under a minute.' },
+      { id: 'electrical', name: 'Jerry & Sons Electrical', accent: '#2F6BFF', shadow: 'rgba(47,107,255,.18)',
+        src: 'Jerry%20%26%20Sons%20Electrical/index.html',
+        blurb: "A family-owned electrical business across Utah's Wasatch Front, with dedicated services, about, and service-area pages built to establish trust before a homeowner ever calls." },
+      { id: 'handyman', name: 'Handyman Jason', accent: '#FF6B4A', shadow: 'rgba(255,107,74,.18)',
+        src: 'Handyman%20Jason/index.html',
+        blurb: "A solo handyman's site for Sedona and the Verde Valley, built around fast quote requests and a friendly, local feel — not a faceless franchise." },
+      { id: 'landscaping', name: 'Yardwise', accent: '#1FC77D', shadow: 'rgba(31,199,125,.2)',
+        src: 'Yardwise/index.html',
+        blurb: 'A Sacramento landscaping and smart-yard-care site covering design, install, irrigation, and connected device management — visual-first, so finished yards do the selling.' }
     ];
-    const industries = data.map(d => {
-      const on = this.state.active === d.id;
+    const view = this.state.view;
+    const isAll = view === 'all';
+    const current = data.find(d => d.id === view) || null;
+    const select = (id) => () => this.setState({ view: id });
+    const cards = data.map(d => Object.assign({}, d, { select: select(d.id) }));
+    const pillSource = [{ id: 'all', name: 'All', accent: '#17152B' }].concat(data);
+    const pills = pillSource.map(d => {
+      const on = view === d.id;
       return {
-        id: d.id, name: d.name,
+        id: d.id, name: d.name, select: select(d.id),
         pillBg:     on ? d.accent : 'transparent',
         pillColor:  on ? (d.accent === '#FFC53D' ? '#17152B' : '#fff') : '#c8c5dd',
         pillBorder: on ? d.accent : 'rgba(255,255,255,.22)'
@@ -509,7 +442,8 @@ class Component extends DCLogic {
       isDesktop:   !this.state.isMobile,
       mobileNav:   this.state.mobileNav,
       toggleNav:   () => this.setState(s => ({ mobileNav: !s.mobileNav })),
-      industries,
+      pills, cards, current, isAll, isSingle: !isAll,
+      backToAll:   () => this.setState({ view: 'all' }),
       openCheckout:  () => this._open(),
       closeCheckout: () => this._close(),
       coOpen: this.state.coOpen,
@@ -641,6 +575,26 @@ class Component extends DCLogic {
     if (on) { btn.dataset.originalText = btn.textContent; btn.textContent = 'Processing…'; }
     else if (btn.dataset.originalText) { btn.textContent = btn.dataset.originalText; }
   }
+})();
+</script>
+
+<script>
+(function () {
+  var seen = new WeakSet();
+  function scaleCard(el) {
+    var inner = el.querySelector('.tjs-pcard-inner');
+    if (!inner || !el.clientWidth) return;
+    inner.style.transform = 'scale(' + (el.clientWidth / 1440) + ')';
+  }
+  var ro = new ResizeObserver(function (entries) {
+    entries.forEach(function (entry) { scaleCard(entry.target); });
+  });
+  var mo = new MutationObserver(function () {
+    document.querySelectorAll('.tjs-pcard').forEach(function (el) {
+      if (!seen.has(el)) { seen.add(el); ro.observe(el); scaleCard(el); }
+    });
+  });
+  mo.observe(document.body, { childList: true, subtree: true });
 })();
 </script>
 </body>

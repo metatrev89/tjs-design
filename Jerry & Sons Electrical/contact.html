@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact &amp; Schedule | Jerry &amp; Sons Electrical | Wasatch Front, UT</title>
+<meta name="description" content="Call, message, or schedule an appointment with Jerry & Sons Electrical. No checkout, no pricing — just a quick way to get connected.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      JERRY <span class="amp">&amp;</span> SONS ELECTRICAL
+      <svg class="icon logo-bolt" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-12h-7z"/></svg>
+    </a>
+    <nav class="main-nav" id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="service-area.html">Service Area</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <a href="tel:+18015550123" class="btn btn-gold">
+        <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (801) 555-0123
+      </a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container">
+    <h1>Let's get you wired up</h1>
+
+    <a href="tel:+18015550123" class="btn btn-navy call-banner">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      (801) 555-0123 — call or text
+    </a>
+
+    <div class="form-grid">
+      <div class="form-card" id="message">
+        <h3>Send us a message</h3>
+        <form action="#" method="post">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="(801) 555-0123" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com">
+          </div>
+          <div class="form-group">
+            <label for="address">City / address</label>
+            <input type="text" id="address" name="address" placeholder="West Valley City, UT">
+          </div>
+          <div class="form-group">
+            <label for="message">What's going on?</label>
+            <textarea id="message-field" name="message" placeholder="Tell us what you need..."></textarea>
+          </div>
+          <!-- TODO: connect this form to email/CRM endpoint -->
+          <button type="submit" class="btn btn-navy">Send it over</button>
+        </form>
+      </div>
+
+      <div class="form-card" id="schedule">
+        <h3>Request an appointment</h3>
+        <form action="#" method="post">
+          <div class="form-group">
+            <label for="appt-date">Preferred date</label>
+            <input type="date" id="appt-date" name="appt-date">
+          </div>
+          <div class="form-group">
+            <label for="appt-time">Preferred time</label>
+            <select id="appt-time" name="appt-time">
+              <option value="">Select a time window</option>
+              <option value="morning">Morning (7am–11am)</option>
+              <option value="midday">Midday (11am–3pm)</option>
+              <option value="afternoon">Afternoon (3pm–7pm)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="appt-need">What do you need done?</label>
+            <input type="text" id="appt-need" name="appt-need" placeholder="e.g. ceiling fan install">
+          </div>
+          <!-- TODO: replace with embedded scheduling tool (e.g. Calendly/Housecall Pro) if preferred over a form -->
+          <button type="submit" class="btn btn-gold">Let's get wired up</button>
+          <p class="form-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Mon–Sat, 7am–7pm &middot; West Valley City HQ
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      JERRY <span class="amp">&amp;</span> SONS ELECTRICAL
+      <svg class="icon" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 11-12h-7z"/></svg>
+    </div>
+    <p>Family-owned &amp; operated, headquartered in West Valley City, UT — proudly serving the entire Wasatch Front.</p>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="service-area.html">Service Area</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-contact">
+      <span>
+        <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (801) 555-0123
+      </span>
+      <span>
+        <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2 6 12 13 22 6"/></svg>
+        hello@jerryandsonselectrical.com
+      </span>
+    </div>
+    <p class="footer-legal">&copy; 2026 Jerry &amp; Sons Electrical. Licensed &amp; insured. License #UT-000000.</p>
+  </div>
+</footer>
+
+<div class="mobile-cta-bar">
+  <a href="tel:+18015550123" class="btn btn-gold">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+    Call
+  </a>
+  <a href="#schedule" class="btn btn-outline" style="border-color:#fff; color:#fff;">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    Schedule
+  </a>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yardwise | Landscaping &amp; Smart Yard Care in Sacramento, CA</title>
+<meta name="description" content="Yardwise is a Sacramento landscaping and lawn maintenance company offering design, install, irrigation, and smart device installs and management.">
+<style>
+  :root {
+    --green: #1B8A4B;
+    --green-dark: #14753E;
+    --green-tint: #EDF6EE;
+    --yellow: #FFC72C;
+    --yellow-dark: #E6B021;
+    --charcoal: #1B1F1C;
+    --bg: #FAFAF7;
+    --white: #FFFFFF;
+    --gray: #6B6F6C;
+    --border: #E3E7E2;
+    --radius: 10px;
+    --radius-lg: 18px;
+    --maxw: 1140px;
+    --shadow: 0 4px 20px rgba(27,31,28,0.07);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--charcoal);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  section[id] { scroll-margin-top: 84px; }
+
+  h1, h2, h3 { font-weight: 600; line-height: 1.25; }
+  h2 { font-size: 30px; margin-bottom: 12px; }
+  h3 { font-size: 18px; }
+  p.lede { color: var(--gray); font-size: 16px; max-width: 560px; }
+
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-yellow { background: var(--yellow); color: var(--charcoal); }
+  .btn-yellow:hover { background: var(--yellow-dark); }
+  .btn-outline-light { background: transparent; border-color: rgba(250,250,247,0.6); color: var(--bg); }
+  .btn-outline-light:hover { border-color: var(--bg); }
+  .btn-outline-green { background: transparent; border-color: var(--green); color: var(--green); }
+  .btn-outline-green:hover { background: var(--green-tint); }
+  .btn-green { background: var(--green); color: var(--bg); }
+  .btn-green:hover { background: var(--green-dark); }
+  .btn-block { width: 100%; }
+
+  .icon { width: 22px; height: 22px; flex-shrink: 0; }
+  .icon-sm { width: 16px; height: 16px; }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    gap: 16px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .logo svg { width: 26px; height: 26px; }
+  .nav-links {
+    display: none;
+    gap: 28px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-actions { display: flex; align-items: center; gap: 18px; }
+  .nav-phone {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    color: var(--green);
+  }
+  .nav-phone-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+  .nav-phone-text small {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray);
+  }
+  .nav-phone-text strong {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+  }
+  .menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+  }
+  .menu-btn svg { width: 24px; height: 24px; }
+
+  @media (min-width: 880px) {
+    .nav-links { display: flex; }
+    .nav-phone { display: flex; }
+    .menu-btn { display: none; }
+  }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    padding: 16px 24px 24px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    padding: 12px 0;
+    font-size: 15px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-menu a:last-of-type { border-bottom: none; }
+  .mobile-menu .nav-phone { display: flex; margin-top: 12px; }
+
+  /* Hero */
+  .hero { background: var(--green); padding: 56px 0 64px; text-align: center; }
+  .hero h1 {
+    color: var(--bg);
+    font-size: 34px;
+    max-width: 640px;
+    margin: 0 auto 16px;
+  }
+  .hero p {
+    color: #D9EDDF;
+    font-size: 16px;
+    max-width: 480px;
+    margin: 0 auto 28px;
+  }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  @media (min-width: 640px) {
+    .hero h1 { font-size: 42px; }
+  }
+
+  /* Trust bar */
+  .trust-bar {
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 0;
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    text-align: center;
+  }
+  .trust-item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .trust-item svg { color: var(--green); }
+  .trust-item span { font-size: 13px; font-weight: 500; color: var(--charcoal); max-width: 140px; }
+
+  @media (min-width: 720px) {
+    .trust-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  /* Generic section spacing */
+  .section { padding: 64px 0; }
+  .section-head { max-width: 600px; margin-bottom: 36px; }
+  .section-tint { background: var(--green-tint); }
+
+  /* Services */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 26px;
+  }
+  .service-card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: var(--radius);
+    margin-bottom: 14px;
+  }
+  .service-card h3 { margin-bottom: 8px; }
+  .service-card p { color: var(--gray); font-size: 14px; }
+  .service-card .tag {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--green-dark);
+    background: var(--green-tint);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+  .services-end { margin-top: 32px; text-align: center; }
+  .services-end p { color: var(--gray); margin-bottom: 14px; }
+
+  @media (min-width: 700px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1000px) {
+    .services-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  /* Tech teaser */
+  .tech-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .tech-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+  .tech-item svg { color: var(--green); flex-shrink: 0; margin-top: 2px; }
+  .tech-item h3 { font-size: 15px; margin-bottom: 4px; }
+  .tech-item p { font-size: 13px; color: var(--gray); }
+  @media (min-width: 760px) {
+    .tech-row { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* About */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    align-items: center;
+  }
+  .about-photo {
+    border-radius: var(--radius-lg);
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .about-text p { color: var(--gray); margin-bottom: 14px; }
+  .license-note { font-size: 12px; color: var(--gray); font-style: italic; margin-top: 8px; }
+  @media (min-width: 880px) {
+    .about-grid { grid-template-columns: 1fr 1.1fr; }
+  }
+
+  /* Service area */
+  .area-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .area-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .area-chip svg { color: var(--green); flex-shrink: 0; }
+  @media (min-width: 700px) {
+    .area-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  /* Testimonials */
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .testimonial-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .stars { color: var(--yellow-dark); font-size: 13px; margin-bottom: 10px; }
+  .testimonial-card p.quote { font-size: 14px; color: var(--charcoal); flex-grow: 1; margin-bottom: 16px; }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+  }
+  .author-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .author-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .testimonial-author span { font-size: 13px; color: var(--gray); }
+  .testimonial-author strong { display: block; font-size: 13px; color: var(--charcoal); }
+  @media (min-width: 720px) {
+    .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1040px) {
+    .testimonial-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  /* Contact */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 18px; }
+  .info-row { display: flex; gap: 12px; align-items: flex-start; }
+  .info-row svg { color: var(--green); margin-top: 2px; flex-shrink: 0; }
+  .info-row strong { display: block; font-size: 14px; }
+  .info-row span { font-size: 13px; color: var(--gray); }
+
+  .form-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 26px;
+  }
+  .form-card h3 { margin-bottom: 4px; }
+  .form-card .lede-sm { font-size: 13px; color: var(--gray); margin-bottom: 18px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--bg);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none;
+    border-color: var(--green);
+  }
+  .field-row { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  @media (min-width: 480px) {
+    .field-row.two { grid-template-columns: 1fr 1fr; }
+  }
+
+  .walkthrough-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 18px 0;
+  }
+  .walkthrough-card {
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+    text-align: center;
+    cursor: pointer;
+    background: var(--bg);
+  }
+  .walkthrough-card svg { color: var(--green); margin-bottom: 6px; }
+  .walkthrough-card strong { display: block; font-size: 13px; margin-bottom: 2px; }
+  .walkthrough-card span { font-size: 11px; color: var(--gray); }
+  .walkthrough-card.active { border-color: var(--green); background: var(--green-tint); }
+
+  .form-success {
+    display: none;
+    background: var(--green-tint);
+    color: var(--green-dark);
+    border-radius: var(--radius);
+    padding: 14px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 14px;
+  }
+  .form-success.show { display: block; }
+
+  @media (min-width: 920px) {
+    .contact-grid { grid-template-columns: 0.9fr 1.1fr; }
+  }
+
+  /* Footer */
+  footer { background: var(--charcoal); color: rgba(250,250,247,0.7); padding: 48px 0 90px; }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .footer-logo { display: flex; align-items: center; gap: 8px; color: var(--bg); font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+  .footer-logo svg { width: 22px; height: 22px; }
+  footer h4 { color: var(--bg); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+  footer ul li { margin-bottom: 8px; font-size: 13px; }
+  footer p.small { font-size: 12px; color: rgba(250,250,247,0.45); margin-top: 24px; }
+  @media (min-width: 760px) {
+    .footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+  }
+
+  /* Mobile sticky bar */
+  .mobile-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 60;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+  }
+  .mobile-bar a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 14px 0;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .mobile-bar a.call { color: var(--green); }
+  .mobile-bar a.quote { background: var(--yellow); color: var(--charcoal); }
+  @media (min-width: 880px) {
+    .mobile-bar { display: none; }
+  }
+  body { padding-bottom: 64px; }
+  @media (min-width: 880px) {
+    body { padding-bottom: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav-row">
+    <a href="#home" class="logo" aria-label="Yardwise home">
+      <svg viewBox="0 0 32 32" fill="none" stroke="#FFC72C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="24" r="4"></circle>
+        <circle cx="23" cy="24" r="4"></circle>
+        <path d="M6 24 L6 18 Q6 15 9 15 L20 15 Q23 15 23 18 L23 24"></path>
+        <path d="M18 15 L26 6"></path>
+        <circle cx="27" cy="5" r="1.4" fill="#FFC72C"></circle>
+        <path d="M20.5 5 Q24 1.5 27.5 5" stroke-width="1.4"></path>
+        <path d="M22 7 Q24.5 4.8 27 7" stroke-width="1.4"></path>
+      </svg>
+      Yardwise
+    </a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#service-area">Service Area</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a href="tel:19165550142" class="nav-phone">
+        <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 2 6a2 2 0 0 1 2-2z"></path></svg>
+        <span class="nav-phone-text">
+          <small>Call or Text</small>
+          <strong>(916) 555-0142</strong>
+        </span>
+      </a>
+      <a href="#contact" class="btn btn-yellow" style="display:none" id="navQuoteBtn">Get a quote</a>
+      <button class="menu-btn" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#service-area">Service Area</a>
+    <a href="#contact">Contact</a>
+    <a href="tel:19165550142" class="nav-phone">
+      <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 2 6a2 2 0 0 1 2-2z"></path></svg>
+      <span class="nav-phone-text">
+        <small>Call or Text</small>
+        <strong>(916) 555-0142</strong>
+      </span>
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <section id="home" class="hero">
+    <div class="wrap">
+      <h1>Sharp Landscaping, Smarter Yards.</h1>
+      <p>Design, install, and maintenance for Sacramento yards — plus the smart irrigation and lighting systems that keep them running right.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-yellow">Get a quote</a>
+        <a href="#contact" class="btn btn-outline-light">Schedule a walkthrough</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-bar">
+    <div class="wrap trust-grid">
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21v-1a8 8 0 0 1 16 0v1"></path></svg>
+        <span>Founder-led, hands-on crew</span>
+      </div>
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 9v12h18V9z"></path><path d="M9 21V12h6v9"></path></svg>
+        <span>Based in Sacramento, CA</span>
+      </div>
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M18 9 12 15 9 12 5 16"></path></svg>
+        <span>Design through maintenance</span>
+      </div>
+      <div class="trust-item">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="12" y1="18" x2="12" y2="18"></line></svg>
+        <span>Smart systems, installed &amp; managed</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Services</span>
+        <h2>What we handle</h2>
+        <p class="lede">No checkout, no guesswork pricing — tell us what you need and we'll quote it straight.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <img src="images/web/Landscape design & install.jpg" alt="Landscape design and install">
+          <h3>Landscape design &amp; install</h3>
+          <p>New beds, hardscape, planting plans, and full sod or turf installs — built right from the ground up.</p>
+        </div>
+        <div class="service-card">
+          <img src="images/web/Lawn care & maintenance.jpg" alt="Lawn care and maintenance">
+          <h3>Lawn care &amp; maintenance</h3>
+          <p>Mowing, edging, seasonal cleanup, and fertilization on a schedule that keeps your yard looking sharp year-round.</p>
+        </div>
+        <div class="service-card">
+          <img src="images/web/Irrigation & drip systems.jpg" alt="Irrigation and drip systems">
+          <h3>Irrigation &amp; drip systems</h3>
+          <p>Design, installation, and repair for irrigation and drip line systems that actually cover your yard the way they're supposed to.</p>
+        </div>
+        <div class="service-card">
+          <img src="images/web/Smart device installs & management.jpg" alt="Smart device installs and management">
+          <h3>Smart device installs &amp; management</h3>
+          <p>App-controlled irrigation zones, soil moisture sensors, and smart outdoor lighting — installed and actively managed, not just switched on and left alone.</p>
+          <span class="tag">Ongoing support included</span>
+        </div>
+      </div>
+      <div class="services-end">
+        <p>Don't see what you need listed? Call or text us — we probably handle it.</p>
+        <p style="font-weight:700;font-size:16px;margin-bottom:14px;">(916) 555-0142</p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+          <a href="tel:19165550142" class="btn btn-outline-green">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 2 6a2 2 0 0 1 2-2z"></path></svg>
+            Call
+          </a>
+          <a href="sms:19165550142" class="btn btn-outline-green">
+            <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H8l-4 4z"></path></svg>
+            Text
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Smart yard tech</span>
+        <h2>The tech side, handled too</h2>
+        <p class="lede">We install on established platforms and stay on it after the job's done — checking schedules, troubleshooting, and adjusting as the seasons change.</p>
+      </div>
+      <div class="tech-row">
+        <div class="tech-item">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          <div>
+            <h3>App-controlled irrigation zones</h3>
+            <p>Run and adjust every zone from your phone, on a schedule that actually fits your yard.</p>
+          </div>
+        </div>
+        <div class="tech-item">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1"></path></svg>
+          <div>
+            <h3>Soil moisture sensors</h3>
+            <p>Watering based on actual ground conditions, not a fixed timer guessing for you.</p>
+          </div>
+        </div>
+        <div class="tech-item">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"></path><path d="M10 22h4"></path><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"></path></svg>
+          <div>
+            <h3>Smart lighting automation</h3>
+            <p>Landscape lighting on automated schedules — set once, adjust anytime from the app.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="wrap about-grid">
+      <div class="about-photo"><img src="images/web/Sean and team placeholder.jpg" alt="Sean and the Yardwise crew on a job site"></div>
+      <div class="about-text">
+        <span class="eyebrow">About</span>
+        <h2>Built by people who actually do the work</h2>
+        <p>Sean started Yardwise at 25 because he kept seeing the same gap: yards that looked fine on the surface but were being managed on guesswork — fixed watering schedules, no real maintenance plan, nobody checking the systems after install day.</p>
+        <p>He built a small crew around doing it differently — real design work up front, maintenance that's actually scheduled and tracked, and smart systems that get monitored after they go in, not just switched on and forgotten. Today Sean runs the crew alongside a handful of guys who handle the trucks, the install work, and the day-to-day maintenance routes across Sacramento.</p>
+        <p>Licensed and insured, built for the long haul — not a franchise, not a call center, just a team that shows up and does the work right.</p>
+        <p class="license-note">California landscaping contractor license #1047382.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="service-area" class="section section-tint">
+    <div class="wrap">
+      <span class="eyebrow">Service Area</span>
+      <h2>Where we work</h2>
+      <p class="lede">Headquartered in Sacramento, serving homeowners across the metro area.</p>
+      <div class="area-grid">
+        <div class="area-chip">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Sacramento
+        </div>
+        <div class="area-chip">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Elk Grove
+        </div>
+        <div class="area-chip">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Folsom
+        </div>
+        <div class="area-chip">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Roseville
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Reviews</span>
+        <h2>What people say</h2>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"They set up smart drip zones for our whole backyard and actually came back to fine-tune the schedule a few weeks in. Nobody else offered that."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar"><img src="images/web/Jenna.jpg" alt="Jenna R."></div>
+            <div><strong>Jenna R.</strong><span>Elk Grove</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Sean's crew redid our front yard in under a week — looks better than the renderings he showed us going in."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar"><img src="images/web/Marcus.jpg" alt="Marcus T."></div>
+            <div><strong>Marcus T.</strong><span>Sacramento</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Lawn care is consistent every single time, and they text before each visit. Small thing, but it matters."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar"><img src="images/web/Priya.jpg" alt="Priya K."></div>
+            <div><strong>Priya K.</strong><span>Folsom</span></div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <p class="quote">"Installed a smart sprinkler system and landscape lighting at the same time. Clean work, no mess left behind."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar"><img src="images/web/Dave.jpg" alt="Dave H."></div>
+            <div><strong>Dave H.</strong><span>Roseville</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section section-tint">
+    <div class="wrap contact-grid">
+      <div class="contact-info">
+        <span class="eyebrow">Contact</span>
+        <h2>Get a quote</h2>
+        <p class="lede" style="margin-bottom:8px;">Tell us about your yard and we'll get back to you, usually within a business day.</p>
+        <div class="info-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 2 6a2 2 0 0 1 2-2z"></path></svg>
+          <div><strong>(916) 555-0142</strong><span>Call or text anytime</span></div>
+        </div>
+        <div class="info-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+          <div><strong>hello@yardwiseca.com</strong><span>Send us an email</span></div>
+        </div>
+        <div class="info-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          <div><strong>Sacramento, CA</strong><span>Serving the greater Sacramento area</span></div>
+        </div>
+        <div class="info-row">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg>
+          <div><strong>Mon–Fri, 7am–6pm</strong><span>Sat by appointment — confirm hours with client</span></div>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Request a quote</h3>
+        <p class="lede-sm">No pricing shown here — we'll follow up directly.</p>
+        <form id="quoteForm">
+          <div class="field-row two">
+            <div class="field"><label for="qName">Name</label><input id="qName" type="text" required></div>
+            <div class="field"><label for="qPhone">Phone</label><input id="qPhone" type="tel" required></div>
+          </div>
+          <div class="field-row two">
+            <div class="field"><label for="qEmail">Email</label><input id="qEmail" type="email" required></div>
+            <div class="field"><label for="qCity">Address / city</label><input id="qCity" type="text" required></div>
+          </div>
+          <div class="field">
+            <label for="qProject">What do you need?</label>
+            <select id="qProject">
+              <option>Landscape design &amp; install</option>
+              <option>Lawn care &amp; maintenance</option>
+              <option>Irrigation &amp; drip systems</option>
+              <option>Smart device install &amp; management</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="qMessage">Tell us about the project</label>
+            <textarea id="qMessage" rows="3"></textarea>
+          </div>
+
+          <p style="font-size:13px;font-weight:600;margin-bottom:8px;">Prefer a walkthrough first?</p>
+          <div class="walkthrough-cards">
+            <div class="walkthrough-card" data-type="In-person walkthrough">
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 1 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <strong>In-person</strong>
+              <span>We come look at the property</span>
+            </div>
+            <div class="walkthrough-card" data-type="Virtual walkthrough">
+              <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="14" height="12" rx="2"></rect><path d="M16 10l6-3v10l-6-3z"></path></svg>
+              <strong>Virtual</strong>
+              <span>Quick video call walkthrough</span>
+            </div>
+          </div>
+          <div class="field" id="walkthroughTimeField" style="display:none;">
+            <label for="qWhen">Preferred date / time</label>
+            <input id="qWhen" type="text" placeholder="e.g. Thursday afternoon">
+          </div>
+
+          <button type="submit" class="btn btn-yellow btn-block">Send request</button>
+          <div class="form-success" id="formSuccess">Thanks — request received. We'll follow up shortly to confirm details.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <div class="footer-logo">
+        <svg viewBox="0 0 32 32" fill="none" stroke="#FFC72C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="24" r="4"></circle>
+          <circle cx="23" cy="24" r="4"></circle>
+          <path d="M6 24 L6 18 Q6 15 9 15 L20 15 Q23 15 23 18 L23 24"></path>
+          <path d="M18 15 L26 6"></path>
+          <circle cx="27" cy="5" r="1.4" fill="#FFC72C"></circle>
+          <path d="M20.5 5 Q24 1.5 27.5 5" stroke-width="1.4"></path>
+          <path d="M22 7 Q24.5 4.8 27 7" stroke-width="1.4"></path>
+        </svg>
+        Yardwise
+      </div>
+      <p style="font-size:13px;max-width:280px;">Landscaping, maintenance, and smart yard systems for Sacramento homeowners.</p>
+    </div>
+    <div>
+      <h4>Site</h4>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#service-area">Service Area</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <ul>
+        <li>(916) 555-0142<br><span style="font-size:11px;color:rgba(250,250,247,0.45);">Call or Text</span></li>
+        <li>hello@yardwiseca.com</li>
+        <li>Sacramento, CA</li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap">
+    <p class="small">© 2026 Yardwise. All rights reserved. CA contractor license #1047382.</p>
+  </div>
+</footer>
+
+<div class="mobile-bar">
+  <a href="tel:19165550142" class="call">
+    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 2 6a2 2 0 0 1 2-2z"></path></svg>
+    Call
+  </a>
+  <a href="#contact" class="quote">Get a quote</a>
+</div>
+
+<script>
+  var menuToggle = document.getElementById('menuToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  menuToggle.addEventListener('click', function () {
+    var isOpen = mobileMenu.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  document.querySelectorAll('.mobile-menu a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      mobileMenu.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  var walkthroughCards = document.querySelectorAll('.walkthrough-card');
+  var walkthroughTimeField = document.getElementById('walkthroughTimeField');
+  var selectedWalkthrough = null;
+  walkthroughCards.forEach(function (card) {
+    card.addEventListener('click', function () {
+      var alreadyActive = card.classList.contains('active');
+      walkthroughCards.forEach(function (c) { c.classList.remove('active'); });
+      if (alreadyActive) {
+        selectedWalkthrough = null;
+        walkthroughTimeField.style.display = 'none';
+      } else {
+        card.classList.add('active');
+        selectedWalkthrough = card.getAttribute('data-type');
+        walkthroughTimeField.style.display = 'block';
+      }
+    });
+  });
+
+  document.getElementById('quoteForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('formSuccess').classList.add('show');
+    this.querySelector('button[type="submit"]').setAttribute('disabled', 'true');
+  });
+</script>
+
+</body>
+</html>

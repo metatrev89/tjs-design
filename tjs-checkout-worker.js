@@ -1,13 +1,19 @@
 /**
  * TJS Design — Checkout Worker
- * Creates Stripe Payment Intents server-side so card data never touches GitHub Pages.
- * Qualifies the site for PCI DSS SAQ A (simplest compliance tier).
+ * Handles Stripe payments + Google Calendar booking
  *
- * Environment secrets (set in Cloudflare dashboard → Worker → Settings → Variables):
- *   STRIPE_SECRET_KEY  — sk_live_... (never expose this in frontend code)
+ * Environment secrets (Cloudflare Worker Settings → Variables):
+ *   STRIPE_SECRET_KEY      — sk_live_...
+ *   GOOGLE_CLIENT_ID       — OAuth client ID
+ *   GOOGLE_CLIENT_SECRET   — OAuth client secret
+ *   GOOGLE_REFRESH_TOKEN   — set after running /oauth/start once
  *
  * Routes:
- *   POST /create-payment-intent  →  { clientSecret: "pi_...secret..." }
+ *   GET  /oauth/start             →  redirect to Google consent screen
+ *   GET  /oauth/callback          →  exchange code, display refresh token
+ *   GET  /calendar/slots          →  return available booking slots
+ *   POST /calendar/book           →  create calendar event
+ *   POST /create-payment-intent   →  { clientSecret }
  */
 
 const ALLOWED_ORIGINS = [
@@ -18,52 +24,120 @@ const ALLOWED_ORIGINS = [
 
 const CORS = (origin) => ({
   'Access-Control-Allow-Origin': ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Max-Age': '86400',
 });
+
+const OAUTH_REDIRECT = 'https://tjs-checkout.trevorspencer89.workers.dev/oauth/callback';
+const GOOGLE_SCOPES  = 'https://www.googleapis.com/auth/calendar';
 
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') || '';
     const corsHeaders = CORS(origin);
+    const url = new URL(request.url);
 
-    // Handle preflight
+    // Preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: corsHeaders });
     }
 
-    if (request.method !== 'POST') {
-      return new Response('Method not allowed', { status: 405 });
+    // ── GET /oauth/start ──────────────────────────────────────────────────
+    if (url.pathname === '/oauth/start') {
+      const authUrl = new URL('https://accounts.google.com/o/oauth2/v2/auth');
+      authUrl.searchParams.set('client_id',     env.GOOGLE_CLIENT_ID);
+      authUrl.searchParams.set('redirect_uri',  OAUTH_REDIRECT);
+      authUrl.searchParams.set('response_type', 'code');
+      authUrl.searchParams.set('scope',         GOOGLE_SCOPES);
+      authUrl.searchParams.set('access_type',   'offline');
+      authUrl.searchParams.set('prompt',        'consent');
+      return Response.redirect(authUrl.toString(), 302);
     }
 
-    const url = new URL(request.url);
+    // ── GET /oauth/callback ───────────────────────────────────────────────
+    if (url.pathname === '/oauth/callback') {
+      const code = url.searchParams.get('code');
+      if (!code) return new Response('Missing code', { status: 400 });
 
-    // ── POST /create-payment-intent ──────────────────────────────────────────
-    if (url.pathname === '/create-payment-intent') {
-      let body;
+      const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          code,
+          client_id:     env.GOOGLE_CLIENT_ID,
+          client_secret: env.GOOGLE_CLIENT_SECRET,
+          redirect_uri:  OAUTH_REDIRECT,
+          grant_type:    'authorization_code',
+        }),
+      });
+
+      const tokens = await tokenRes.json();
+      if (!tokenRes.ok) {
+        return new Response(JSON.stringify(tokens), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+
+      return new Response(`
+        <!DOCTYPE html>
+        <html><body style="font-family:sans-serif;padding:40px;max-width:600px;margin:auto">
+          <h2>✅ Google Calendar authorized!</h2>
+          <p>Copy this refresh token and add it as a Worker secret named <strong>GOOGLE_REFRESH_TOKEN</strong>:</p>
+          <textarea rows="4" style="width:100%;font-size:13px;padding:8px;font-family:monospace">${tokens.refresh_token}</textarea>
+          <p style="margin-top:16px;color:#555">Once saved as a secret and redeployed, your Worker can access your calendar indefinitely.</p>
+        </body></html>
+      `, { headers: { 'Content-Type': 'text/html' } });
+    }
+
+    // ── GET /calendar/slots ───────────────────────────────────────────────
+    if (url.pathname === '/calendar/slots' && request.method === 'GET') {
       try {
-        body = await request.json();
-      } catch {
+        const accessToken = await getAccessToken(env);
+        const slots = await getAvailableSlots(accessToken);
+        return json({ slots }, 200, corsHeaders);
+      } catch (err) {
+        return json({ error: err.message }, 500, corsHeaders);
+      }
+    }
+
+    // ── POST /calendar/book ───────────────────────────────────────────────
+    if (url.pathname === '/calendar/book' && request.method === 'POST') {
+      let body;
+      try { body = await request.json(); } catch {
+        return json({ error: 'Invalid JSON' }, 400, corsHeaders);
+      }
+
+      const { name, email, slot } = body;
+      if (!name || !email || !slot) {
+        return json({ error: 'name, email, and slot are required.' }, 400, corsHeaders);
+      }
+
+      try {
+        const accessToken = await getAccessToken(env);
+        const event = await bookSlot(accessToken, { name, email, slot });
+        return json({ success: true, eventId: event.id }, 200, corsHeaders);
+      } catch (err) {
+        return json({ error: err.message }, 500, corsHeaders);
+      }
+    }
+
+    // ── POST /create-payment-intent ───────────────────────────────────────
+    if (url.pathname === '/create-payment-intent' && request.method === 'POST') {
+      let body;
+      try { body = await request.json(); } catch {
         return json({ error: 'Invalid JSON' }, 400, corsHeaders);
       }
 
       const { name, email, addon, addonBilling } = body;
-
       if (!name || !email) {
         return json({ error: 'Name and email are required.' }, 400, corsHeaders);
       }
 
-      // Calculate amount in cents
-      // Base: $999.99 website build (one-time)
-      // Addon annual: $999.96/yr billed today ($83.33/mo × 12)
-      // Addon monthly: $129.99/mo billed today
       let amountCents = 99999;
-      if (addon) {
-        amountCents += addonBilling === 'annual' ? 99996 : 12999;
-      }
+      if (addon) amountCents += addonBilling === 'annual' ? 99996 : 12999;
 
-      // Build a human-readable description for the Stripe dashboard
       let description = 'TJS Design — Custom Website Build';
       if (addon) {
         description += addonBilling === 'annual'
@@ -71,7 +145,6 @@ export default {
           : ' + Site Management (Monthly)';
       }
 
-      // Create the Payment Intent via Stripe API
       const stripeRes = await fetch('https://api.stripe.com/v1/payment_intents', {
         method: 'POST',
         headers: {
@@ -88,13 +161,11 @@ export default {
           'metadata[customer_email]': email,
           'metadata[addon]': addon ? 'true' : 'false',
           'metadata[addon_billing]': addonBilling || 'none',
-          // automatic_payment_methods enables cards + Apple/Google Pay
           'automatic_payment_methods[enabled]': 'true',
         }),
       });
 
       const pi = await stripeRes.json();
-
       if (!stripeRes.ok) {
         console.error('Stripe error:', pi);
         return json({ error: pi.error?.message || 'Payment setup failed.' }, 400, corsHeaders);
@@ -106,6 +177,132 @@ export default {
     return json({ error: 'Not found' }, 404, corsHeaders);
   },
 };
+
+// ── Google helpers ────────────────────────────────────────────────────────────
+
+async function getAccessToken(env) {
+  if (!env.GOOGLE_REFRESH_TOKEN) {
+    throw new Error('Calendar not authorized yet. Visit /oauth/start to authorize.');
+  }
+  const res = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      client_id:     env.GOOGLE_CLIENT_ID,
+      client_secret: env.GOOGLE_CLIENT_SECRET,
+      refresh_token: env.GOOGLE_REFRESH_TOKEN,
+      grant_type:    'refresh_token',
+    }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error_description || 'Failed to get access token');
+  return data.access_token;
+}
+
+async function getAvailableSlots(accessToken) {
+  const now = new Date();
+  const end = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
+
+  const freeBusyRes = await fetch('https://www.googleapis.com/calendar/v3/freeBusy', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      timeMin:  now.toISOString(),
+      timeMax:  end.toISOString(),
+      timeZone: 'America/Denver',
+      items:    [{ id: 'primary' }],
+    }),
+  });
+
+  const freeBusy = await freeBusyRes.json();
+  const busy = freeBusy.calendars?.primary?.busy || [];
+
+  // Candidate slots: Mon–Fri, 9am–4pm hourly MT (MDT = UTC-6)
+  // 30-min call duration, 24-hour minimum advance notice
+  const CALL_DURATION_MS = 30 * 60 * 1000;
+  const MIN_NOTICE_MS    = 24 * 60 * 60 * 1000;
+  const slots = [];
+  const slotHours = [9, 10, 11, 12, 13, 14, 15, 16];
+  const cursor = new Date(now);
+  cursor.setMinutes(0, 0, 0);
+
+  while (slots.length < 20 && cursor < end) {
+    const day = cursor.getDay();
+    if (day >= 1 && day <= 5) {
+      for (const hour of slotHours) {
+        const slotStart = new Date(cursor);
+        slotStart.setHours(hour + 6, 0, 0, 0); // MDT → UTC
+        const slotEnd = new Date(slotStart.getTime() + CALL_DURATION_MS);
+
+        // Skip if within 24-hour window
+        if (slotStart.getTime() - now.getTime() < MIN_NOTICE_MS) continue;
+
+        const isBusy = busy.some(b => {
+          const bStart = new Date(b.start);
+          const bEnd   = new Date(b.end);
+          return slotStart < bEnd && slotEnd > bStart;
+        });
+
+        if (!isBusy) {
+          slots.push({
+            start:    slotStart.toISOString(),
+            end:      slotEnd.toISOString(),
+            duration: 30,
+            label: slotStart.toLocaleString('en-US', {
+              weekday: 'short', month: 'short', day: 'numeric',
+              hour: 'numeric', minute: '2-digit',
+              timeZone: 'America/Denver', timeZoneName: 'short',
+            }),
+          });
+        }
+        if (slots.length >= 20) break;
+      }
+    }
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  return slots;
+}
+
+async function bookSlot(accessToken, { name, email, slot }) {
+  const start = new Date(slot);
+  const end   = new Date(start.getTime() + 30 * 60 * 1000); // 30-minute call
+
+  const eventRes = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      summary:     `Discovery Call — ${name}`,
+      description: `New website client\nName: ${name}\nEmail: ${email}`,
+      start: { dateTime: start.toISOString(), timeZone: 'America/Denver' },
+      end:   { dateTime: end.toISOString(),   timeZone: 'America/Denver' },
+      attendees: [{ email }],
+      conferenceData: {
+        createRequest: {
+          requestId: `tjs-${Date.now()}`,
+          conferenceSolutionKey: { type: 'hangoutsMeet' },
+        },
+      },
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email',  minutes: 60 },
+          { method: 'popup',  minutes: 15 },
+        ],
+      },
+    }),
+  });
+
+  const event = await eventRes.json();
+  if (!eventRes.ok) throw new Error(event.error?.message || 'Failed to book event');
+  return event;
+}
 
 function json(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
