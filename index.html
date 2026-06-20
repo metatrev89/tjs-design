@@ -30,7 +30,7 @@
   <!-- ================= NAV ================= -->
   <header style="position:sticky; top:0; z-index:50; background:rgba(251,248,242,.82); backdrop-filter:blur(12px); border-bottom:1px solid rgba(23,21,43,.07);">
     <div style="max-width:1180px; margin:0 auto; padding:0 clamp(20px,5vw,48px); height:72px; display:flex; align-items:center; justify-content:space-between;">
-      <a href="#top" style="display:flex; align-items:center; gap:11px; text-decoration:none;">
+      <a onClick="{{ closeNav }}" href="#top" style="display:flex; align-items:center; gap:11px; text-decoration:none;">
         <img src="Logo.png" alt="TJS Design" style="width:44px; height:44px; border-radius:11px; object-fit:cover; display:block;"/>
         <div style="font-family:'Sora',sans-serif; font-weight:800; font-size:19px; color:#17152B; letter-spacing:-0.01em;">Design</div>
       </a>
@@ -72,7 +72,7 @@
     </div>
     <div style="position:relative; max-width:1180px; margin:0 auto; padding:clamp(48px,8vw,92px) clamp(20px,5vw,48px) clamp(56px,8vw,96px);">
       <div style="max-width:760px;">
-        <div style="display:inline-flex; align-items:center; gap:8px; background:#FFC53D; border-radius:999px; padding:9px 17px; font-family:'Sora',sans-serif; font-weight:700; font-size:13px; color:#17152B; margin-bottom:28px; transform:rotate(-2deg);">★ For plumbers, roofers, landscapers &amp; more</div>
+        <div style="display:inline-flex; align-items:center; gap:8px; background:#FFC53D; border-radius:999px; padding:9px 17px; font-family:'Sora',sans-serif; font-weight:700; font-size:13px; color:#17152B; margin-bottom:28px; transform:rotate(-2deg);">★ For all local service businesses &amp; more</div>
         <h1 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(40px,7.4vw,68px); line-height:1.02; color:#17152B; margin:0 0 24px; letter-spacing:-0.025em;">Your business deserves a website that <span style="background:linear-gradient(105deg,#FF6B4A,#FF3D9A); -webkit-background-clip:text; background-clip:text; color:transparent;">actually works.</span></h1>
         <p style="font-size:clamp(17px,2.3vw,20px); line-height:1.55; color:#55525f; margin:0 0 34px; max-width:560px;">Fully custom, mobile-ready, SEO-optimized websites for local service businesses — start to finish, in under 14 business days. Flat rate. No surprises. You just show up to one call.</p>
         <div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:44px;">
@@ -131,11 +131,11 @@
       <div>
         <div style="font-family:'Sora',sans-serif; font-weight:700; font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:#7C5CFF; margin-bottom:16px;">Why Trevor</div>
         <h2 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(28px,4vw,42px); line-height:1.08; color:#17152B; margin:0 0 20px; letter-spacing:-0.02em;">Corporate-grade expertise. Freelancer speed. Flat-rate price.</h2>
-        <p style="font-size:clamp(15px,1.9vw,17px); line-height:1.6; color:#55525f; margin:0 0 28px;">I'm Trevor Spencer. Before TJS Design, I spent over a decade in product management, sales, and digital marketing — driving $34.5M in product portfolio revenue at Red Hat, advising 20+ companies from defense contractors to FinTech startups, and leading go-to-market strategy at brands like Podium, Pluralsight, and Domo. I know what it takes for a digital presence to actually drive business because I've lived on the side that demands results from it. Now I build websites for local service businesses that don't just look good — they convert. I own every piece — design, development, SEO, indexing, analytics — and deliver in under 14 business days.</p>
+        <p style="font-size:clamp(15px,1.9vw,17px); line-height:1.6; color:#55525f; margin:0 0 28px;">I'm Trevor Spencer. Before TJS Design, I spent over a decade in product and business management, sales, and digital marketing — driving and managing ~$34.5M in product portfolio revenue at Red Hat, advising 20+ companies ranging from defense contractors and FinTech startups to large enterprise clients and SMB local service providers, and executing go-to-market strategy at brands like Podium, Pluralsight, and Domo. I know what it takes for a digital presence to actually drive business because I've lived on the side that demands results from it. Now, with TJS Design, I build websites for local service businesses that don't just look great — they convert. I own every piece — design, development, SEO, indexing, analytics — and deliver in under 14 business days.</p>
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:18px;">
           <div style="display:flex; align-items:center; gap:12px;"><div style="width:14px; height:14px; border-radius:50%; background:#2F6BFF; flex:none;"></div><div><div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B;">12+ Years</div><div style="font-size:13px; color:#7a7783;">Marketing &amp; Technology</div></div></div>
           <div style="display:flex; align-items:center; gap:12px;"><div style="width:14px; height:14px; border-radius:50%; background:#FF3D9A; flex:none;"></div><div><div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B;">20+ Companies</div><div style="font-size:13px; color:#7a7783;">Advised &amp; Managed</div></div></div>
-          <div style="display:flex; align-items:center; gap:12px;"><div style="width:14px; height:14px; border-radius:50%; background:#1FC77D; flex:none;"></div><div><div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B;">$34.5M</div><div style="font-size:13px; color:#7a7783;">Revenue Driven</div></div></div>
+          <div style="display:flex; align-items:center; gap:12px;"><div style="width:14px; height:14px; border-radius:50%; background:#1FC77D; flex:none;"></div><div><div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B;">$36M+</div><div style="font-size:13px; color:#7a7783;">Revenue Driven</div></div></div>
           <div style="display:flex; align-items:center; gap:12px;"><div style="width:14px; height:14px; border-radius:50%; background:#FF6B4A; flex:none;"></div><div><div style="font-family:'Sora',sans-serif; font-weight:800; font-size:18px; color:#17152B;">&lt;14 Days</div><div style="font-size:13px; color:#7a7783;">Every Project</div></div></div>
         </div>
       </div>
@@ -154,10 +154,10 @@
         <!-- Package 1 — dark hero card -->
         <div style="position:relative; background:#17152B; border-radius:26px; padding:clamp(28px,3.5vw,40px); color:#fff; overflow:hidden;">
           <div style="position:absolute; top:-60px; right:-60px; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle at 40% 40%, #FF3D9A, transparent 70%); opacity:.5;"></div>
-          <sc-if value="{{ showBestValue }}" hint-placeholder-val="{{ true }}">
-            <div style="position:absolute; top:24px; right:24px; background:#FFC53D; color:#17152B; font-family:'Sora',sans-serif; font-weight:800; font-size:12px; letter-spacing:.04em; padding:7px 13px; border-radius:999px; transform:rotate(4deg);">★ BEST VALUE</div>
-          </sc-if>
           <div style="position:relative;">
+            <sc-if value="{{ showBestValue }}" hint-placeholder-val="{{ true }}">
+              <div style="display:inline-flex; align-items:center; background:#FFC53D; color:#17152B; font-family:'Sora',sans-serif; font-weight:800; font-size:12px; letter-spacing:.04em; padding:7px 13px; border-radius:999px; margin-bottom:16px;">★ BEST VALUE</div>
+            </sc-if>
             <h3 style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(24px,3vw,30px); margin:0 0 14px;">Custom Website Build</h3>
             <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:8px;"><span style="font-family:'Sora',sans-serif; font-weight:800; font-size:clamp(36px,5vw,48px);">$999.99</span></div>
             <div style="font-size:13px; font-weight:600; color:#b8b5cf; text-transform:uppercase; letter-spacing:.08em; margin-bottom:20px;">One-Time Investment</div>
@@ -171,7 +171,7 @@
               <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:#eceaf6;"><span style="color:#1FC77D; font-weight:800; flex:none;">✓</span> AEO — optimized for ChatGPT, Perplexity &amp; Google AI Overview</div>
               <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:#eceaf6;"><span style="color:#1FC77D; font-weight:800; flex:none;">✓</span> Google Search Console + Bing Webmaster indexing</div>
               <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:#eceaf6;"><span style="color:#1FC77D; font-weight:800; flex:none;">✓</span> Google Analytics 4 — configured and ready</div>
-              <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:#eceaf6;"><span style="color:#1FC77D; font-weight:800; flex:none;">✓</span> Hosting architecture ~90% cheaper than drag-and-drop platforms</div>
+              <div style="display:flex; gap:11px; font-size:15px; line-height:1.45; color:#eceaf6;"><span style="color:#1FC77D; font-weight:800; flex:none;">✓</span> $0/year hosting — no recurring platform fees, ever</div>
             </div>
             <div style="background:rgba(255,255,255,.07); border-radius:14px; padding:16px; margin-bottom:14px;">
               <div style="font-weight:700; font-size:13px; color:#FFC53D; margin-bottom:6px;">DOMAIN NOT INCLUDED</div>
@@ -210,7 +210,7 @@
         </div>
       </div>
 
-      <p style="font-size:14px; line-height:1.6; color:#7a7783; max-width:840px; margin:30px auto 0; text-align:center;">A comparable custom site from an agency typically runs <strong style="color:#17152B;">$3,000–$8,000+</strong> with $300–$600/yr in platform fees. TJS Design delivers all of it at <strong style="color:#17152B;">$999.99</strong>, plus hosting that averages ~90% lower than Wix or Squarespace — saving you roughly $500/year.</p>
+      <p style="font-size:14px; line-height:1.6; color:#7a7783; max-width:840px; margin:30px auto 0; text-align:center;">A comparable custom site from an agency typically runs <strong style="color:#17152B;">$3,000–$8,000+</strong> with $300–$600/yr in platform fees. TJS Design delivers all of it at <strong style="color:#17152B;">$999.99</strong>, plus $0/year hosting — no platform fees, ever — saving you $192–$588/year compared to Wix or Squarespace.</p>
     </div>
   </section>
 
@@ -269,7 +269,7 @@
           </thead>
           <tbody style="font-size:15px; color:#3a3845;">
             <tr><td style="padding:16px 22px; font-weight:600; border-bottom:1px solid rgba(23,21,43,.07);">Build Cost</td><td style="padding:16px 22px; font-weight:700; color:#17152B; background:rgba(47,107,255,.06); border-bottom:1px solid rgba(23,21,43,.07);">$999.99</td><td style="padding:16px 22px; border-bottom:1px solid rgba(23,21,43,.07);">$3,000 – $8,000+</td><td style="padding:16px 22px; border-bottom:1px solid rgba(23,21,43,.07);">$0 (your time)</td></tr>
-            <tr><td style="padding:16px 22px; font-weight:600; border-bottom:1px solid rgba(23,21,43,.07);">Annual Hosting</td><td style="padding:16px 22px; font-weight:700; color:#17152B; background:rgba(47,107,255,.06); border-bottom:1px solid rgba(23,21,43,.07);">~$50–$70/yr</td><td style="padding:16px 22px; border-bottom:1px solid rgba(23,21,43,.07);">$120–$500+</td><td style="padding:16px 22px; border-bottom:1px solid rgba(23,21,43,.07);">$192–$588/yr</td></tr>
+            <tr><td style="padding:16px 22px; font-weight:600; border-bottom:1px solid rgba(23,21,43,.07);">Annual Hosting</td><td style="padding:16px 22px; font-weight:700; color:#17152B; background:rgba(47,107,255,.06); border-bottom:1px solid rgba(23,21,43,.07);">$0/yr</td><td style="padding:16px 22px; border-bottom:1px solid rgba(23,21,43,.07);">$120–$500+</td><td style="padding:16px 22px; border-bottom:1px solid rgba(23,21,43,.07);">$192–$588/yr</td></tr>
             <tr><td style="padding:16px 22px; font-weight:600; border-bottom:1px solid rgba(23,21,43,.07);">Custom Design</td><td style="padding:16px 22px; font-weight:700; color:#1FC77D; background:rgba(47,107,255,.06); border-bottom:1px solid rgba(23,21,43,.07);">✓ Yes</td><td style="padding:16px 22px; border-bottom:1px solid rgba(23,21,43,.07);">✓ Yes</td><td style="padding:16px 22px; color:#b0392f; border-bottom:1px solid rgba(23,21,43,.07);">✕ Template only</td></tr>
             <tr><td style="padding:16px 22px; font-weight:600; border-bottom:1px solid rgba(23,21,43,.07);">Full SEO + AEO</td><td style="padding:16px 22px; font-weight:700; color:#1FC77D; background:rgba(47,107,255,.06); border-bottom:1px solid rgba(23,21,43,.07);">✓ Included</td><td style="padding:16px 22px; border-bottom:1px solid rgba(23,21,43,.07);">Add-on ($500–$2,000)</td><td style="padding:16px 22px; color:#b0392f; border-bottom:1px solid rgba(23,21,43,.07);">✕ Basic only</td></tr>
             <tr><td style="padding:16px 22px; font-weight:600; border-bottom:1px solid rgba(23,21,43,.07);">Google + Bing Indexing</td><td style="padding:16px 22px; font-weight:700; color:#1FC77D; background:rgba(47,107,255,.06); border-bottom:1px solid rgba(23,21,43,.07);">✓ Included</td><td style="padding:16px 22px; border-bottom:1px solid rgba(23,21,43,.07);">Varies</td><td style="padding:16px 22px; color:#b0392f; border-bottom:1px solid rgba(23,21,43,.07);">✕ DIY</td></tr>
@@ -558,7 +558,7 @@ class Component extends DCLogic {
       { q: 'What about my domain name?', a: 'Your domain is purchased separately by you — it stays in your name and belongs to you. Most local businesses find a solid option for $10–$25 per year through registrars like Namecheap. I walk you through it on your intake call so you don\u2019t overpay.' },
       { q: "What does 'AEO' mean?", a: 'AEO stands for Answer Engine Optimization — structuring your site so AI-powered search tools like Google\u2019s AI Overview, ChatGPT, and Perplexity can find and surface your business. Standard SEO gets you ranked in search. AEO gets you referenced by AI search. Both matter now.' },
       { q: 'Can I make changes to the site after it launches?', a: "Yes. On the Monthly Management plan, changes are covered in your monthly update call and ongoing support. If you're not on the plan, we can handle one-off updates on a per-request basis." },
-      { q: "What does 'fully optimized hosting' mean?", a: 'It means your site isn\u2019t tied to expensive proprietary platforms. Wix and Squarespace charge $16–$49/month to host — that\u2019s $192–$588/year. Your TJS Design site runs on hosting that typically costs under $50–$70 per year — roughly 90% less, and faster too.' },
+      { q: "What does 'fully optimized hosting' mean?", a: 'It means your site isn\u2019t tied to expensive proprietary platforms. Wix and Squarespace charge $16–$49/month to host — that\u2019s $192–$588/year. Your TJS Design site runs on completely free hosting — $0 per year — and faster too.' },
       { q: 'Is the 14-business-day timeline guaranteed?', a: 'Yes — on my end. The timeline runs from your intake call. As long as you\u2019re available for design review feedback within a reasonable window, I hit the deadline. Extended periods of no response would adjust it, but that\u2019s never been an issue.' },
       { q: 'Do I have to get the monthly management plan?', a: 'No. The Monthly Management plan is completely optional. Your site is fully functional and live without it. The plan is for owners who want total hands-off ownership going forward — updates, monitoring, and support, all handled.' },
       { q: 'Who do I contact if something breaks?', a: "If you're on the Monthly Management plan, you contact me directly — phone, text, or email, 24/7. If you're not on the plan, reach out and we'll handle it." }
