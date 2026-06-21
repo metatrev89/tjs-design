@@ -265,7 +265,7 @@ img { max-width: 100%; display: block; }
 }
 .family-photo {
   width: 100%;
-  height: 220px;
+  aspect-ratio: 1 / 1;
   background: var(--placeholder-bg);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
@@ -276,7 +276,7 @@ img { max-width: 100%; display: block; }
   gap: 8px;
 }
 .family-photo.is-empty { border-bottom: 2px dashed var(--placeholder-border); }
-.family-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.family-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
 .family-photo .icon { color: var(--placeholder-icon); }
 .family-photo span { font-size: 0.78rem; color: #8B7F58; }
 .family-body { padding: 18px 20px; }
