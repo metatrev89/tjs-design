@@ -61,7 +61,7 @@
   </header>
 
   <!-- ============ JUMP-LINK / TAB STRIP ============ -->
-  <div style="position:sticky; top:72px; z-index:40; background:#17152B;">
+  <div style="position:sticky; top:72px; z-index:40; background:#FBF8F2; border-bottom:1px solid rgba(23,21,43,.07);">
     <div class="tjs-strip" style="max-width:1180px; margin:0 auto; padding:14px clamp(16px,5vw,48px); display:flex; gap:10px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;">
       <sc-for list="{{ pills }}" as="p" hint-placeholder-count="5">
         <button onClick="{{ p.select }}" style="cursor:pointer; flex:none; border:1.5px solid {{ p.pillBorder }}; font-family:'Sora',sans-serif; font-weight:700; font-size:14px; padding:9px 17px; border-radius:999px; background:{{ p.pillBg }}; color:{{ p.pillColor }}; white-space:nowrap;">{{ p.name }}</button>
@@ -451,8 +451,8 @@ class Component extends DCLogic {
       return {
         id: d.id, name: d.name, select: select(d.id),
         pillBg:     on ? d.accent : 'transparent',
-        pillColor:  on ? (d.accent === '#FFC53D' ? '#17152B' : '#fff') : '#c8c5dd',
-        pillBorder: on ? d.accent : 'rgba(255,255,255,.22)'
+        pillColor:  on ? (d.accent === '#FFC53D' ? '#17152B' : '#fff') : '#55525f',
+        pillBorder: on ? d.accent : 'rgba(23,21,43,.18)'
       };
     });
     const slots = this.state.slots;
