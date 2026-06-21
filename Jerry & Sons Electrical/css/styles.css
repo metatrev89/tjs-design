@@ -309,6 +309,14 @@ img { max-width: 100%; display: block; }
   flex-wrap: wrap;
 }
 .cta-banner p { color: var(--cream); font-size: 1.1rem; font-weight: 600; margin: 0; }
+.cta-banner-actions { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+@media (max-width: 640px) {
+  /* Force the text onto its own row and the 3 buttons onto their own row
+     below it, as a group — otherwise flex-wrap lets "Call" ride along next
+     to the text on the same line while Contact/Schedule wrap separately. */
+  .cta-banner .container { flex-direction: column; }
+}
 
 /* ---------- Service area ---------- */
 .area-block { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
