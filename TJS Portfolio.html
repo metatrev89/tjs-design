@@ -112,6 +112,12 @@
                 <div class="tjs-pcard-inner" style="width:1440px; height:900px; transform-origin:top left; position:absolute; top:0; left:0; pointer-events:none;">
                   <iframe src="{{ ind.src }}" title="{{ ind.name }} preview" style="width:1440px; height:900px; border:none; display:block;" loading="lazy"></iframe>
                 </div>
+                <!-- Frozen overlay: pointer-events:none on the wrapper above doesn't
+                     reliably block wheel-scroll passthrough into the iframe in every
+                     browser, which let some previews scroll and others not. This
+                     plain div sits on top of the iframe and absorbs all pointer/wheel
+                     input itself (the click still bubbles up to the card button). -->
+                <div style="position:absolute; inset:0;"></div>
               </div>
               <div style="padding:18px 20px;">
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
