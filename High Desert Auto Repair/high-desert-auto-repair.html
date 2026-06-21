@@ -1689,25 +1689,23 @@
   });
 
   // In-page anchor links (nav + sticky bar + "Book Now" buttons, etc.): scroll
-  // explicitly within this document instead of relying on the browser's native
-  // #hash jump. When this page is embedded in an iframe (as it is on the TJS
-  // Design portfolio page), native hash navigation can sometimes scroll the
-  // OUTER page instead of this one, especially on mobile Safari. Doing the
-  // scroll manually keeps it scoped to this page no matter where it's loaded.
+  // explicitly within THIS window only, via window.scrollTo() with a manually
+  // computed offset. Deliberately NOT using Element.scrollIntoView() here —
+  // per the CSSOM View spec, scrollIntoView() is allowed to walk up and scroll
+  // ancestor scrolling contexts to bring the target into view, and when this
+  // page is embedded in an iframe (as it is on the TJS Design portfolio page),
+  // some browsers treat the parent frame as such an ancestor — scrolling the
+  // OUTER page instead of (or in addition to) this one. window.scrollTo() has
+  // no such cross-frame behavior defined anywhere, so it can't leak out.
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', (e) => {
       const id = a.getAttribute('href').slice(1);
       const target = id && document.getElementById(id);
       if (!target) return;
       e.preventDefault();
-      // No "smooth" behavior and an immediate blur — both are deliberate.
-      // On iOS Safari, a smooth-scroll animation combined with a focused
-      // link inside an iframe can trigger the OUTER page to scroll the
-      // iframe into view mid-animation, even though the scroll itself is
-      // correctly scoped to this document. Instant scroll + dropping focus
-      // avoids giving the outer page a reason to react at all.
       a.blur();
-      target.scrollIntoView({ behavior: 'auto', block: 'start' });
+      const y = target.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({ top: y, left: 0, behavior: 'auto' });
     });
   });
 
