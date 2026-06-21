@@ -675,6 +675,7 @@
       body { padding-bottom: 80px; }
 
       .hero { padding: 56px 0 52px; }
+      .hero__landscape { height: 85%; }
       .hero__actions { flex-direction: column; }
       .hero__actions .btn { width: 100%; }
       .hero__trust { gap: 14px; }
@@ -1699,8 +1700,14 @@
       const target = id && document.getElementById(id);
       if (!target) return;
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      history.replaceState(null, '', '#' + id);
+      // No "smooth" behavior and an immediate blur — both are deliberate.
+      // On iOS Safari, a smooth-scroll animation combined with a focused
+      // link inside an iframe can trigger the OUTER page to scroll the
+      // iframe into view mid-animation, even though the scroll itself is
+      // correctly scoped to this document. Instant scroll + dropping focus
+      // avoids giving the outer page a reason to react at all.
+      a.blur();
+      target.scrollIntoView({ behavior: 'auto', block: 'start' });
     });
   });
 
