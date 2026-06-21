@@ -169,7 +169,29 @@
   .mobile-menu .nav-phone { display: flex; margin-top: 12px; }
 
   /* Hero */
-  .hero { background: var(--green); padding: 56px 0 64px; text-align: center; }
+  .hero {
+    position: relative;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--green);
+    background-image: url("images/Hero Banner.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 56px 20px 64px;
+    text-align: center;
+  }
+  .hero-content {
+    background: rgba(15, 26, 18, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius-lg);
+    padding: 36px 28px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
   .hero h1 {
     color: var(--bg);
     font-size: 34px;
@@ -186,6 +208,14 @@
 
   @media (min-width: 640px) {
     .hero h1 { font-size: 42px; }
+  }
+
+  @media (max-width: 639px) {
+    .hero {
+      min-height: 420px;
+      background-image: url("images/Hero photo mobile.jpg");
+    }
+    .hero-content { padding: 28px 20px; }
   }
 
   /* Trust bar */
@@ -546,11 +576,13 @@
 
   <section id="home" class="hero">
     <div class="wrap">
-      <h1>Sharp Landscaping, Smarter Yards.</h1>
-      <p>Design, install, and maintenance for Sacramento yards — plus the smart irrigation and lighting systems that keep them running right.</p>
-      <div class="hero-ctas">
-        <a href="#contact" class="btn btn-yellow">Get a quote</a>
-        <a href="#contact" class="btn btn-outline-light">Schedule a walkthrough</a>
+      <div class="hero-content">
+        <h1>Sharp Landscaping, Smarter Yards.</h1>
+        <p>Design, install, and maintenance for Sacramento yards — plus the smart irrigation and lighting systems that keep them running right.</p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn btn-yellow">Get a quote</a>
+          <a href="#contact" class="btn btn-outline-light">Schedule a walkthrough</a>
+        </div>
       </div>
     </div>
   </section>
