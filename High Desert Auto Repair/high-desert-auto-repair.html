@@ -40,13 +40,14 @@
        RESET & BASE
     ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; }
     body {
       font-family: var(--font-body);
       background: var(--cream);
       color: var(--charcoal);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
@@ -296,8 +297,10 @@
     .services-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      justify-content: center;
       gap: 16px;
       margin-top: 40px;
+      width: 100%;
     }
     .service-card {
       background: var(--white);
@@ -666,7 +669,8 @@
       .section { padding: 48px 0; }
       .nav__links, .nav__actions .btn { display: none; }
       .nav__hamburger { display: flex; }
-      .nav__call { padding: 6px 8px; font-size: .85rem; }
+      .nav__call { padding: 9px; font-size: .85rem; }
+      .nav__call-text { display: none; }
       .sticky-bar { display: flex; }
       body { padding-bottom: 80px; }
 
@@ -728,14 +732,14 @@
       </nav>
 
       <div class="nav__actions">
-        <a href="tel:+15055550182" class="nav__call">
+        <a href="tel:+15055550182" class="nav__call" aria-label="Call (505) 555-0182">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6.29 6.29l.95-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
           </svg>
-          (505) 555-0182
+          <span class="nav__call-text">(505) 555-0182</span>
         </a>
         <a href="#book" class="btn btn--primary btn--sm">Book Now</a>
-        <button class="nav__hamburger" id="nav-toggle" aria-label="Menu">
+        <button class="nav__hamburger" id="nav-toggle" type="button" aria-label="Menu">
           <span></span><span></span><span></span>
         </button>
       </div>
@@ -1673,11 +1677,31 @@
   /* ---- NAV TOGGLE ---- */
   const navToggle = document.getElementById('nav-toggle');
   const siteNav   = document.getElementById('site-nav');
-  navToggle.addEventListener('click', () => siteNav.classList.toggle('nav--open'));
+  navToggle.addEventListener('click', (e) => {
+    e.preventDefault();
+    siteNav.classList.toggle('nav--open');
+  });
 
   // Close nav on link click
   document.querySelectorAll('.nav__mobile a').forEach(a => {
     a.addEventListener('click', () => siteNav.classList.remove('nav--open'));
+  });
+
+  // In-page anchor links (nav + sticky bar + "Book Now" buttons, etc.): scroll
+  // explicitly within this document instead of relying on the browser's native
+  // #hash jump. When this page is embedded in an iframe (as it is on the TJS
+  // Design portfolio page), native hash navigation can sometimes scroll the
+  // OUTER page instead of this one, especially on mobile Safari. Doing the
+  // scroll manually keeps it scoped to this page no matter where it's loaded.
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const target = id && document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.replaceState(null, '', '#' + id);
+    });
   });
 
   /* ---- BOOKING STATE ---- */
