@@ -32,3 +32,6 @@ Allow: /
 
 # Sitemap location
 Sitemap: https://tjsdesign.online/sitemap.xml
+
+# AI/LLM knowledge file
+# See https://tjsdesign.online/llms.txt for a plain-text summary of this site's content, services, and business info.
