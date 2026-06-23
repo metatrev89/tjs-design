@@ -50,4 +50,46 @@
     <priority>0.5</priority>
   </url>
 
+  <!-- ====== Localized Service Pages ====== -->
+
+  <!-- Salt Lake City -->
+  <url>
+    <loc>https://tjsdesign.online/website-design-salt-lake-city.html</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Provo -->
+  <url>
+    <loc>https://tjsdesign.online/website-design-provo.html</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Ogden -->
+  <url>
+    <loc>https://tjsdesign.online/website-design-ogden.html</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- St. George -->
+  <url>
+    <loc>https://tjsdesign.online/website-design-st-george.html</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- West Jordan -->
+  <url>
+    <loc>https://tjsdesign.online/website-design-west-jordan.html</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
 </urlset>

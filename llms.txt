@@ -85,6 +85,14 @@ A: Yes, on TJS Design's end. The timeline starts from your intake call and is me
 Q: Do I have to get the Site Management plan?
 A: No. It's completely optional. Your site is fully live and functional without it.
 
+## Service Area Pages (Localized)
+TJS Design has dedicated service pages for major Utah cities. Each page covers website design for local service businesses in that specific market:
+- Salt Lake City, UT: https://tjsdesign.online/website-design-salt-lake-city.html
+- Provo, UT: https://tjsdesign.online/website-design-provo.html
+- Ogden, UT: https://tjsdesign.online/website-design-ogden.html
+- St. George, UT: https://tjsdesign.online/website-design-st-george.html
+- West Jordan, UT: https://tjsdesign.online/website-design-west-jordan.html
+
 ## Contact & Location
 - Website: https://tjsdesign.online
 - Email: trevorspencer89@gmail.com
