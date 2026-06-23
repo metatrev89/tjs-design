@@ -12,8 +12,10 @@
  * Routes:
  *   GET  /oauth/start             →  redirect to Google consent screen
  *   GET  /oauth/callback          →  exchange code, display refresh token
- *   GET  /calendar/slots          →  return available booking slots
- *   POST /calendar/book           →  create calendar event
+ *   GET  /calendar/slots           →  return available 30-min booking slots (checkout flow)
+ *   POST /calendar/book           →  create 30-min intake-call calendar event (checkout flow)
+ *   GET  /calendar/prospect-slots →  return available 15-min prospect slots (schedule page)
+ *   POST /calendar/book-prospect  →  create 15-min prospect call event, no Google Meet, phone call
  *   POST /create-payment-intent   →  { clientSecret } — one-time build, or a real Stripe
  *                                     Subscription (Site Management) with the build billed
  *                                     once on the first invoice. See PRICE_IDS below.
@@ -142,6 +144,44 @@ export default {
       }
     }
 
+    // ── GET /calendar/prospect-slots ─────────────────────────────────────
+    if (url.pathname === '/calendar/prospect-slots' && request.method === 'GET') {
+      try {
+        const accessToken = await getAccessToken(env);
+        const slots = await getProspectSlots(accessToken);
+        return json({ slots }, 200, corsHeaders);
+      } catch (err) {
+        return json({ error: err.message }, 500, corsHeaders);
+      }
+    }
+
+    // ── POST /calendar/book-prospect ──────────────────────────────────────
+    if (url.pathname === '/calendar/book-prospect' && request.method === 'POST') {
+      let body;
+      try { body = await request.json(); } catch {
+        return json({ error: 'Invalid JSON' }, 400, corsHeaders);
+      }
+
+      const { name, email, phone, biz, note, slot, slotDate, slotTime } = body;
+      if (!name || !email || !slot) {
+        return json({ error: 'name, email, and slot are required.' }, 400, corsHeaders);
+      }
+
+      try {
+        const accessToken = await getAccessToken(env);
+        const event = await bookProspectSlot(accessToken, { name, email, phone, biz, note, slot });
+        // Best-effort notification email to Trevor — don't let it fail the booking
+        try {
+          await sendProspectBookingEmail(env, { name, phone, email, biz, note, slotDate, slotTime });
+        } catch (emailErr) {
+          console.error('Prospect booking email failed:', emailErr);
+        }
+        return json({ success: true, eventId: event.id }, 200, corsHeaders);
+      } catch (err) {
+        return json({ error: err.message }, 500, corsHeaders);
+      }
+    }
+
     // ── POST /create-payment-intent ───────────────────────────────────────
     if (url.pathname === '/create-payment-intent' && request.method === 'POST') {
       let body;
@@ -220,7 +260,7 @@ export default {
         return json({ error: 'Invalid JSON' }, 400, corsHeaders);
       }
 
-      const { name, phone, email, company } = body;
+      const { name, phone, email, company, message } = body;
       // Honeypot: real visitors never fill this hidden field — bots often do.
       if (company) {
         return json({ success: true }, 200, corsHeaders);
@@ -230,7 +270,7 @@ export default {
       }
 
       try {
-        await sendContactEmail(env, { name, phone, email });
+        await sendContactEmail(env, { name, phone, email, message });
         return json({ success: true }, 200, corsHeaders);
       } catch (err) {
         return json({ error: err.message }, 500, corsHeaders);
@@ -367,6 +407,166 @@ async function bookSlot(accessToken, { name, email, slot }) {
   return event;
 }
 
+// ── Prospect-call helpers (schedule.html) ────────────────────────────────────
+
+async function getProspectSlots(accessToken) {
+  const now = new Date();
+  const end = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
+
+  const freeBusyRes = await fetch('https://www.googleapis.com/calendar/v3/freeBusy', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      timeMin:  now.toISOString(),
+      timeMax:  end.toISOString(),
+      timeZone: 'America/Denver',
+      items:    [{ id: 'primary' }],
+    }),
+  });
+
+  const freeBusy = await freeBusyRes.json();
+  const busy = freeBusy.calendars?.primary?.busy || [];
+
+  const CALL_DURATION_MS = 15 * 60 * 1000;  // 15-minute calls
+  const MIN_NOTICE_MS    = 24 * 60 * 60 * 1000;
+  const slots = [];
+  // Mon–Fri, 9 am – 4:30 pm MDT (UTC-6), slots on the hour and half-hour
+  const slotHours   = [9, 10, 11, 12, 13, 14, 15, 16];
+  const slotMinutes = [0, 30];
+
+  const cursor = new Date(now);
+  cursor.setMinutes(0, 0, 0);
+
+  outer:
+  while (cursor < end) {
+    const day = cursor.getDay(); // UTC day-of-week — close enough for MDT
+    if (day >= 1 && day <= 5) {
+      for (const hour of slotHours) {
+        for (const minute of slotMinutes) {
+          // Skip 4:30 pm start → would end 4:45 pm, fine; but skip 5:00 pm+
+          if (hour === 16 && minute === 30) continue;
+
+          const slotStart = new Date(cursor);
+          slotStart.setHours(hour + 6, minute, 0, 0); // MDT (UTC-6) → UTC
+          const slotEnd = new Date(slotStart.getTime() + CALL_DURATION_MS);
+
+          if (slotStart.getTime() - now.getTime() < MIN_NOTICE_MS) continue;
+
+          const isBusy = busy.some(b => {
+            const bStart = new Date(b.start);
+            const bEnd   = new Date(b.end);
+            return slotStart < bEnd && slotEnd > bStart;
+          });
+
+          if (!isBusy) {
+            const dateStr = slotStart.toLocaleDateString('en-US', {
+              weekday: 'long', month: 'long', day: 'numeric',
+              timeZone: 'America/Denver',
+            });
+            const startT = slotStart.toLocaleTimeString('en-US', {
+              hour: 'numeric', minute: '2-digit',
+              timeZone: 'America/Denver',
+            });
+            const endT = slotEnd.toLocaleTimeString('en-US', {
+              hour: 'numeric', minute: '2-digit',
+              timeZone: 'America/Denver', timeZoneName: 'short',
+            });
+            slots.push({
+              start: slotStart.toISOString(),
+              date:  dateStr,
+              time:  `${startT} – ${endT}`,
+            });
+          }
+          if (slots.length >= 20) break outer;
+        }
+      }
+    }
+    cursor.setDate(cursor.getDate() + 1);
+  }
+
+  return slots;
+}
+
+async function bookProspectSlot(accessToken, { name, email, phone, biz, note, slot }) {
+  const start = new Date(slot);
+  const end   = new Date(start.getTime() + 15 * 60 * 1000);
+
+  const descLines = [
+    '📞 Prospect call — Trevor calls them.',
+    '',
+    `Phone:    ${phone || '—'}`,
+    `Email:    ${email}`,
+    `Business: ${biz || '—'}`,
+  ];
+  if (note) descLines.push(`Note:     ${note}`);
+  descLines.push('', 'Booked via tjsdesign.online/schedule');
+
+  const eventRes = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      summary:     `Prospect Call — ${name}${biz ? ' · ' + biz : ''}`,
+      description: descLines.join('\n'),
+      start: { dateTime: start.toISOString(), timeZone: 'America/Denver' },
+      end:   { dateTime: end.toISOString(),   timeZone: 'America/Denver' },
+      attendees: [{ email }],
+      // No conferenceData block — this is a phone call, Trevor dials out
+      reminders: {
+        useDefault: false,
+        overrides: [
+          { method: 'email',  minutes: 24 * 60 },
+          { method: 'popup',  minutes: 15 },
+        ],
+      },
+    }),
+  });
+
+  const event = await eventRes.json();
+  if (!eventRes.ok) throw new Error(event.error?.message || 'Failed to book event');
+  return event;
+}
+
+async function sendProspectBookingEmail(env, { name, phone, email, biz, note, slotDate, slotTime }) {
+  if (!env.RESEND_API_KEY) throw new Error('Missing RESEND_API_KEY');
+
+  const lines = [
+    '📞 New prospect call booked!',
+    '',
+    `Name:     ${name}`,
+    `Business: ${biz || '—'}`,
+    `Phone:    ${phone || '—'}`,
+    `Email:    ${email}`,
+    `When:     ${slotDate || ''}${slotTime ? ' at ' + slotTime : ''}`,
+  ];
+  if (note) lines.push(`Note:     ${note}`);
+  lines.push('', "You're calling them — their number is above. The event is on your Google Calendar.");
+
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from:     'TJS Design <onboarding@resend.dev>',
+      to:       'trevorspencer89@gmail.com',
+      reply_to: email,
+      subject:  `Prospect call booked — ${name}${slotDate ? ' · ' + slotDate : ''}`,
+      text:     lines.join('\n'),
+    }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Failed to send notification email.');
+  return data;
+}
+
 // ── Stripe helpers ───────────────────────────────────────────────────────────
 
 const STRIPE_API = 'https://api.stripe.com/v1';
@@ -476,10 +676,18 @@ async function sendPaymentNotificationEmail(env, { name, email, addon, addonBill
   return data;
 }
 
-async function sendContactEmail(env, { name, phone, email }) {
+async function sendContactEmail(env, { name, phone, email, message }) {
   if (!env.RESEND_API_KEY) {
     throw new Error('Contact form is not configured yet (missing RESEND_API_KEY).');
   }
+
+  const isSchedule = message && message.startsWith('SCHEDULE REQUEST');
+  const subject = isSchedule
+    ? `Schedule request — ${name}`
+    : `New contact form submission — ${name}`;
+  const body = message
+    ? message
+    : `New message from the TJS Design site contact form:\n\nName: ${name}\nPhone: ${phone || '—'}\nEmail: ${email}`;
 
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -491,8 +699,8 @@ async function sendContactEmail(env, { name, phone, email }) {
       from: 'TJS Design Contact Form <onboarding@resend.dev>',
       to: 'trevorspencer89@gmail.com',
       reply_to: email,
-      subject: `New contact form submission — ${name}`,
-      text: `New message from the TJS Design site contact form:\n\nName: ${name}\nPhone: ${phone || '—'}\nEmail: ${email}`,
+      subject,
+      text: body,
     }),
   });
 
