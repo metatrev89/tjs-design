@@ -157,6 +157,7 @@
   .nav-logo span { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 19px; color: #17152B; }
   .nav-links { display: flex; align-items: center; gap: 28px; }
   .nav-links a { text-decoration: none; font-weight: 500; font-size: 15px; color: #3a3845; }
+  .nav-links a.btn-primary { color: #fff; }
   .btn-primary {
     display: inline-block; text-decoration: none;
     background: #2F6BFF; color: #fff;
@@ -179,9 +180,10 @@
     font-size: clamp(15px,2vw,17px); padding: 17px 30px;
     border-radius: 14px; border: 2px solid #17152B;
   }
-  @media (max-width: 680px) {
+  @media (max-width: 900px) {
     .nav-links { display: none; }
     .nav-mobile-btn { display: flex !important; }
+    .nav.open .nav-links { display: flex; flex-direction: column; align-items: flex-start; position: absolute; top: 72px; left: 0; right: 0; background: #FBF8F2; padding: 16px clamp(20px,5vw,48px) 22px; gap: 14px; border-bottom: 1px solid rgba(23,21,43,.08); }
   }
   .nav-mobile-btn {
     display: none; background: #17152B; border: none; cursor: pointer;
@@ -363,6 +365,8 @@
     </a>
     <div class="nav-links">
       <a href="/#services">Services</a>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/industries.html">Industries</a>
       <a href="/portfolio.html">Portfolio</a>
       <a href="/#process">How It Works</a>
       <a href="/#faq">FAQ</a>
@@ -383,7 +387,7 @@
   </div>
   <div class="container" style="position:relative;">
     <div class="breadcrumb">
-      <a href="/">TJS Design</a> &rsaquo; Website Design &rsaquo; Riverside, CA
+      <a href="/">TJS Design</a> &rsaquo; <a href="/locations.html">Website Design</a> &rsaquo; Riverside, CA
     </div>
     <div class="badge">★ Serving Riverside &amp; the Inland Empire</div>
     <h1 class="hero-h1">
@@ -419,19 +423,19 @@
     </div>
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-label">First Impression</div>
-        <div class="stat-number" style="color:#2F6BFF;">75%</div>
-        <div class="stat-desc">of consumers judge a business's credibility based on its website design.</div>
+        <div class="stat-label">Profile Actions</div>
+        <div class="stat-number" style="color:#2F6BFF;">56%</div>
+        <div class="stat-desc">of actions on Google Business Profiles are website clicks.</div><p style="font-size:13px; line-height:1.5; color:#9a97a3; margin-top:10px;">Source: <a href="https://www.statista.com/statistics/1041427/customer-actions-per-gmb-listing/" target="_blank" rel="noopener" style="color:#2F6BFF;">Statista, citing BrightLocal (Sept 2017–Dec 2018 data)</a></p>
       </div>
       <div class="stat-card">
-        <div class="stat-label">Search Behavior</div>
-        <div class="stat-number" style="color:#FF6B4A;">97%</div>
-        <div class="stat-desc">of people search online to find local services before making contact.</div>
+        <div class="stat-label">Google First</div>
+        <div class="stat-number" style="color:#FF6B4A;">71%</div>
+        <div class="stat-desc">of consumers use Google Search when looking for a local business.</div><p style="font-size:13px; line-height:1.5; color:#9a97a3; margin-top:10px;">Source: <a href="https://www.brightlocal.com/research/consumer-search-behavior-channels/" target="_blank" rel="noopener" style="color:#2F6BFF;">BrightLocal Consumer Search Behavior Study, 2026</a></p>
       </div>
       <div class="stat-card">
-        <div class="stat-label">The Gap</div>
-        <div class="stat-number" style="color:#1FC77D;">~30%</div>
-        <div class="stat-desc">of small local businesses still have no website at all. That's your opening.</div>
+        <div class="stat-label">After Reviews</div>
+        <div class="stat-number" style="color:#1FC77D;">54%</div>
+        <div class="stat-desc">of consumers visit a business's website after reading positive reviews.</div><p style="font-size:13px; line-height:1.5; color:#9a97a3; margin-top:10px;">Source: <a href="https://www.brightlocal.com/research/local-consumer-review-survey/" target="_blank" rel="noopener" style="color:#2F6BFF;">BrightLocal Local Consumer Review Survey, 2026</a></p>
       </div>
     </div>
   </div>
@@ -717,6 +721,7 @@
       </div>
       <div class="footer-links">
         <a href="/">Home</a>
+        <a href="/locations.html">Locations</a>
         <a href="/portfolio.html">Portfolio</a>
         <a href="/privacy.html">Privacy</a>
         <a href="/terms.html">Terms</a>

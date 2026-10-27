@@ -85,8 +85,31 @@ A: Yes, on TJS Design's end. The timeline starts from your intake call and is me
 Q: Do I have to get the Site Management plan?
 A: No. It's completely optional. Your site is fully live and functional without it.
 
+## Key Pages
+- Pricing: https://tjsdesign.online/pricing.html
+- Do I need a website if I have a Google Business Profile?: https://tjsdesign.online/do-i-need-a-website-if-i-have-google-business-profile.html
+- Google Business Profile statistics (sourced): https://tjsdesign.online/google-business-profile-statistics.html
+- TJS Design vs. Wix: https://tjsdesign.online/tjs-design-vs-wix.html
+- Website vs. Facebook page for a local business: https://tjsdesign.online/website-vs-facebook-for-business.html
+
+## Industry Pages
+- Industries overview: https://tjsdesign.online/industries.html
+- Websites for plumbers: https://tjsdesign.online/website-for-plumbers.html
+- Websites for roofers: https://tjsdesign.online/website-for-roofers.html
+- Websites for auto repair shops: https://tjsdesign.online/website-for-auto-repair.html
+- Websites for electricians: https://tjsdesign.online/website-for-electricians.html
+- Websites for handymen: https://tjsdesign.online/website-for-handyman.html
+- Websites for landscapers: https://tjsdesign.online/website-for-landscapers.html
+
+## Sourced Facts
+- 56% of customer actions on Google Business Profiles were website clicks (BrightLocal study of 45,000+ listings, data Sept 2017–Dec 2018).
+- 54% of consumers visit a business's website after reading positive reviews (BrightLocal Local Consumer Review Survey, 2026).
+- 42% of citations in AI local search results (ChatGPT, Google AI Mode, AI Overviews) came from business websites (BrightLocal Local AI Visibility Study, 2026).
+- 47% of Google's top 10 organic results for local searches are business websites (BrightLocal Business Listings Visibility Study, 2024).
+- 71% of consumers use Google Search when looking for a local business (BrightLocal Consumer Search Behavior Study, 2026).
+
 ## Service Area Pages (Localized)
-TJS Design has dedicated service pages for major Utah cities. Each page covers website design for local service businesses in that specific market:
+TJS Design has dedicated service pages for Utah and California cities (index: https://tjsdesign.online/locations.html). Each page covers website design for local service businesses in that specific market:
 - Salt Lake City, UT: https://tjsdesign.online/website-design-salt-lake-city.html
 - Provo, UT: https://tjsdesign.online/website-design-provo.html
 - Ogden, UT: https://tjsdesign.online/website-design-ogden.html
@@ -97,6 +120,7 @@ TJS Design has dedicated service pages for major Utah cities. Each page covers w
 - Draper, UT: https://tjsdesign.online/website-design-draper.html
 - Orem, UT: https://tjsdesign.online/website-design-orem.html
 - Murray, UT: https://tjsdesign.online/website-design-murray.html
+- Lehi, UT: https://tjsdesign.online/website-design-lehi.html
 - Los Angeles, CA: https://tjsdesign.online/website-design-los-angeles.html
 - San Diego, CA: https://tjsdesign.online/website-design-san-diego.html
 - San Jose, CA: https://tjsdesign.online/website-design-san-jose.html

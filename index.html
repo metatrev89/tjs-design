@@ -316,6 +316,8 @@
       <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
         <nav style="display:flex; align-items:center; gap:32px;">
           <a href="#services" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">Services</a>
+          <a href="pricing.html" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">Pricing</a>
+          <a href="industries.html" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">Industries</a>
           <a href="portfolio.html" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">Portfolio</a>
           <a href="#process" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">How It Works</a>
           <a href="#faq" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">FAQ</a>
@@ -333,6 +335,8 @@
     <sc-if value="{{ mobileNav }}" hint-placeholder-val="{{ false }}">
       <div style="border-top:1px solid rgba(23,21,43,.07); padding:14px clamp(20px,5vw,48px) 22px; display:flex; flex-direction:column; gap:4px; background:#FBF8F2;">
         <a onClick="{{ closeNav }}" href="#services" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">Services</a>
+        <a onClick="{{ closeNav }}" href="pricing.html" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">Pricing</a>
+        <a onClick="{{ closeNav }}" href="industries.html" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">Industries</a>
         <a onClick="{{ closeNav }}" href="portfolio.html" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">Portfolio</a>
         <a onClick="{{ closeNav }}" href="#process" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">How It Works</a>
         <a onClick="{{ closeNav }}" href="#faq" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">FAQ</a>
@@ -351,9 +355,9 @@
     </div>
     <div style="position:relative; max-width:1180px; margin:0 auto; padding:clamp(48px,8vw,92px) clamp(20px,5vw,48px) clamp(56px,8vw,96px);">
       <div style="max-width:760px;">
-        <div style="display:inline-flex; align-items:center; gap:8px; background:#FFC53D; border-radius:999px; padding:9px 17px; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:13px; color:#17152B; margin-bottom:28px; transform:rotate(-2deg);">★ For all local service businesses &amp; more</div>
-        <h1 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:clamp(40px,7.4vw,68px); line-height:1.02; color:#17152B; margin:0 0 24px; letter-spacing:-0.025em;">Your business deserves a website that <span style="background:linear-gradient(105deg,#FF6B4A,#FF3D9A); -webkit-background-clip:text; background-clip:text; color:transparent;">actually works.</span></h1>
-        <p style="font-size:clamp(17px,2.3vw,20px); line-height:1.55; color:#55525f; margin:0 0 34px; max-width:560px;">Fully custom, mobile-ready, SEO-optimized websites for local service businesses — start to finish, in under 14 business days. Flat rate. No surprises. You just show up to one call.</p>
+        <div style="display:inline-flex; align-items:center; gap:8px; background:#FFC53D; border-radius:999px; padding:9px 17px; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:13px; color:#17152B; margin-bottom:28px; transform:rotate(-2deg);">★ For local businesses with a Google profile and no website</div>
+        <h1 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:clamp(40px,7.4vw,68px); line-height:1.02; color:#17152B; margin:0 0 24px; letter-spacing:-0.025em;">Your Google Business Profile is <span style="background:linear-gradient(105deg,#FF6B4A,#FF3D9A); -webkit-background-clip:text; background-clip:text; color:transparent;">missing its website.</span></h1>
+        <p style="font-size:clamp(17px,2.3vw,20px); line-height:1.55; color:#55525f; margin:0 0 34px; max-width:560px;">People already find you on Google. When they tap “Website,” there’s nothing there. TJS Design builds the missing half of your profile — a fully custom, mobile-ready site connected to your listing, done for you in under 14 business days. Flat rate. One call.</p>
         <div style="display:flex; flex-wrap:wrap; gap:14px; margin-bottom:44px;">
           <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; background:#17152B; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:clamp(15px,2vw,17px); padding:17px 28px; border-radius:14px;">Get My Website — $999.99</button>
           <a href="portfolio.html" style="text-decoration:none; display:inline-flex; align-items:center; background:transparent; color:#17152B; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:clamp(15px,2vw,17px); padding:17px 28px; border-radius:14px; border:2px solid #17152B;">See the Work →</a>
@@ -373,20 +377,22 @@
     <div style="max-width:1180px; margin:0 auto; padding:clamp(64px,9vw,108px) clamp(20px,5vw,48px);">
       <div style="max-width:680px; margin-bottom:48px;">
         <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:13px; letter-spacing:.18em; text-transform:uppercase; color:#FF3D9A; margin-bottom:16px;">The Reality</div>
-        <h2 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:clamp(30px,4.6vw,48px); line-height:1.06; color:#17152B; margin:0 0 22px; letter-spacing:-0.02em;">You show up on Google. But there's nothing there.</h2>
-        <p style="font-size:clamp(16px,2vw,18px); line-height:1.6; color:#55525f; margin:0;">When someone searches for a plumber, a roofer, a landscaper, or a cleaning service in their area, the first thing they do is Google it. They see your Google Business listing. They click your name — and find nothing. No website. No photos. No services. So they click the next business. That's a lost customer, every single day you don't have a website that represents you properly.</p>
+        <h2 style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:clamp(30px,4.6vw,48px); line-height:1.06; color:#17152B; margin:0 0 22px; letter-spacing:-0.02em;">Your profile gets you found. Your website gets you chosen.</h2>
+        <p style="font-size:clamp(16px,2vw,18px); line-height:1.6; color:#55525f; margin:0;">When someone searches for a plumber, a roofer, a landscaper, or a cleaning service in their area, the first thing they do is Google it. They see your Google Business listing. They click your name — and find nothing. No website. No photos. No services. So they click the next business. That's a lost customer, every single day you don't have a website that represents you properly. In BrightLocal's study of 45,000+ Google listings, 56% of the actions people took on a profile were website clicks (<a href="google-business-profile-statistics.html" style="color:#2F6BFF;">see the research</a>).</p>
       </div>
       <sc-if value="{{ showStats }}" hint-placeholder-val="{{ true }}">
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">
           <div style="background:#FBF8F2; border:2px solid #17152B; border-radius:20px; padding:30px; box-shadow:6px 6px 0 rgba(23,21,43,.08);">
-            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#9a97a3; margin-bottom:10px;">First Impression</div>
-            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:56px; line-height:1; color:#2F6BFF; margin-bottom:12px;">75%</div>
-            <p style="font-size:16px; line-height:1.5; color:#3a3845; margin:0;">of consumers judge a business's credibility by its website.</p>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#9a97a3; margin-bottom:10px;">Profile Actions</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:56px; line-height:1; color:#2F6BFF; margin-bottom:12px;">56%</div>
+            <p style="font-size:16px; line-height:1.5; color:#3a3845; margin:0;">of actions on Google Business Profiles are website clicks.</p>
+            <p style="font-size:13px; line-height:1.5; color:#9a97a3; margin:10px 0 0;">Source: <a href="https://www.brightlocal.com/blog/five-things-we-discovered-analyzing-45000-google-my-business-listings/" target="_blank" rel="noopener" style="color:#2F6BFF;">BrightLocal GMB Insights Study</a>, 2019</p>
           </div>
           <div style="background:#FBF8F2; border:2px solid #17152B; border-radius:20px; padding:30px; box-shadow:6px 6px 0 rgba(23,21,43,.08);">
-            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#9a97a3; margin-bottom:10px;">The Gap</div>
-            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:56px; line-height:1; color:#FF6B4A; margin-bottom:12px;">~30%</div>
-            <p style="font-size:16px; line-height:1.5; color:#3a3845; margin:0;">of small local businesses have no website at all.</p>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#9a97a3; margin-bottom:10px;">After Reviews</div>
+            <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:56px; line-height:1; color:#FF6B4A; margin-bottom:12px;">54%</div>
+            <p style="font-size:16px; line-height:1.5; color:#3a3845; margin:0;">of consumers visit a business's website after reading positive reviews.</p>
+            <p style="font-size:13px; line-height:1.5; color:#9a97a3; margin:10px 0 0;">Source: <a href="https://www.brightlocal.com/research/local-consumer-review-survey/" target="_blank" rel="noopener" style="color:#2F6BFF;">BrightLocal Local Consumer Review Survey</a>, 2026</p>
           </div>
           <div style="background:#FBF8F2; border:2px solid #17152B; border-radius:20px; padding:30px; box-shadow:6px 6px 0 rgba(23,21,43,.08);">
             <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#9a97a3; margin-bottom:10px;">Missed Revenue</div>
@@ -652,6 +658,14 @@
           <div style="margin-top:auto; padding-top:16px; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:13px; color:#2F6BFF;">See Murray page →</div>
         </a>
 
+        <a href="/website-design-lehi.html" style="text-decoration:none; display:flex; flex-direction:column; background:#fff; border:1.5px solid rgba(23,21,43,.09); border-radius:20px; padding:28px 24px; box-shadow:0 2px 12px rgba(23,21,43,.04); transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 6px 24px rgba(23,21,43,.10)'" onmouseout="this.style.boxShadow='0 2px 12px rgba(23,21,43,.04)'">
+          <div style="font-size:28px; margin-bottom:12px;">🏔️</div>
+          <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:17px; color:#17152B; margin-bottom:6px;">Lehi</div>
+          <div style="font-size:13px; color:#9a97a3; font-weight:500; margin-bottom:14px;">Silicon Slopes HQ, northern Utah County</div>
+          <div style="font-size:14px; color:#55525f; line-height:1.55;">Tech campuses, new subdivisions, and thousands of new homeowners off Traverse Mountain and Thanksgiving Point — all searching Google first.</div>
+          <div style="margin-top:auto; padding-top:16px; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:13px; color:#2F6BFF;">See Lehi page →</div>
+        </a>
+
       </div>
 
       <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:#9a97a3; margin-bottom:16px;">California</div>
@@ -833,6 +847,9 @@
           <div style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:13px; color:#fff; text-transform:uppercase; letter-spacing:.1em; margin-bottom:16px;">Explore</div>
           <div style="display:flex; flex-direction:column; gap:11px;">
             <a href="#services" style="text-decoration:none; color:#c2bfd6; font-size:15px;">Services</a>
+            <a href="pricing.html" style="text-decoration:none; color:#c2bfd6; font-size:15px;">Pricing</a>
+            <a href="industries.html" style="text-decoration:none; color:#c2bfd6; font-size:15px;">Industries</a>
+            <a href="locations.html" style="text-decoration:none; color:#c2bfd6; font-size:15px;">Locations</a>
             <a href="portfolio.html" style="text-decoration:none; color:#c2bfd6; font-size:15px;">Portfolio</a>
             <a href="#process" style="text-decoration:none; color:#c2bfd6; font-size:15px;">How It Works</a>
             <a href="#faq" style="text-decoration:none; color:#c2bfd6; font-size:15px;">FAQ</a>
