@@ -320,6 +320,7 @@
           <a href="industries.html" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">Industries</a>
           <a href="portfolio.html" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">Portfolio</a>
           <a href="#process" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">How It Works</a>
+          <a href="local-growth-blueprint.html" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">Guide</a>
           <a href="#faq" style="text-decoration:none; font-weight:500; font-size:15px; color:#3a3845;">FAQ</a>
           <button onClick="{{ openCheckout }}" style="cursor:pointer; border:none; background:#2F6BFF; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:15px; padding:11px 20px; border-radius:999px;">Get My Website →</button>
         </nav>
@@ -339,6 +340,7 @@
         <a onClick="{{ closeNav }}" href="industries.html" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">Industries</a>
         <a onClick="{{ closeNav }}" href="portfolio.html" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">Portfolio</a>
         <a onClick="{{ closeNav }}" href="#process" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">How It Works</a>
+        <a onClick="{{ closeNav }}" href="local-growth-blueprint.html" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">Guide</a>
         <a onClick="{{ closeNav }}" href="#faq" style="text-decoration:none; font-weight:600; font-size:17px; color:#17152B; padding:12px 0;">FAQ</a>
         <button onClick="{{ openCheckout }}" style="margin-top:8px; cursor:pointer; border:none; background:#2F6BFF; color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; padding:15px; border-radius:13px; width:100%;">Get My Website →</button>
       </div>
@@ -1009,7 +1011,7 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     this._onResize = () => {
-      const m = window.innerWidth < 900;
+      const m = window.innerWidth < 1024;
       if (m !== this.state.isMobile) this.setState({ isMobile: m, mobileNav: false });
     };
     this._onResize();

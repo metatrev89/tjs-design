@@ -42,7 +42,7 @@ section[id] { scroll-margin-top: 80px; }
   font-size: clamp(15px,2vw,17px); padding: 17px 30px;
   border-radius: 14px; border: 2px solid #17152B;
 }
-@media (max-width: 900px) {
+@media (max-width: 1023px) {
   .nav-links { display: none; }
   .nav-mobile-btn { display: flex !important; }
 }
