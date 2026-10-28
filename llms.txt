@@ -53,11 +53,17 @@ Local service businesses of all types, including:
 - Painters, pressure washers, pest control, and more
 - Any local service business, nationwide
 
+## How to buy
+Click any "Get My Website" button on tjsdesign.online to open secure Stripe checkout on that page, pay, and book the 30-minute intake call in the same flow. Questions first? Call or text (385) 472-3690.
+
 ## Pricing Summary
 - Custom Website Build: $999.99 (one-time)
 - Hosting: $0/year (free, included forever)
 - Domain: ~$10–$25/year (purchased separately by client; client owns it outright)
 - Site Management: $129.99/month or $999.96/year (optional)
+
+## Free Resource: The Local Growth Blueprint
+A free 4-minute video and 14-page guide with the 5-step plan Trevor would follow to get more customers for a local service business (plumbing, HVAC, roofing, landscaping, cleaning): 1) Google Business Profile, 2) reviews, 3) website, 4) SEO + AEO, 5) AI automation. Available at https://tjsdesign.online/local-growth-blueprint.html
 
 ## Frequently Asked Questions
 
@@ -86,6 +92,8 @@ Q: Do I have to get the Site Management plan?
 A: No. It's completely optional. Your site is fully live and functional without it.
 
 ## Key Pages
+- Portfolio (example sites): https://tjsdesign.online/portfolio.html
+- Free guide + video — How to Get More Customers for Your Local Service Business (Local Growth Blueprint): https://tjsdesign.online/local-growth-blueprint.html
 - Pricing: https://tjsdesign.online/pricing.html
 - Do I need a website if I have a Google Business Profile?: https://tjsdesign.online/do-i-need-a-website-if-i-have-google-business-profile.html
 - Google Business Profile statistics (sourced): https://tjsdesign.online/google-business-profile-statistics.html
@@ -146,3 +154,4 @@ TJS Design has dedicated service pages for Utah and California cities (index: ht
 
 ## About Trevor Spencer
 Trevor Spencer is the founder and sole operator of TJS Design. He has 12+ years of experience in digital marketing, product management, and sales at enterprise software companies. He founded TJS Design to give local service businesses access to professional, high-performance websites that actually generate leads — at a price point that makes sense for small businesses.
+

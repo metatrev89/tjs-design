@@ -1,37 +1,57 @@
 # robots.txt — tjsdesign.online
 # TJS Design — Custom Websites for Local Service Businesses
 
-# Allow all major search engine crawlers
+# Allow all search engine crawlers
 User-agent: *
 Allow: /
 
-# Allow AI model crawlers explicitly (AEO)
+# Search and AI answer-engine crawlers, allowed explicitly (AEO)
 User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
-User-agent: Google-Extended
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
 User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
 Allow: /
 
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
 Allow: /
 
 User-agent: Slurp
 Allow: /
 
-# Sitemap location
+# Sitemap
 Sitemap: https://tjsdesign.online/sitemap.xml
 
-# AI/LLM knowledge file
-# See https://tjsdesign.online/llms.txt for a plain-text summary of this site's content, services, and business info.
+# AI/LLM summary of this site's services and key pages: https://tjsdesign.online/llms.txt
