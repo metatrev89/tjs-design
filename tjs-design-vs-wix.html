@@ -115,7 +115,7 @@
       <a href="/#process">How It Works</a>
       <a href="/local-growth-blueprint.html">Guide</a>
       <a href="/#faq">FAQ</a>
-      <a href="/" class="btn-primary">Get My Website →</a>
+      <a href="/" class="btn-primary" data-tjs-checkout>Get My Website →</a>
     </div>
     <button class="nav-mobile-btn" aria-label="Menu" onclick="this.closest('nav').classList.toggle('open')"><span></span><span></span><span></span></button>
   </div>
@@ -149,7 +149,7 @@
 <section class="section section-white" id="faq"><div class="container"><div class="section-label" style="color:#FF3D9A;">FAQ</div><h2 class="section-h2">Questions owners actually ask.</h2><div class="faq-list" style="max-width:800px;"><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is Wix cheaper than hiring someone to build a website?<span class="arrow">▾</span></button><div class="faq-a">Upfront, yes — Wix plans run about $17–$39/month billed annually (third-party pricing reviews, October 2026). Over three years a Wix Core plan is roughly $1,044, plus the hours you spend building it. TJS Design is $999.99 once, with $0/year hosting, and you don't build anything.</div></div><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Is a custom website better for SEO than Wix?<span class="arrow">▾</span></button><div class="faq-a">Wix can rank, and plenty of Wix sites do. The difference is control and setup: a custom site gives full control over page structure, speed and schema markup, and TJS Design sets up SEO, AEO, Search Console, Bing and GA4 for you. On Wix, that work is up to you.</div></div><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Can I edit my TJS Design website myself?<span class="arrow">▾</span></button><div class="faq-a">Sites are custom-built, so they aren't edited in a drag-and-drop editor. Most owners text changes in, or add Site Management ($129.99/month or $999.96/year) for a monthly update call and content changes.</div></div><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">When should I just use Wix?<span class="arrow">▾</span></button><div class="faq-a">If you enjoy building things yourself, want to change your site every day, or need a big online store, Wix is a reasonable choice. If you'd rather spend your time running your business, a done-for-you site makes more sense.</div></div></div></div></section>
 <section class="section section-cream"><div class="container"><div class="cta-box">
   <h2>Your Google profile is already getting looked at. Give it somewhere to send people.</h2><p>One flat $999.99. One 30-minute call. A fully custom website connected to your Google Business Profile, live in under 14 business days.</p>
-  <div class="cta-actions"><a href="/" class="btn-primary" style="font-size:17px; padding:17px 32px; border-radius:14px;">Get My Website — $999.99</a><a href="sms:3854723690" class="btn-sms">Text Trevor</a><a href="tel:3854723690" class="btn-outline" style="color:#fff; border-color:rgba(255,255,255,.3);">Call (385) 472-3690</a></div>
+  <div class="cta-actions"><a href="/" class="btn-primary" style="font-size:17px; padding:17px 32px; border-radius:14px;" data-tjs-checkout>Get My Website — $999.99</a><a href="sms:3854723690" class="btn-sms">Text Trevor</a><a href="tel:3854723690" class="btn-outline" style="color:#fff; border-color:rgba(255,255,255,.3);">Call (385) 472-3690</a></div>
 </div></div></section>
 <footer class="section-cream">
   <div class="container">
@@ -175,5 +175,6 @@
     if (!isOpen) item.classList.add('open');
   }
 </script>
+<script src="/checkout.js" defer></script>
 </body>
 </html>

@@ -139,7 +139,7 @@
       <a href="/#process">How It Works</a>
       <a href="/local-growth-blueprint.html">Guide</a>
       <a href="/#faq">FAQ</a>
-      <a href="/" class="btn-primary">Get My Website →</a>
+      <a href="/" class="btn-primary" data-tjs-checkout>Get My Website →</a>
     </div>
     <button class="nav-mobile-btn" aria-label="Menu" onclick="this.closest('nav').classList.toggle('open')"><span></span><span></span><span></span></button>
   </div>
@@ -166,7 +166,7 @@
 <section class="section section-white" id="faq"><div class="container"><div class="section-label" style="color:#FF3D9A;">FAQ</div><h2 class="section-h2">Questions owners actually ask.</h2><div class="faq-list" style="max-width:800px;"><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">What percentage of Google Business Profile actions are website clicks?<span class="arrow">▾</span></button><div class="faq-a">56%, according to BrightLocal's study of 45,000+ listings (data from Sept 2017–Dec 2018). Website clicks were the most common action, ahead of calls and direction requests.</div></div><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How many people visit a business website after reading reviews?<span class="arrow">▾</span></button><div class="faq-a">54% of consumers visit a business's website after reading positive reviews, per BrightLocal's 2026 Local Consumer Review Survey — the most common next step.</div></div><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Do AI tools like ChatGPT cite business websites for local searches?<span class="arrow">▾</span></button><div class="faq-a">Yes. In BrightLocal's 2026 Local AI Visibility Study, 42% of citations across ChatGPT, Google AI Mode and AI Overviews came from business websites.</div></div><div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">How old is the 56% statistic?<span class="arrow">▾</span></button><div class="faq-a">It comes from BrightLocal's 2019 study of data collected from 2017–2018. It's the largest public breakdown of profile actions we know of, so we cite it with its date. The newer 2024–2026 studies on this page point the same direction.</div></div></div></div></section>
 <section class="section section-cream"><div class="container"><div class="cta-box">
   <h2>Want your Google profile's Website button to actually work?</h2><p>TJS Design builds a custom site and connects it to your profile — flat $999.99, live in under 14 business days.</p>
-  <div class="cta-actions"><a href="/" class="btn-primary" style="font-size:17px; padding:17px 32px; border-radius:14px;">Get My Website — $999.99</a><a href="sms:3854723690" class="btn-sms">Text Trevor</a><a href="tel:3854723690" class="btn-outline" style="color:#fff; border-color:rgba(255,255,255,.3);">Call (385) 472-3690</a></div>
+  <div class="cta-actions"><a href="/" class="btn-primary" style="font-size:17px; padding:17px 32px; border-radius:14px;" data-tjs-checkout>Get My Website — $999.99</a><a href="sms:3854723690" class="btn-sms">Text Trevor</a><a href="tel:3854723690" class="btn-outline" style="color:#fff; border-color:rgba(255,255,255,.3);">Call (385) 472-3690</a></div>
 </div></div></section>
 <footer class="section-cream">
   <div class="container">
@@ -192,5 +192,6 @@
     if (!isOpen) item.classList.add('open');
   }
 </script>
+<script src="/checkout.js" defer></script>
 </body>
 </html>
