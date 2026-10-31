@@ -5,3 +5,6 @@
 export/
 *.zip
 *.pdf
+
+# One-time setup scripts (not part of the website)
+_setup/

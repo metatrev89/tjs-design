@@ -6,33 +6,25 @@ TJS Design is a custom web design service run by Trevor Spencer, a web designer 
 ## What makes TJS Design different?
 - Every website is built 100% from scratch — no templates, no drag-and-drop builders, no off-the-shelf layouts
 - One expert handles everything start to finish — design, development, SEO, AEO, analytics, and launch
-- Flat-rate pricing: $999.99 one-time, no hidden fees
-- Free hosting ($0/year), using GitHub Pages — no ongoing platform costs
+- Simple plans from $0 down on a 12-month agreement — same website and service on every plan
+- Hosting, management and a weekly Google Business Profile post (52 a year) included
 - Delivered in under 14 business days from the intake call
 - Includes full on-page SEO, structured data (JSON-LD), AEO optimization, Google Search Console indexing, Bing Webmaster Tools, and Google Analytics 4 setup — all included
 
-## Services
+## Plans (12-month agreement, card on file)
+Every plan includes the same year-one service: a fully custom, mobile-ready, SEO + AEO optimized website delivered in under 14 business days; Google Search Console, Bing Webmaster Tools and GA4 setup; connection to the client's Google Business Profile; hosting, security, updates and uptime monitoring; content changes; up to one 30-minute call per month; support by phone, text and email; and a branded Google Business Profile post every week (52 per year).
 
-### Custom Website Build — $999.99 (one-time)
-A fully custom, mobile-ready, SEO-optimized website built specifically for your local service business. Includes:
-- Custom design (no templates)
-- Mobile-responsive layout
-- On-page SEO (metadata, structured data, canonical tags)
-- Answer Engine Optimization (AEO) for Google AI Overview, ChatGPT, and Perplexity
-- Google Search Console setup and sitemap submission
-- Bing Webmaster Tools registration
-- Google Analytics 4 integration
-- Free hosting via GitHub Pages ($0/year)
-- Delivered in under 14 business days
+- Own It — $999.99 upfront + $29.99/month for 12 months (due today $1,029.98; year one $1,359.87). Lowest total cost.
+- Balanced — $499.99 upfront + $79.99/month for 12 months (due today $579.98; year one $1,459.87).
+- Zero Down — $0 upfront + $129.99/month for 12 months (due today $129.99; year one $1,559.88).
 
-### Ongoing Site Management — $129.99/month or $999.96/year ($83.33/month)
-Optional ongoing management for business owners who want their site fully handled after launch. Includes:
-- One 30-minute update call per month
-- Unlimited content and copy updates
-- 24/7 direct support via phone, text, and email
-- Full site maintenance and monitoring
-- Ongoing analytics review
-- Cancel anytime (monthly plan) or save $560/year with annual billing
+If a client cancels during the first 12 months, the remaining year-one payments are still due. The website belongs to the client once year one is paid.
+
+## After year one
+Plans move automatically to Essential Care month-to-month on the card on file.
+- Essential Care — $29.99/month month-to-month, or $19.99/month on a 12-month plan. Hosting, security and uptime; 52 weekly Google Business Profile posts; up to 3 small edits per month; text and email support during business hours.
+- Premium Care — $79.99/month month-to-month, or $59.99/month on a 12-month plan. Everything in Essential plus up to one 30-minute call per month, bigger content changes and 24/7 support.
+Month-to-month plans can be canceled anytime before the next charge by text, call or email.
 
 ## How It Works (4 steps)
 1. Purchase & Schedule — Pay online and immediately book your 30-minute intake call during checkout
@@ -54,13 +46,14 @@ Local service businesses of all types, including:
 - Any local service business, nationwide
 
 ## How to buy
-Click any "Get My Website" button on tjsdesign.online to open secure Stripe checkout on that page, pay, and book the 30-minute intake call in the same flow. Questions first? Call or text (385) 472-3690.
+Click any "Get My Website" button on tjsdesign.online to open secure Stripe checkout on that page, choose a plan, agree to the 12-month terms, pay what is due today, and book the 30-minute intake call in the same flow. Questions first? Call or text (385) 472-3690.
 
 ## Pricing Summary
-- Custom Website Build: $999.99 (one-time)
-- Hosting: $0/year (free, included forever)
+- Own It: $999.99 upfront + $29.99/month (12 months)
+- Balanced: $499.99 upfront + $79.99/month (12 months)
+- Zero Down: $0 upfront + $129.99/month (12 months)
+- After year one: Essential Care $29.99/month month-to-month ($19.99/month on a 12-month plan) or Premium Care $79.99/month ($59.99/month on a 12-month plan)
 - Domain: ~$10–$25/year (purchased separately by client; client owns it outright)
-- Site Management: $129.99/month or $999.96/year (optional)
 
 ## Free Resource: The Local Growth Blueprint
 A free 4-minute video and 14-page guide with the 5-step plan Trevor would follow to get more customers for a local service business (plumbing, HVAC, roofing, landscaping, cleaning): 1) Google Business Profile, 2) reviews, 3) website, 4) SEO + AEO, 5) AI automation. Available at https://tjsdesign.online/local-growth-blueprint.html
@@ -68,7 +61,7 @@ A free 4-minute video and 14-page guide with the 5-step plan Trevor would follow
 ## Frequently Asked Questions
 
 Q: How much does a website from TJS Design cost?
-A: A custom website costs a flat $999.99 one-time fee. Hosting is $0/year. The optional Site Management plan is $129.99/month or $83.33/month billed annually.
+A: Three plans on a 12-month agreement: Own It ($999.99 upfront + $29.99/month), Balanced ($499.99 upfront + $79.99/month) or Zero Down ($0 upfront + $129.99/month). Each includes the custom website, hosting, management and 52 weekly Google Business Profile posts. After year one, Essential Care is $29.99/month month-to-month or $19.99/month on a 12-month plan.
 
 Q: How long does it take?
 A: Under 14 business days from the intake call, guaranteed.
@@ -77,19 +70,22 @@ Q: What do I need to provide?
 A: Very little. The intake call covers everything — your services, branding, photos, and goals. No logo? That's fine too.
 
 Q: Does TJS Design do SEO?
-A: Yes. Every website includes full on-page SEO, AEO (Answer Engine Optimization), structured data (JSON-LD), Google Search Console setup, Bing Webmaster Tools, and GA4 — all included in the $999.99 rate.
+A: Yes. Every website includes full on-page SEO, AEO (Answer Engine Optimization), structured data (JSON-LD), Google Search Console setup, Bing Webmaster Tools, and GA4 — all included in every plan.
 
 Q: What is AEO?
 A: AEO (Answer Engine Optimization) structures your site so AI-powered tools like Google's AI Overview, ChatGPT, and Perplexity can surface your business in answers. It works alongside traditional SEO.
 
-Q: Is hosting really free?
-A: Yes. TJS Design uses GitHub Pages, so hosting costs $0/year — forever. You only pay for your domain ($10–$25/year), which you own outright.
+Q: Is hosting included?
+A: Yes. Hosting, security and uptime monitoring are part of every plan — there's no separate hosting bill. The only other cost is the domain ($10–$25/year), which the client owns outright.
 
 Q: Is the 14-day timeline guaranteed?
 A: Yes, on TJS Design's end. The timeline starts from your intake call and is met every time as long as design feedback is provided within a reasonable window.
 
-Q: Do I have to get the Site Management plan?
-A: No. It's completely optional. Your site is fully live and functional without it.
+Q: What happens after the first year?
+A: The plan moves to Essential Care at $29.99/month month-to-month (cancel anytime before the next charge by text, call or email), or $19.99/month on another 12-month plan. Premium Care is $79.99/month ($59.99/month on a 12-month plan).
+
+Q: Can I cancel in the first year?
+A: Every plan is a 12-month agreement. Service can stop anytime, but the remaining year-one payments are still due. The site is the client's once year one is paid.
 
 ## Key Pages
 - Portfolio (example sites): https://tjsdesign.online/portfolio.html

@@ -8,6 +8,7 @@
  *   GOOGLE_CLIENT_SECRET   — OAuth client secret
  *   GOOGLE_REFRESH_TOKEN   — set after running /oauth/start once
  *   RESEND_API_KEY         — Resend API key, used to email contact form + payment notifications
+ *   STRIPE_WEBHOOK_SECRET  — whsec_... signing secret for the /stripe-webhook endpoint
  *
  * Routes:
  *   GET  /oauth/start             →  redirect to Google consent screen
@@ -16,24 +17,48 @@
  *   POST /calendar/book           →  create 30-min intake-call calendar event (checkout flow)
  *   GET  /calendar/prospect-slots →  return available 15-min prospect slots (schedule page)
  *   POST /calendar/book-prospect  →  create 15-min prospect call event, no Google Meet, phone call
- *   POST /create-payment-intent   →  { clientSecret } — one-time build, or a real Stripe
- *                                     Subscription (Site Management) with the build billed
- *                                     once on the first invoice. See PRICE_IDS below.
- *   POST /payment-confirmed       →  email Trevor as soon as the client-side payment confirms,
- *                                     so he has their contact info even if they never get to
- *                                     the calendar-booking step. Best-effort / non-blocking —
- *                                     not a substitute for a real Stripe webhook later.
+ *   POST /create-payment-intent   →  { clientSecret, subscriptionId } — creates the client's
+ *                                     year-one plan as a Stripe Subscription (monthly price) with
+ *                                     the upfront fee billed once on the first invoice. See PLANS.
+ *   POST /payment-confirmed       →  locks in the 12-month agreement (see ensureContractSchedule)
+ *                                     and emails Trevor. Called by the browser right after payment.
+ *   POST /stripe-webhook          →  Stripe → Worker backup for the same lock-in, so it still
+ *                                     happens if the browser closes before /payment-confirmed.
  *   POST /contact                 →  email a footer contact-form submission via Resend
  */
 
-// Stripe Products/Prices created 2026-06-20 — acct_1T488BA7Unp9hIDT (live mode).
-// Product "Custom Website Build" (prod_UjxHRuqBTYwmpH) and
-// Product "Site Management" (prod_UjxH80uDsyyRex).
-const PRICE_IDS = {
-  build:   'price_1TkTNCA7Unp9hIDT9WnyLcjA', // Custom Website Build — $999.99 one-time
-  monthly: 'price_1TkTNNA7Unp9hIDTZiLloBNF', // Site Management — $129.99/month
-  annual:  'price_1TkTNTA7Unp9hIDTVLhCUom3', // Site Management — $999.96/year
+// ── Plans (pricing model introduced 2026-10-30) ─────────────────────────────
+// Prices are looked up in Stripe by lookup_key (created by stripe-setup-prices.sh),
+// so no price IDs need to be pasted into this file.
+//
+// Year one is a 12-month agreement: upfront fee (if any) + 12 monthly payments.
+// After the 12th payment the subscription moves to Essential Care month-to-month.
+const PLANS = {
+  own:      { label: 'Own It',    upfront: 'tjs_upfront_999',  monthly: 'tjs_y1_own_2999',      upfrontCents: 99999, monthlyCents: 2999 },
+  balanced: { label: 'Balanced',  upfront: 'tjs_upfront_499',  monthly: 'tjs_y1_balanced_7999', upfrontCents: 49999, monthlyCents: 7999 },
+  zero:     { label: 'Zero Down', upfront: null,               monthly: 'tjs_y1_zero_12999',    upfrontCents: 0,     monthlyCents: 12999 },
 };
+const YEAR_ONE_PAYMENTS = 12;
+const AFTER_YEAR_ONE = 'tjs_essential_m2m_2999'; // Essential Care, month-to-month, $29.99/mo
+const TERMS_VERSION = '2026-10-30';
+
+let _priceCache = null;
+async function priceIds(env) {
+  if (_priceCache) return _priceCache;
+  const keys = new Set([AFTER_YEAR_ONE]);
+  Object.values(PLANS).forEach(p => { keys.add(p.monthly); if (p.upfront) keys.add(p.upfront); });
+  const qs = new URLSearchParams({ active: 'true', limit: '100' });
+  keys.forEach(k => qs.append('lookup_keys[]', k));
+  const res = await fetch(`${STRIPE_API}/prices?${qs}`, { headers: STRIPE_HEADERS(env) });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error?.message || 'Could not load prices.');
+  const map = {};
+  (data.data || []).forEach(p => { map[p.lookup_key] = p.id; });
+  const missing = [...keys].filter(k => !map[k]);
+  if (missing.length) throw new Error('Checkout is not configured yet (missing prices: ' + missing.join(', ') + ').');
+  _priceCache = map;
+  return map;
+}
 
 const ALLOWED_ORIGINS = [
   'https://tjsdesign.online',
@@ -189,34 +214,26 @@ export default {
         return json({ error: 'Invalid JSON' }, 400, corsHeaders);
       }
 
-      const { name, email, addon, addonBilling } = body;
+      const { name, email, plan, agreed } = body;
       if (!name || !email) {
         return json({ error: 'Name and email are required.' }, 400, corsHeaders);
       }
+      const cfg = PLANS[plan];
+      if (!cfg) return json({ error: 'Please choose a plan.' }, 400, corsHeaders);
+      if (agreed !== true) {
+        return json({ error: 'Please accept the 12-month agreement to continue.' }, 400, corsHeaders);
+      }
 
       try {
-        if (!addon) {
-          // Build only — simple one-time PaymentIntent, no subscription involved.
-          const pi = await stripeCreatePaymentIntent(env, {
-            amount: 99999,
-            description: 'TJS Design — Custom Website Build',
-            email, name,
-          });
-          return json({ clientSecret: pi.client_secret }, 200, corsHeaders);
-        }
-
-        // Build + Site Management — create a real recurring Subscription.
-        // The Website Build is billed once, on this first invoice only, via
-        // add_invoice_items; the Subscription itself then auto-renews going
-        // forward at the Site Management price (monthly or annual).
-        const managementPrice = addonBilling === 'annual' ? PRICE_IDS.annual : PRICE_IDS.monthly;
-
+        const ids = await priceIds(env);
         const customer = await stripeCreateCustomer(env, { name, email });
         const sub = await stripeCreateSubscription(env, {
           customer: customer.id,
-          managementPrice,
-          buildPrice: PRICE_IDS.build,
-          name, email, addonBilling,
+          monthlyPrice: ids[cfg.monthly],
+          upfrontPrice: cfg.upfront ? ids[cfg.upfront] : null,
+          name, email, plan,
+          agreedAt: new Date().toISOString(),
+          ip: request.headers.get('CF-Connecting-IP') || '',
         });
 
         const pi = sub.latest_invoice && sub.latest_invoice.payment_intent;
@@ -238,19 +255,46 @@ export default {
         return json({ error: 'Invalid JSON' }, 400, corsHeaders);
       }
 
-      const { name, email, addon, addonBilling, subscriptionId } = body;
+      const { name, email, plan, subscriptionId } = body;
       if (!name || !email) {
         return json({ error: 'Name and email are required.' }, 400, corsHeaders);
       }
 
+      // Lock the 12-month agreement into Stripe. The webhook does the same thing as a
+      // backup, and ensureContractSchedule is safe to call twice.
+      let scheduleNote = '';
+      if (subscriptionId) {
+        try { scheduleNote = await ensureContractSchedule(env, subscriptionId); }
+        catch (err) { scheduleNote = 'Schedule NOT set: ' + err.message; console.error(err); }
+      }
+
       try {
-        await sendPaymentNotificationEmail(env, { name, email, addon, addonBilling, subscriptionId });
+        await sendPaymentNotificationEmail(env, { name, email, plan, subscriptionId, scheduleNote });
       } catch (err) {
         // Never let a notification-email failure look like a problem to the client —
         // the payment itself already succeeded by the time this is called.
         console.error('Payment notification email failed:', err);
       }
       return json({ success: true }, 200, corsHeaders);
+    }
+
+    // ── POST /stripe-webhook ─────────────────────────────────────────────────
+    // Configure in Stripe → Developers → Webhooks: endpoint …/stripe-webhook,
+    // event invoice.paid. Signing secret goes in STRIPE_WEBHOOK_SECRET.
+    if (url.pathname === '/stripe-webhook' && request.method === 'POST') {
+      const payload = await request.text();
+      const ok = await verifyStripeSignature(payload, request.headers.get('Stripe-Signature') || '', env.STRIPE_WEBHOOK_SECRET);
+      if (!ok) return new Response('Bad signature', { status: 400 });
+      const event = JSON.parse(payload);
+      if (event.type === 'invoice.paid') {
+        const inv = event.data.object;
+        const subId = inv.subscription || inv.parent?.subscription_details?.subscription;
+        if (subId && inv.billing_reason === 'subscription_create') {
+          try { await ensureContractSchedule(env, subId); }
+          catch (err) { console.error('Webhook schedule error:', err); return new Response('Retry', { status: 500 }); }
+        }
+      }
+      return new Response('ok');
     }
 
     // ── POST /contact ──────────────────────────────────────────────────────
@@ -576,26 +620,6 @@ const STRIPE_HEADERS = (env) => ({
   'Stripe-Version': '2024-06-20',
 });
 
-async function stripeCreatePaymentIntent(env, { amount, description, email, name }) {
-  const res = await fetch(`${STRIPE_API}/payment_intents`, {
-    method: 'POST',
-    headers: STRIPE_HEADERS(env),
-    body: new URLSearchParams({
-      amount: String(amount),
-      currency: 'usd',
-      description,
-      receipt_email: email,
-      'metadata[customer_name]': name,
-      'metadata[customer_email]': email,
-      'metadata[price_id]': PRICE_IDS.build,
-      'automatic_payment_methods[enabled]': 'true',
-    }),
-  });
-  const pi = await res.json();
-  if (!res.ok) throw new Error(pi.error?.message || 'Payment setup failed.');
-  return pi;
-}
-
 async function stripeCreateCustomer(env, { name, email }) {
   const res = await fetch(`${STRIPE_API}/customers`, {
     method: 'POST',
@@ -607,18 +631,23 @@ async function stripeCreateCustomer(env, { name, email }) {
   return customer;
 }
 
-async function stripeCreateSubscription(env, { customer, managementPrice, buildPrice, name, email, addonBilling }) {
+async function stripeCreateSubscription(env, { customer, monthlyPrice, upfrontPrice, name, email, plan, agreedAt, ip }) {
   const params = new URLSearchParams({
     customer,
-    'items[0][price]': managementPrice,
-    'add_invoice_items[0][price]': buildPrice,
+    'items[0][price]': monthlyPrice,
     payment_behavior: 'default_incomplete',
     'payment_settings[save_default_payment_method]': 'on_subscription',
     'expand[]': 'latest_invoice.payment_intent',
+    description: `TJS Design — ${PLANS[plan].label} plan (12-month agreement)`,
+    'metadata[plan]': plan,
     'metadata[customer_name]': name,
     'metadata[customer_email]': email,
-    'metadata[addon_billing]': addonBilling || 'none',
+    'metadata[agreement]': `${YEAR_ONE_PAYMENTS}-month agreement accepted at checkout`,
+    'metadata[agreed_at]': agreedAt,
+    'metadata[agreed_ip]': ip,
+    'metadata[terms_version]': TERMS_VERSION,
   });
+  if (upfrontPrice) params.set('add_invoice_items[0][price]', upfrontPrice);
   const res = await fetch(`${STRIPE_API}/subscriptions`, {
     method: 'POST',
     headers: STRIPE_HEADERS(env),
@@ -629,19 +658,78 @@ async function stripeCreateSubscription(env, { customer, managementPrice, buildP
   return sub;
 }
 
+async function stripeGet(env, path) {
+  const res = await fetch(`${STRIPE_API}${path}`, { headers: STRIPE_HEADERS(env) });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error?.message || `Stripe GET ${path} failed.`);
+  return data;
+}
+async function stripePost(env, path, params) {
+  const res = await fetch(`${STRIPE_API}${path}`, { method: 'POST', headers: STRIPE_HEADERS(env), body: params });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error?.message || `Stripe POST ${path} failed.`);
+  return data;
+}
+
+/**
+ * Turn a freshly paid year-one subscription into a schedule:
+ *   phase 1 — the plan's monthly price for 12 billing periods (the 12-month agreement)
+ *   phase 2 — Essential Care month-to-month, then the schedule releases and the
+ *             subscription simply continues at $29.99/mo until the client cancels.
+ * Safe to call more than once: does nothing if the subscription already has a schedule.
+ */
+async function ensureContractSchedule(env, subscriptionId) {
+  const sub = await stripeGet(env, `/subscriptions/${subscriptionId}`);
+  if (sub.schedule) return 'Schedule already set';
+  if (sub.status !== 'active' && sub.status !== 'trialing') return `Not scheduled yet (subscription is ${sub.status})`;
+  const plan = PLANS[sub.metadata?.plan];
+  if (!plan) return 'Not scheduled (no plan on subscription)';
+
+  const ids = await priceIds(env);
+  const sched = await stripePost(env, '/subscription_schedules', new URLSearchParams({ from_subscription: subscriptionId }));
+  const p0 = sched.phases[0];
+  await stripePost(env, `/subscription_schedules/${sched.id}`, new URLSearchParams({
+    end_behavior: 'release',
+    proration_behavior: 'none',
+    'phases[0][items][0][price]': ids[plan.monthly],
+    'phases[0][items][0][quantity]': '1',
+    'phases[0][start_date]': String(p0.start_date),
+    'phases[0][iterations]': String(YEAR_ONE_PAYMENTS),
+    'phases[0][proration_behavior]': 'none',
+    'phases[1][items][0][price]': ids[AFTER_YEAR_ONE],
+    'phases[1][items][0][quantity]': '1',
+    'phases[1][iterations]': '1',
+    'phases[1][proration_behavior]': 'none',
+    'metadata[plan]': sub.metadata.plan,
+    'metadata[note]': '12 year-one payments, then Essential Care month-to-month',
+  }));
+  return `Schedule ${sched.id} set: ${YEAR_ONE_PAYMENTS} × ${plan.label} payments, then Essential Care $29.99/mo`;
+}
+
+/** Verify a Stripe webhook signature (t=…,v1=…) with HMAC-SHA256. */
+async function verifyStripeSignature(payload, header, secret) {
+  if (!secret || !header) return false;
+  const parts = Object.fromEntries(header.split(',').map(kv => kv.split('=')));
+  const sigs = header.split(',').filter(kv => kv.startsWith('v1=')).map(kv => kv.slice(3));
+  if (!parts.t || !sigs.length) return false;
+  if (Math.abs(Date.now() / 1000 - Number(parts.t)) > 600) return false;
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const mac = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(`${parts.t}.${payload}`));
+  const hex = [...new Uint8Array(mac)].map(b => b.toString(16).padStart(2, '0')).join('');
+  return sigs.some(s => s.length === hex.length && [...s].every((c, i) => c === hex[i]));
+}
+
 // ── Resend helpers ──────────────────────────────────────────────────────────
 
-async function sendPaymentNotificationEmail(env, { name, email, addon, addonBilling, subscriptionId }) {
+async function sendPaymentNotificationEmail(env, { name, email, plan, subscriptionId, scheduleNote }) {
   if (!env.RESEND_API_KEY) {
     throw new Error('Payment notification not sent (missing RESEND_API_KEY).');
   }
 
-  let purchase = 'Custom Website Build ($999.99 one-time)';
-  if (addon) {
-    purchase += addonBilling === 'annual'
-      ? ' + Site Management (Annual, $999.96/yr)'
-      : ' + Site Management (Monthly, $129.99/mo)';
-  }
+  const cfg = PLANS[plan];
+  const purchase = cfg
+    ? `${cfg.label} plan — ${cfg.upfrontCents ? '$' + (cfg.upfrontCents / 100).toFixed(2) + ' upfront + ' : ''}$${(cfg.monthlyCents / 100).toFixed(2)}/mo, 12-month agreement`
+    : `Unknown plan (${plan || 'none'})`;
 
   const lines = [
     'Payment received from a new client!',
@@ -651,6 +739,7 @@ async function sendPaymentNotificationEmail(env, { name, email, addon, addonBill
     `Purchase: ${purchase}`,
   ];
   if (subscriptionId) lines.push(`Stripe Subscription ID: ${subscriptionId}`);
+  if (scheduleNote) lines.push(`12-month schedule: ${scheduleNote}`);
   lines.push(
     '',
     "They should be scheduling their intake call next. If you don't see a calendar booking from them soon, it's worth reaching out directly."
