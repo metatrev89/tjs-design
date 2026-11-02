@@ -112,10 +112,11 @@
       row((p.upfront ? money(p.upfront) + ' upfront + first month' : 'First month'), '') +
       row('Then ' + money(p.monthly) + '/mo for 11 more months', money(11 * p.monthly)) +
       row('Year-one total (12-month agreement)', money(yearOneCents(p))) +
-      row('After year one', 'Essential Care $29.99/mo, cancel anytime') +
+      row('After year one', 'Month-to-month care plan') +
+      '<p style="font-size:13px; line-height:1.6; color:#55525f; margin:10px 0 0;">When your 12-month agreement ends, your website moves to a month-to-month care plan of your choice: <strong>Essential Care</strong> at $29.99/mo, or <strong>Premium Care</strong> at $79.99/mo, which adds a monthly 30-minute call, larger updates and 24/7 support. You&#8217;ll be enrolled in Essential Care automatically unless you choose to upgrade or cancel.</p>' +
       '<label style="display:flex; gap:10px; align-items:flex-start; margin:16px 0 4px; cursor:pointer; font-size:13px; line-height:1.5; color:#3a3845;">' +
         '<input type="checkbox" data-tjsco="agree"' + (S.agreed ? ' checked' : '') + ' style="width:18px; height:18px; margin-top:2px; flex:none; accent-color:#2F6BFF;">' +
-        '<span>I agree to a <strong>12-month agreement</strong> and authorize TJS Design to charge my card ' + (p.upfront ? money(p.upfront) + ' plus ' : '') + money(p.monthly) + ' today, then ' + money(p.monthly) + ' monthly for 11 more months. If I cancel early, the rest of year one is still due. After 12 months my plan continues as Essential Care at $29.99/mo month-to-month until I cancel (cancel anytime before the next charge by text, call or email). I agree to the <a href="/terms.html" target="_blank" rel="noopener" style="color:#2F6BFF;">Terms of Service</a>.</span>' +
+        '<span>I agree to a <strong>12-month agreement</strong> and authorize TJS Design to charge my card ' + (p.upfront ? money(p.upfront) + ' plus ' : '') + money(p.monthly) + ' today, then ' + money(p.monthly) + ' monthly for 11 more months. If I cancel early, the remaining year-one payments are still due. After 12 months, my plan continues month-to-month as Essential Care at $29.99/mo unless I upgrade to Premium Care at $79.99/mo or cancel, which I can do anytime before the next charge by text, call or email. I agree to the <a href="/terms.html" target="_blank" rel="noopener" style="color:#2F6BFF;">Terms of Service</a>.</span>' +
       '</label>' +
       '<button type="button" data-tjsco="to-payment"' + (S.agreed ? '' : ' disabled') + ' style="' + BTN_DARK + ' margin-top:14px;' + (S.agreed ? '' : ' opacity:.45; cursor:not-allowed;') + '">Continue to Payment →</button>' +
     '</div>';

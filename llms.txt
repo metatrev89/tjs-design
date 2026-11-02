@@ -22,8 +22,8 @@ If a client cancels during the first 12 months, the remaining year-one payments 
 
 ## After year one
 Plans move automatically to Essential Care month-to-month on the card on file.
-- Essential Care — $29.99/month month-to-month, or $19.99/month on a 12-month plan. Hosting, security and uptime; 52 weekly Google Business Profile posts; up to 3 small edits per month; text and email support during business hours.
-- Premium Care — $79.99/month month-to-month, or $59.99/month on a 12-month plan. Everything in Essential plus up to one 30-minute call per month, bigger content changes and 24/7 support.
+- Essential Care — $29.99/month, month-to-month. Hosting, security and uptime; 52 weekly Google Business Profile posts; up to 3 small edits per month; text and email support during business hours.
+- Premium Care — $79.99/month, month-to-month. Everything in Essential plus up to one 30-minute call per month, bigger content changes and 24/7 support.
 Month-to-month plans can be canceled anytime before the next charge by text, call or email.
 
 ## How It Works (4 steps)
@@ -52,7 +52,7 @@ Click any "Get My Website" button on tjsdesign.online to open secure Stripe chec
 - Own It: $999.99 upfront + $29.99/month (12 months)
 - Balanced: $499.99 upfront + $79.99/month (12 months)
 - Zero Down: $0 upfront + $129.99/month (12 months)
-- After year one: Essential Care $29.99/month month-to-month ($19.99/month on a 12-month plan) or Premium Care $79.99/month ($59.99/month on a 12-month plan)
+- After year one: Essential Care $29.99/month or Premium Care $79.99/month, both month-to-month (Essential is the default)
 - Domain: ~$10–$25/year (purchased separately by client; client owns it outright)
 
 ## Free Resource: The Local Growth Blueprint
@@ -61,7 +61,7 @@ A free 4-minute video and 14-page guide with the 5-step plan Trevor would follow
 ## Frequently Asked Questions
 
 Q: How much does a website from TJS Design cost?
-A: Three plans on a 12-month agreement: Own It ($999.99 upfront + $29.99/month), Balanced ($499.99 upfront + $79.99/month) or Zero Down ($0 upfront + $129.99/month). Each includes the custom website, hosting, management and 52 weekly Google Business Profile posts. After year one, Essential Care is $29.99/month month-to-month or $19.99/month on a 12-month plan.
+A: Three plans on a 12-month agreement: Own It ($999.99 upfront + $29.99/month), Balanced ($499.99 upfront + $79.99/month) or Zero Down ($0 upfront + $129.99/month). Each includes the custom website, hosting, management and 52 weekly Google Business Profile posts. After year one, care continues month-to-month: Essential Care at $29.99/month or Premium Care at $79.99/month.
 
 Q: How long does it take?
 A: Under 14 business days from the intake call, guaranteed.
@@ -82,7 +82,7 @@ Q: Is the 14-day timeline guaranteed?
 A: Yes, on TJS Design's end. The timeline starts from your intake call and is met every time as long as design feedback is provided within a reasonable window.
 
 Q: What happens after the first year?
-A: The plan moves to Essential Care at $29.99/month month-to-month (cancel anytime before the next charge by text, call or email), or $19.99/month on another 12-month plan. Premium Care is $79.99/month ($59.99/month on a 12-month plan).
+A: The plan moves to Essential Care at $29.99/month month-to-month unless the client upgrades or cancels (cancel anytime before the next charge by text, call or email). Premium Care is $79.99/month, also month-to-month.
 
 Q: Can I cancel in the first year?
 A: Every plan is a 12-month agreement. Service can stop anytime, but the remaining year-one payments are still due. The site is the client's once year one is paid.
